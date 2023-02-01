@@ -7,4 +7,4 @@
 | [03]() |  [P01]() | []() |:heavy_check_mark: |
 | [04]() |  [P02]() | []() |:heavy_check_mark: |
 | [05]() |  [P03]() | []() |:heavy_check_mark: |
-| [06]() |  [P04]() ] []() |:heavy_check_mark: |
+| [06]() |  [P04]() | []() |:heavy_check_mark: |
