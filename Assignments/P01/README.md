@@ -6,10 +6,7 @@
 - []: # **Author:** _[Loic_Konan](Loic_Konan)_
 - []: # **Date:** _02/13/2023_
 - []: # **Description:** _Wordle in Pygame_
-- []: # **Tags:** [Wordle,Pygame]
   
-  <br /><br />
-
 ## Loic Konan
 
 ### Description
@@ -18,9 +15,9 @@
 - The goal is to find the word in the grid. The word is hidden in the grid.
 - The word can be found horizontally, vertically, or diagonally.
 
-<img src="pic.png">
-<img src="pic.png">
-<img src="pic.png">
+<img src="assets/pic.png">
+<img src="assets/pic0.png">
+<img src="assets/pic1.png">
 
 ### Instructions
 
