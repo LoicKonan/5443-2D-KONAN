@@ -15,10 +15,6 @@
 - The goal is to find the word in the grid. The word is hidden in the grid.
 - The word can be found horizontally, vertically, or diagonally.
 
-<img src="assets/pic.png ">
-<img src="assets/pic0.png">
-<img src="assets/pic1.png">
-
 ### Instructions
 
 - The game is played with the Keyboard.
@@ -26,6 +22,10 @@
 - The player can use the backspace key to delete the letter.
 
 - The player can use the enter key to validate the word.
+<img src="assets/pic.png ">
+<img src="assets/pic0.png">
+<img src="assets/pic1.png">
+
 
 ### Files
 
