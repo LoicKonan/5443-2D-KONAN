@@ -1,12 +1,12 @@
-## Project 01 -  with Postgres + 
+## Project 01 -  Wordle in Pygame 
 
 - []: # **Language:** _markdown_
 - []: # **Path:** _README.md_
 - []: # **Title:** _Project 01_
 - []: # **Author:** _[Loic_Konan](Loic_Konan)_
 - []: # **Date:** _02/13/2023_
-- []: # **Description:** _ with  + _
-- []: # **Tags:** **_[, ]_**
+- []: # **Description:** _Wordle in Pygame_
+- []: # **Tags:** [Wordle,Pygame]
   
   <br /><br />
 
@@ -14,9 +14,18 @@
 
 ### Description
 
+- This is a wordle game in pygame.
+- The goal is to find the word in the grid. The word is hidden in the grid.
+- The word can be found horizontally, vertically, or diagonally.
+
+<img src="pic.png">
+<img src="pic.png">
 <img src="pic.png">
 
 ### Instructions
+
+- The game is played with the Keyboard.
+- 
 
 ### Files
 
