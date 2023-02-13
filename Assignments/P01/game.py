@@ -3,8 +3,9 @@ import sys
 import random
 import pygame.mixer
 from lists import *
-
+    
 pygame.init()
+pygame.mixer.init() 
 
 # Constants
 
@@ -13,7 +14,14 @@ WIDTH, HEIGHT = 633, 900
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 BACKGROUND = pygame.image.load("assets/Starting Tiles.png")
 BACKGROUND_RECT = BACKGROUND.get_rect(center=(317, 300))
+
+# add my ICON Image.
 ICON = pygame.image.load("assets/Icon.png")
+
+a = pygame.mixer.music.load("assets/puss.ogg")
+pygame.mixer.music.load("assets/lose.ogg")
+
+
 
 pygame.display.set_caption("Wordle!")
 pygame.display.set_icon(ICON)
@@ -142,6 +150,7 @@ def check_guess(guess_to_check):
                 guess_to_check[i].text_color = "white"
                 if not game_decided:
                     game_result = "W"
+                    
             else:
                 guess_to_check[i].bg_color = YELLOW
                 for indicator in indicators:
