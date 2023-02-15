@@ -32,7 +32,7 @@ GREY = "#787c7e"
 OUTLINE = "#d3d6da"
 FILLED_OUTLINE = "#878a8c"
 
-CORRECT_WORD = "coder"
+CORRECT_WORD = "ether"
 
 ALPHABET = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]
 
@@ -117,7 +117,6 @@ class Indicator:
         pygame.display.update()
 
 # Drawing the indicators on the screen.
-
 
 indicator_x, indicator_y = 20, 600
 
