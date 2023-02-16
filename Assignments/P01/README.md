@@ -32,4 +32,4 @@
 |   #   | File / Folder          | Description | Status                  |
 | :---: | ---------------------- | ----------- | ----------------------- |
 |   1   | [README.md](README.md) | README file | :ballot_box_with_check: |
-|   3   | [game.py](game.py)     | main file   | :ballot_box_with_check: |
+|  2    | [game.py](game.py)     | main file   | :ballot_box_with_check: |
