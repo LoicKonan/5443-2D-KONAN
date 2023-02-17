@@ -7,6 +7,7 @@ WORDS = [
 "blush",
 "focal",
 "evade",
+"ether",
 "naval",
 "serve",
 "heath",

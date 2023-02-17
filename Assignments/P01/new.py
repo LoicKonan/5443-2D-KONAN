@@ -28,17 +28,18 @@ ICON = pygame.image.load("assets/Icon.png")
 pygame.display.set_icon(ICON)
 
 # screen square 6 x 5 matrix
-board = [[" A ", " ", " ", " ", " "],
-         [" ", " B ", " ", " ", " "],
+board = [[" ", " ", " ", " ", " "],
          [" ", " ", " ", " ", " "],
          [" ", " ", " ", " ", " "],
-         [" ", " ", " C ", " ", " Z "],
-         [" ", " ", " ", " ", " E "]]
+         [" ", " ", " ", " ", " "],
+         [" ", " ", " ", " ", " "],
+         [" ", " ", " ", " ", " "]]
 
 turn = 0
 fps = 60
 clock = pygame.time.Clock()
 huge_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
+secret_word = "ETHER"
 
 # This Function will draw the squares on the screen and determine the size and spaces.
 def draw_board():
