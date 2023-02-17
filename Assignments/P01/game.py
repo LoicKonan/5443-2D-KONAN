@@ -8,7 +8,6 @@ pygame.init()
 pygame.mixer.init() 
 
 # Constants
-
 WIDTH, HEIGHT = 633, 900
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
