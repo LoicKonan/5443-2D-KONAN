@@ -1,4 +1,3 @@
-# Building Wordle Game!!!
 import pygame
 import sys
 import random
@@ -38,8 +37,10 @@ board = [[" ", " ", " ", " ", " "],
 turn = 0
 fps = 60
 clock = pygame.time.Clock()
-huge_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
+huge_font = pygame.font.Font("assets/FreeSansBold.otf", 56)
 secret_word = "ETHER"
+game_over = False
+letters = 0
 
 # This Function will draw the squares on the screen and determine the size and spaces.
 def draw_board():
@@ -48,7 +49,7 @@ def draw_board():
     for col, row in itertools.product(range(5), range(6)):
         pygame.draw.rect(screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
         piece_text = huge_font.render(board[row][col], True, white)
-        screen.blit(piece_text, (col * 80 + 100, row * 80 + 12))
+        screen.blit(piece_text, (col * 80 + 110, row * 80 + 12))
         
     # This indicate what turn you on.
     pygame.draw.rect(screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
@@ -66,6 +67,27 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            
+        if event.type == pygame.TEXTINPUT and not game_over:
+            entry = event.__getattribute__('text')
+            print(event)
+            board[turn][letters] = entry
+            letters +=1
+            if letters == 5:
+                turn +=1
+                letters = 0
+                
+            if turn == 7:
+                game_over = True
+                print("Game Over")
+                # pygame.mixer.music.load("assets/GameOver.mp3")
+                # pygame.mixer.music.play()
+                
+                # pygame.mixer.music.set_volume(0.5)
+                # pygame.mixer.music.play(-1)
+                
+                # pygame.mixer.music.stop()
+            
 
     pygame.display.update()
     
