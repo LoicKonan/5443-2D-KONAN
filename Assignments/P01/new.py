@@ -8,6 +8,9 @@ import itertools
 import pygame
 
 
+pygame.init()
+pygame.mixer.init() 
+
 
 # screen setup Colors
 white  = (255, 255, 255)
@@ -24,20 +27,18 @@ pygame.display.set_caption("Wordle Game")
 ICON = pygame.image.load("assets/Icon.png") 
 pygame.display.set_icon(ICON)
 
-screen.fill(white)
+# screen square 6 x 5 matrix
+board = [[" A ", " ", " ", " ", " "],
+         [" ", " B ", " ", " ", " "],
+         [" ", " ", " ", " ", " "],
+         [" ", " ", " ", " ", " "],
+         [" ", " ", " C ", " ", " Z "],
+         [" ", " ", " ", " ", " E "]]
 
-# screen square borders
-board = [[" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "]]
-
-
+turn = 0
 fps = 60
 clock = pygame.time.Clock()
-turn = 0
+huge_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
 
 # This Function will draw the squares on the screen and determine the size and spaces.
 def draw_board():
@@ -45,6 +46,8 @@ def draw_board():
     global board
     for col, row in itertools.product(range(5), range(6)):
         pygame.draw.rect(screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
+        piece_text = huge_font.render(board[row][col], True, white)
+        screen.blit(piece_text, (col * 80 + 100, row * 80 + 12))
         
     # This indicate what turn you on.
     pygame.draw.rect(screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
