@@ -15,6 +15,7 @@ pygame.mixer.init()
 white = (255, 255, 255)
 black = (0, 0, 0)
 green = (0, 255, 0)
+yellow = (255, 255, 0)
 
 # screen setup size constants
 WIDTH = 600
@@ -34,7 +35,7 @@ board = [[" ", " ", " ", " ", " "],
          [" ", " ", " ", " ", " "],
          [" ", " ", " ", " ", " "]]
 
-# This is the turn active.
+# This is the turn.
 turn = 0
 
 # This is the frame rate.
@@ -75,12 +76,29 @@ def draw_board():
         screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
 
 
+def check_words():
+    global board
+    global turn
+    global game_over
+    global secret_word
+    for col, row in itertools.product(range(5), range(6)): 
+        if secret_word[col] == board[row][col] and turn > row:
+            pygame.draw.rect(screen, green, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
+            
+        elif board[row][col] in secret_word and turn > row:
+            pygame.draw.rect(screen, yellow, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
+        
+
+
+
 # game loop
 running = True
 
 while running:
     clock.tick(fps)
     screen.fill(black)
+    check_words()
+
     draw_board()
 
     for event in pygame.event.get():
@@ -90,21 +108,37 @@ while running:
             running = False
 
         # This is the key event.
+        if event.type == pygame.KEYDOWN:
+            
+            # This is the backspace event.
+            if event.key == pygame.K_BACKSPACE and letters > 0:
+                board[turn][letters - 1] = " "
+                letters -= 1
+               
+            # This is will check if space button or the enter key is pressed 
+            # and that the game is not over then move to the next turn.
+            if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN and not game_over:
+                turn += 1
+                letters = 0
+                turn_active = True
+           
+                
+
+        # This is the key event.
         if event.type == pygame.TEXTINPUT and turn_active and not game_over:
             entry = event.__getattribute__('text')
             print(event)
             board[turn][letters] = entry
             letters += 1
 
-            # This is the turn change.
-            if letters == 5:
-                turn += 1
-                letters = 0
 
-            # This is the game over.
-            if turn == 7:
-                game_over = True
-                print("Game Over")
+        # This is the turn change.
+        if letters == 5:
+            turn_active = False
+
+        if letters < 5:
+            turn_active = True
+       
 
     # This is the update event.
     pygame.display.update()
