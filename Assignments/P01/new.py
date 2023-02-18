@@ -12,10 +12,11 @@ pygame.mixer.init()
 
 
 # screen setup Colors
-white = (255, 255, 255)
-black = (0, 0, 0)
-green = (0, 255, 0)
+white  = (255, 255, 255)
+black  = (0, 0, 0)
+green  = (0, 255, 0)
 yellow = (255, 255, 0)
+gray   = (128, 128, 128)
 
 # screen setup size constants
 WIDTH = 600
@@ -60,34 +61,31 @@ letters = 0
 turn_active = True
 
 # This Function will draw the squares on the screen and determine the size and spaces.
-
-
 def draw_board():
     global turn
     global board
     for col, row in itertools.product(range(5), range(6)):
-        pygame.draw.rect(
-            screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
-        piece_text = huge_font.render(board[row][col], True, white)
+        pygame.draw.rect(screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
+        piece_text = huge_font.render(board[row][col], True, gray)
         screen.blit(piece_text, (col * 80 + 110, row * 80 + 12))
 
     # This indicate what turn you on.
-    pygame.draw.rect(
-        screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
+    pygame.draw.rect(screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
 
 
 def check_words():
     global board
     global turn
-    global game_over
     global secret_word
-    for col, row in itertools.product(range(5), range(6)): 
+
+    # This will check if the word is correct.
+    for col, row in itertools.product(range(5), range(6)):
         if secret_word[col] == board[row][col] and turn > row:
             pygame.draw.rect(screen, green, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
-            
+
         elif board[row][col] in secret_word and turn > row:
             pygame.draw.rect(screen, yellow, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
-        
+            
 
 
 
@@ -98,7 +96,6 @@ while running:
     clock.tick(fps)
     screen.fill(black)
     check_words()
-
     draw_board()
 
     for event in pygame.event.get():
@@ -107,7 +104,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        # This is the key event.
+        # 
         if event.type == pygame.KEYDOWN:
             
             # This is the backspace event.
@@ -121,10 +118,8 @@ while running:
                 turn += 1
                 letters = 0
                 turn_active = True
-           
-                
 
-        # This is the key event.
+        # 
         if event.type == pygame.TEXTINPUT and turn_active and not game_over:
             entry = event.__getattribute__('text')
             print(event)
