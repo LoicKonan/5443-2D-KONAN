@@ -88,7 +88,6 @@ def check_words():
             
 
 
-
 # game loop
 running = True
 
@@ -112,7 +111,7 @@ while running:
                 board[turn][letters - 1] = " "
                 letters -= 1
 
-            # This is will check if space button or the enter key is pressed 
+            # This will check if space button or the enter key is pressed 
             # and that the game is not over then move to the next turn.
             if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN and not game_over:
                 turn += 1
@@ -126,7 +125,7 @@ while running:
             board[turn][letters] = entry
             letters += 1
 
-        # Check and see if the game is over or if it guess right.
+        # Check and see if the game is over or if the person guess the right words.
         for row in range(6):
             guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
             if guess == secret_word and row < turn:
