@@ -63,32 +63,31 @@ while running:
     screen.fill(black)
     draw_board()
     
-    
+    #
     for event in pygame.event.get():
+        
+        #
         if event.type == pygame.QUIT:
             running = False
             
+        #    
         if event.type == pygame.TEXTINPUT and not game_over:
             entry = event.__getattribute__('text')
             print(event)
             board[turn][letters] = entry
             letters +=1
+            
+            #
             if letters == 5:
                 turn +=1
                 letters = 0
-                
+            
+            #
             if turn == 7:
                 game_over = True
                 print("Game Over")
-                # pygame.mixer.music.load("assets/GameOver.mp3")
-                # pygame.mixer.music.play()
-                
-                # pygame.mixer.music.set_volume(0.5)
-                # pygame.mixer.music.play(-1)
-                
-                # pygame.mixer.music.stop()
             
-
+    #
     pygame.display.update()
     
 pygame.quit()
