@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 import pygame.mixer
-from lists import *
+from words import *
     
 pygame.init()
 pygame.mixer.init() 

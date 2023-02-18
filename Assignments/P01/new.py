@@ -2,21 +2,20 @@ import pygame
 import sys
 import random
 import pygame.mixer
-from lists import *
+import words
 import itertools
 import pygame
-
 
 pygame.init()
 pygame.mixer.init()
 
 
 # screen setup Colors
-white  = (255, 255, 255)
-black  = (0, 0, 0)
-green  = (0, 255, 0)
+white = (255, 255, 255)
+black = (0, 0, 0)
+green = (0, 255, 0)
 yellow = (255, 255, 0)
-gray   = (128, 128, 128)
+gray = (128, 128, 128)
 
 # screen setup size constants
 WIDTH = 600
@@ -48,8 +47,8 @@ clock = pygame.time.Clock()
 # This is the font.
 huge_font = pygame.font.Font("assets/FreeSansBold.otf", 56)
 
-# This is the secret word.
-secret_word = "ETHER"
+# This is the KEY(CORRECT ANSWER).
+secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
 
 # This is the game over.
 game_over = False
@@ -61,31 +60,36 @@ letters = 0
 turn_active = True
 
 # This Function will draw the squares on the screen and determine the size and spaces.
+
+
 def draw_board():
     global turn
     global board
     for col, row in itertools.product(range(5), range(6)):
-        pygame.draw.rect(screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
+        pygame.draw.rect(
+            screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
         piece_text = huge_font.render(board[row][col], True, gray)
         screen.blit(piece_text, (col * 80 + 110, row * 80 + 12))
 
-    # This indicate what turn you on.
-    pygame.draw.rect(screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
+    # This indicate what turn you on (THE GREEN SQUARE).
+    pygame.draw.rect(
+        screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
 
 
+# This Function will check if the word is correct.
 def check_words():
     global board
     global turn
     global secret_word
-
     # This will check if the word is correct.
     for col, row in itertools.product(range(5), range(6)):
         if secret_word[col] == board[row][col] and turn > row:
-            pygame.draw.rect(screen, green, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
+            pygame.draw.rect(
+                screen, green, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
 
         elif board[row][col] in secret_word and turn > row:
-            pygame.draw.rect(screen, yellow, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
-            
+            pygame.draw.rect(screen, yellow, [
+                             col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
 
 
 # game loop
@@ -98,50 +102,59 @@ while running:
     draw_board()
 
     for event in pygame.event.get():
-
         # This is the quit event.
         if event.type == pygame.QUIT:
             running = False
 
-        # 
-        if event.type == pygame.KEYDOWN:
-
-            # This is the backspace event.
-            if event.key == pygame.K_BACKSPACE and letters > 0:
-                board[turn][letters - 1] = " "
-                letters -= 1
-
-            # This will check if space button or the enter key is pressed 
-            # and that the game is not over then move to the next turn.
-            if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN and not game_over:
-                turn += 1
-                letters = 0
-                turn_active = True
-
-        # 
+        # add player controls for letter entry, backspacing, checking guesses and restarting
         if event.type == pygame.TEXTINPUT and turn_active and not game_over:
             entry = event.__getattribute__('text')
-            print(event)
-            board[turn][letters] = entry
-            letters += 1
+            if entry != " ":
+                entry = entry.lower()
+                board[turn][letters] = entry
+                letters += 1
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE and letters > 0:
+                board[turn][letters - 1] = ' '
+                letters -= 1
+            if event.key == pygame.K_SPACE and not game_over:
+                turn += 1
+                letters = 0
+            if event.key == pygame.K_SPACE and game_over:
+                turn = 0
+                letters = 0
+                game_over = False
+                secret_word = words.WORDS[random.randint(
+                    0, len(words.WORDS) - 1)]
+                board = [[" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "]]
 
-        # Check and see if the game is over or if the person guess the right words.
-        for row in range(6):
-            guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
-            if guess == secret_word and row < turn:
-                game_over = True
-
-
-        # This is the turn change.
+        # control turn active based on letters
         if letters == 5:
             turn_active = False
-
         if letters < 5:
             turn_active = True
 
+        # check if guess is correct, add game over conditions
 
-    # This is the update event.
-    pygame.display.update()
+        for row in range(6):
+            guess = board[row][0] + board[row][1] + \
+                board[row][2] + board[row][3] + board[row][4]
+            if guess == secret_word and row < turn:
+                game_over = True
 
-# This is the quit event.
+        if turn == 6:
+            game_over = True
+            loser_text = huge_font.render('Loser!', True, white)
+            screen.blit(loser_text, (440, 320))
+
+        if game_over and turn < 6:
+            winner_text = huge_font.render('Winner!', True, white)
+            screen.blit(winner_text, (440, 320))
+
+    pygame.display.flip()
 pygame.quit()
