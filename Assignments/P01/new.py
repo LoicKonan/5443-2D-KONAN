@@ -117,15 +117,14 @@ while running:
             if event.key == pygame.K_BACKSPACE and letters > 0:
                 board[turn][letters - 1] = ' '
                 letters -= 1
-            if event.key == pygame.K_SPACE and not game_over:
+            if event.key == pygame.K_RETURN and not game_over:
                 turn += 1
                 letters = 0
-            if event.key == pygame.K_SPACE and game_over:
+            if event.key == pygame.K_RETURN and game_over:
                 turn = 0
                 letters = 0
                 game_over = False
-                secret_word = words.WORDS[random.randint(
-                    0, len(words.WORDS) - 1)]
+                secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
                 board = [[" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "],
@@ -142,8 +141,7 @@ while running:
         # check if guess is correct, add game over conditions
 
         for row in range(6):
-            guess = board[row][0] + board[row][1] + \
-                board[row][2] + board[row][3] + board[row][4]
+            guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
             if guess == secret_word and row < turn:
                 game_over = True
 
