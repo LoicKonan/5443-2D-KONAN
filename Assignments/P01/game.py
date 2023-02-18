@@ -143,19 +143,19 @@ while running:
 
         for row in range(6):
             guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
-            if guess == secret_word and row < turn:
+            if guess == secret_word and row < 6:
                 game_over = True
 
 
         if turn == 6:
             game_over = True
             loser_text = huge_font.render('Loser!', True, white)
-            screen.blit(loser_text, (440, 320))
+            screen.blit(loser_text, (320, 440))
 
 
         if game_over and turn < 6:
             winner_text = huge_font.render('Winner!', True, white)
-            screen.blit(winner_text, (440, 320))
+            screen.blit(winner_text, (320, 440))
 
     pygame.display.flip()
 pygame.quit()
