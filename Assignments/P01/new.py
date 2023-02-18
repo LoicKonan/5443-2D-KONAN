@@ -60,8 +60,6 @@ letters = 0
 turn_active = True
 
 # This Function will draw the squares on the screen and determine the size and spaces.
-
-
 def draw_board():
     global turn
     global board
@@ -110,9 +108,11 @@ while running:
         if event.type == pygame.TEXTINPUT and turn_active and not game_over:
             entry = event.__getattribute__('text')
             if entry != " ":
-                entry = entry.lower()
+                entry = entry.upper()
                 board[turn][letters] = entry
                 letters += 1
+                
+                
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_BACKSPACE and letters > 0:
                 board[turn][letters - 1] = ' '
@@ -132,6 +132,7 @@ while running:
                          [" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "]]
 
+
         # control turn active based on letters
         if letters == 5:
             turn_active = False
@@ -145,10 +146,12 @@ while running:
             if guess == secret_word and row < turn:
                 game_over = True
 
+
         if turn == 6:
             game_over = True
             loser_text = huge_font.render('Loser!', True, white)
             screen.blit(loser_text, (440, 320))
+
 
         if game_over and turn < 6:
             winner_text = huge_font.render('Winner!', True, white)
