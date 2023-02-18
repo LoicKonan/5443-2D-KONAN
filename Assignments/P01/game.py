@@ -2,260 +2,160 @@ import pygame
 import sys
 import random
 import pygame.mixer
-from words import *
-    
+import words
+import itertools
+import pygame
+
 pygame.init()
-pygame.mixer.init() 
+pygame.mixer.init()
 
-# Constants
-WIDTH, HEIGHT = 633, 900
 
-SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-BACKGROUND = pygame.image.load("assets/Starting Tiles.png")
-BACKGROUND_RECT = BACKGROUND.get_rect(center=(317, 300))
+# screen setup Colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+green = (0, 255, 0)
+yellow = (255, 255, 0)
+gray = (128, 128, 128)
 
-# add my ICON Image.
+# screen setup size constants
+WIDTH = 600
+HEIGHT = 800
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# screen Title and Icon Image.
+pygame.display.set_caption("Wordle Game")
 ICON = pygame.image.load("assets/Icon.png")
-
-a = pygame.mixer.music.load("assets/puss.ogg")
-pygame.mixer.music.load("assets/lose.ogg")
-
-
-
-pygame.display.set_caption("Wordle!")
 pygame.display.set_icon(ICON)
 
-GREEN = "#6aaa64"
-YELLOW = "#c9b458"
-GREY = "#787c7e"
-OUTLINE = "#d3d6da"
-FILLED_OUTLINE = "#878a8c"
+# screen square 6 x 5 matrix
+board = [[" ", " ", " ", " ", " "],
+         [" ", " ", " ", " ", " "],
+         [" ", " ", " ", " ", " "],
+         [" ", " ", " ", " ", " "],
+         [" ", " ", " ", " ", " "],
+         [" ", " ", " ", " ", " "]]
 
-CORRECT_WORD = "ether"
+# This is the turn.
+turn = 0
 
-ALPHABET = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]
+# This is the frame rate.
+fps = 60
 
-GUESSED_LETTER_FONT = pygame.font.Font("assets/FreeSansBold.otf", 50)
-AVAILABLE_LETTER_FONT = pygame.font.Font("assets/FreeSansBold.otf", 25)
+# This is the clock.
+clock = pygame.time.Clock()
 
-SCREEN.fill("white")
-SCREEN.blit(BACKGROUND, BACKGROUND_RECT)
-pygame.display.update()
+# This is the font.
+huge_font = pygame.font.Font("assets/FreeSansBold.otf", 56)
 
-LETTER_X_SPACING = 85
-LETTER_Y_SPACING = 12
-LETTER_SIZE = 75
+# This is the KEY(CORRECT ANSWER).
+secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
 
-# Global variables
+# This is the game over.
+game_over = False
 
-guesses_count = 0
+# No letters has been entered yet.
+letters = 0
 
-# guesses is a 2D list that will store guesses. A guess will be a list of letters.
-# The list will be iterated through and each letter in each guess will be drawn on the screen.
-guesses = [[]] * 6
+# This is the turn active.
+turn_active = True
 
-current_guess = []
-current_guess_string = ""
-current_letter_bg_x = 110
+# This Function will draw the squares on the screen and determine the size and spaces.
+def draw_board():
+    global turn
+    global board
+    for col, row in itertools.product(range(5), range(6)):
+        pygame.draw.rect(
+            screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
+        piece_text = huge_font.render(board[row][col], True, gray)
+        screen.blit(piece_text, (col * 80 + 110, row * 80 + 12))
 
-# Indicators is a list storing all the Indicator object. An indicator is that button thing with all the letters you see.
-indicators = []
-
-game_result = ""
-
-
-class Letter:
-    def __init__(self, text, bg_position):
-        # Initializes all the variables, including text, color, position, size, etc.
-        self.bg_color = "white"
-        self.text_color = "black"
-        self.bg_position = bg_position
-        self.bg_x = bg_position[0]
-        self.bg_y = bg_position[1]
-        self.bg_rect = (bg_position[0], self.bg_y, LETTER_SIZE, LETTER_SIZE)
-        self.text = text
-        self.text_position = (self.bg_x+36, self.bg_position[1]+34)
-        self.text_surface = GUESSED_LETTER_FONT.render(
-            self.text, True, self.text_color)
-        self.text_rect = self.text_surface.get_rect(center=self.text_position)
-
-    def draw(self):
-        # Puts the letter and text on the screen at the desired positions.
-        pygame.draw.rect(SCREEN, self.bg_color, self.bg_rect)
-        if self.bg_color == "white":
-            pygame.draw.rect(SCREEN, FILLED_OUTLINE, self.bg_rect, 3)
-        self.text_surface = GUESSED_LETTER_FONT.render(
-            self.text, True, self.text_color)
-        SCREEN.blit(self.text_surface, self.text_rect)
-        pygame.display.update()
-
-    def delete(self):
-        # Fills the letter's spot with the default square, emptying it.
-        pygame.draw.rect(SCREEN, "white", self.bg_rect)
-        pygame.draw.rect(SCREEN, OUTLINE, self.bg_rect, 3)
-        pygame.display.update()
+    # This indicate what turn you on (THE GREEN SQUARE).
+    pygame.draw.rect(
+        screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
 
 
-class Indicator:
-    def __init__(self, x, y, letter):
-        # Initializes variables such as color, size, position, and letter.
-        self.x = x
-        self.y = y
-        self.text = letter
-        self.rect = (self.x, self.y, 57, 75)
-        self.bg_color = OUTLINE
+# This Function will check if the word is correct.
+def check_words():
+    global board
+    global turn
+    global secret_word
+    # This will check if the word is correct.
+    for col, row in itertools.product(range(5), range(6)):
+        if secret_word[col] == board[row][col] and turn > row:
+            pygame.draw.rect(
+                screen, green, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
 
-    def draw(self):
-        # Puts the indicator and its text on the screen at the desired position.
-        pygame.draw.rect(SCREEN, self.bg_color, self.rect)
-        self.text_surface = AVAILABLE_LETTER_FONT.render(
-            self.text, True, "white")
-        self.text_rect = self.text_surface.get_rect(
-            center=(self.x+27, self.y+30))
-        SCREEN.blit(self.text_surface, self.text_rect)
-        pygame.display.update()
-
-# Drawing the indicators on the screen.
-
-indicator_x, indicator_y = 20, 600
-
-for i in range(3):
-    for letter in ALPHABET[i]:
-        new_indicator = Indicator(indicator_x, indicator_y, letter)
-        indicators.append(new_indicator)
-        new_indicator.draw()
-        indicator_x += 60
-    indicator_y += 100
-    if i == 0:
-        indicator_x = 50
-    elif i == 1:
-        indicator_x = 105
+        elif board[row][col] in secret_word and turn > row:
+            pygame.draw.rect(screen, yellow, [
+                             col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
 
 
-def check_guess(guess_to_check):
-    # Goes through each letter and checks if it should be green, yellow, or grey.
-    global current_guess, current_guess_string, guesses_count, current_letter_bg_x, game_result
-    game_decided = False
-    for i in range(5):
-        lowercase_letter = guess_to_check[i].text.lower()
-        if lowercase_letter in CORRECT_WORD:
-            if lowercase_letter == CORRECT_WORD[i]:
-                guess_to_check[i].bg_color = GREEN
-                for indicator in indicators:
-                    if indicator.text == lowercase_letter.upper():
-                        indicator.bg_color = GREEN
-                        indicator.draw()
-                guess_to_check[i].text_color = "white"
-                if not game_decided:
-                    game_result = "W"
-                    
-            else:
-                guess_to_check[i].bg_color = YELLOW
-                for indicator in indicators:
-                    if indicator.text == lowercase_letter.upper():
-                        indicator.bg_color = YELLOW
-                        indicator.draw()
-                guess_to_check[i].text_color = "white"
-                game_result = ""
-                game_decided = True
-        else:
-            guess_to_check[i].bg_color = GREY
-            for indicator in indicators:
-                if indicator.text == lowercase_letter.upper():
-                    indicator.bg_color = GREY
-                    indicator.draw()
-            guess_to_check[i].text_color = "white"
-            game_result = ""
-            game_decided = True
-        guess_to_check[i].draw()
-        pygame.display.update()
+# game loop
+running = True
 
-    guesses_count += 1
-    current_guess = []
-    current_guess_string = ""
-    current_letter_bg_x = 110
+while running:
+    clock.tick(fps)
+    screen.fill(black)
+    check_words()
+    draw_board()
 
-    if guesses_count == 6 and game_result == "":
-        game_result = "L"
-
-
-def play_again():
-    # Puts the play again text on the screen.
-    pygame.draw.rect(SCREEN, "white", (10, 600, 1000, 600))
-    play_again_font = pygame.font.Font("assets/FreeSansBold.otf", 40)
-    play_again_text = play_again_font.render(
-        "Press ENTER to Play Again!", True, "black")
-    play_again_rect = play_again_text.get_rect(center=(WIDTH/2, 700))
-    word_was_text = play_again_font.render(
-        f"The word was {CORRECT_WORD}!", True, "black")
-    word_was_rect = word_was_text.get_rect(center=(WIDTH/2, 650))
-    SCREEN.blit(word_was_text, word_was_rect)
-    SCREEN.blit(play_again_text, play_again_rect)
-    pygame.display.update()
-
-
-def reset():
-    # Resets all global variables to their default states.
-    global guesses_count, CORRECT_WORD, guesses, current_guess, current_guess_string, game_result
-    SCREEN.fill("white")
-    SCREEN.blit(BACKGROUND, BACKGROUND_RECT)
-    guesses_count = 0
-    CORRECT_WORD = random.choice(WORDS)
-    guesses = [[]] * 6
-    current_guess = []
-    current_guess_string = ""
-    game_result = ""
-    pygame.display.update()
-    for indicator in indicators:
-        indicator.bg_color = OUTLINE
-        indicator.draw()
-
-
-def create_new_letter():
-    # Creates a new letter and adds it to the guess.
-    global current_guess_string, current_letter_bg_x
-    current_guess_string += key_pressed
-    new_letter = Letter(key_pressed, (current_letter_bg_x,
-                        guesses_count*100+LETTER_Y_SPACING))
-    current_letter_bg_x += LETTER_X_SPACING
-    guesses[guesses_count].append(new_letter)
-    current_guess.append(new_letter)
-    for guess in guesses:
-        for letter in guess:
-            letter.draw()
-
-
-def delete_letter():
-    # Deletes the last letter from the guess.
-    global current_guess_string, current_letter_bg_x
-    guesses[guesses_count][-1].delete()
-    guesses[guesses_count].pop()
-    current_guess_string = current_guess_string[:-1]
-    current_guess.pop()
-    current_letter_bg_x -= LETTER_X_SPACING
-
-
-while True:
-    if game_result != "":
-        play_again()
     for event in pygame.event.get():
+        # This is the quit event.
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            running = False
+
+        # add player controls for letter entry, backspacing, checking guesses and restarting
+        if event.type == pygame.TEXTINPUT and turn_active and not game_over:
+            entry = event.__getattribute__('text')
+            if entry != " ":
+                entry = entry.upper()
+                board[turn][letters] = entry
+                letters += 1
+                
+                
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                if game_result != "":
-                    reset()
-                elif len(current_guess_string) == 5 and current_guess_string.lower() in WORDS:
-                    check_guess(current_guess)
-            elif event.key == pygame.K_BACKSPACE:
-                if len(current_guess_string) > 0:
-                    delete_letter()
-            else:
-                key_pressed = event.unicode.upper()
-                if (
-                    key_pressed in "QWERTYUIOPASDFGHJKLZXCVBNM"
-                    and key_pressed != ""
-                    and len(current_guess_string) < 5
-                ):
-                    create_new_letter()
+            if event.key == pygame.K_BACKSPACE and letters > 0:
+                board[turn][letters - 1] = ' '
+                letters -= 1
+            if event.key == pygame.K_RETURN and not game_over:
+                turn += 1
+                letters = 0
+            if event.key == pygame.K_RETURN and game_over:
+                turn = 0
+                letters = 0
+                game_over = False
+                secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
+                board = [[" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "],
+                         [" ", " ", " ", " ", " "]]
+
+
+        # control turn active based on letters
+        if letters == 5:
+            turn_active = False
+        if letters < 5:
+            turn_active = True
+
+        # check if guess is correct, add game over conditions
+
+        for row in range(6):
+            guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
+            if guess == secret_word and row < turn:
+                game_over = True
+
+
+        if turn == 6:
+            game_over = True
+            loser_text = huge_font.render('Loser!', True, white)
+            screen.blit(loser_text, (440, 320))
+
+
+        if game_over and turn < 6:
+            winner_text = huge_font.render('Winner!', True, white)
+            screen.blit(winner_text, (440, 320))
+
+    pygame.display.flip()
+pygame.quit()
