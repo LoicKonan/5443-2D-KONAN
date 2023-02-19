@@ -1,10 +1,8 @@
 import pygame
-import sys
 import random
 import pygame.mixer
 import words
 import itertools
-import pygame
 
 pygame.init()
 pygame.mixer.init()
@@ -68,8 +66,8 @@ KEY_HEIGHT = 40
 KEY_MARGIN = 10
 
 # set up sound effects
-win_sound = pygame.mixer.Sound("win.wav")
-lose_sound = pygame.mixer.Sound("lose.wav")
+win_sound  = pygame.mixer.Sound("assets/win.ogg")
+lose_sound = pygame.mixer.Sound("assets/lost.mp3")
 
 
 # This Function will draw the squares on the screen and determine the size and spaces.
@@ -194,13 +192,13 @@ while running:
             game_over = True
             loser_text = letter_font.render('Loser!', True, WHITE)
             screen.blit(loser_text, (200, 490))
-            win_sound.play()
+            lose_sound.play()
 
         # This will print winner on the screen
         if game_over and turn < 6:
             winner_text = letter_font.render('Winner!', True, WHITE)
             screen.blit(winner_text, (200, 490))
-            lose_sound.play()
+            win_sound.play()
 
     pygame.display.flip()
 pygame.quit()

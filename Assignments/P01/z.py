@@ -1,97 +1,52 @@
 import pygame
-import sys
 import random
-import pygame.mixer
-import words
-import itertools
 
-# Initialize Pygame and Pygame Mixer
 pygame.init()
-pygame.mixer.init()
 
-# Define colors
-WHITE = (255, 255, 255) 
-BLACK = (0, 0, 0)
-GREEN = (0, 255, 0)
-YELLOW = (255, 255, 0)
-GRAY = (128, 128, 128)
+# set up the display
+WIDTH, HEIGHT = 640, 480
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-# Define screen size
-SCREEN_WIDTH = 600
-SCREEN_HEIGHT = 800
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+# set up the font
+font = pygame.font.SysFont('Arial', 36)
 
-# Set window title and icon
-pygame.display.set_caption("Wordle Game")
-ICON = pygame.image.load("assets/Icon.png")
-pygame.display.set_icon(ICON)
+# set up the initial word and its position
+word = ''
+word_surface = font.render(word, True, (255, 255, 255))
+word_rect = word_surface.get_rect(center=(WIDTH//2, HEIGHT//2))
 
-# Set up game board
-board = [[" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "]]
+# set up the rotation angle and speed
+angle = 0
+rotate_speed = 5
 
-# Initialize game variables
-current_turn = 0
-fps = 60
+# set up the game clock
 clock = pygame.time.Clock()
-huge_font = pygame.font.Font("assets/FreeSansBold.otf", 56)
-letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
-secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-game_over = False
-letters_entered = 0
-turn_active = True
 
-# set up sound effects
-win_sound = pygame.mixer.Sound("win.wav")
-lose_sound = pygame.mixer.Sound("lose.wav")
+# set up the game loop
+running = True
+while running:
+    # handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.unicode.isalpha():
+                word += event.unicode
+                word_surface = font.render(word, True, (255, 255, 255))
+                word_rect = word_surface.get_rect(center=(WIDTH//2, HEIGHT//2))
 
+    # rotate the word surface
+    angle += rotate_speed
+    rotated_surface = pygame.transform.rotate(word_surface, angle)
 
-# Define the dimensions of the keyboard
-KEY_WIDTH = 40
-KEY_HEIGHT = 40
-KEY_MARGIN = 10
+    # draw the background and the rotated word
+    screen.fill((0, 0, 0))
+    screen.blit(rotated_surface, rotated_surface.get_rect(center=word_rect.center))
 
-# Define the alphabet
-ALPHABET = [" QWERTYUIOP ", " ASDFGHJKL  ", "  ZXCVBNM   "]
+    # update the display
+    pygame.display.flip()
 
-def draw_board():
-    # Draw the squares on the screen and determine the size and spaces.
-    global current_turn
-    global board
-    for col, row in itertools.product(range(5), range(6)):
-        square = pygame.Rect(col * 80 + 100, row * 80 + 12, 65, 65)
-        pygame.draw.rect(screen, WHITE, square, 2, 6)
-        square_text = huge_font.render(board[row][col], True, GRAY)
-        screen.blit(square_text, (col * 80 + 110, row * 80 + 12))
+    # tick the clock
+    clock.tick(60)
 
-    # Indicate which turn you're on with a green square
-    turn_square = pygame.Rect(82, current_turn * 80 + 5, SCREEN_WIDTH - 180, 77)
-    pygame.draw.rect(screen, GREEN, turn_square, 4, 10)
-
-def draw_keyboard(screen):
-    # Set the font and font size
-    font = pygame.font.Font("assets/FreeSansBold.otf", 36)
-
-    # Draw the keys for each row of the keyboard
-    y = 580
-    for row in ALPHABET:
-        x = 5
-
-        for char in row:
-            # Create a rectangular button for each key
-            key = pygame.Rect(x, y, KEY_WIDTH, KEY_HEIGHT)
-
-            # Draw the key and outline
-            pygame.draw.rect(screen, WHITE, key)
-            pygame.draw.rect(screen, GRAY, key, 1)
-
-            # Draw the character on the key
-            text = font.render(char, True, BLACK)
-            text_rect = text.get_rect(center=key.center)
-            screen.blit(text, text_rect)
-
-            x += KEY
+pygame.quit()
