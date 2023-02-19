@@ -64,8 +64,7 @@ def draw_board():
     global turn
     global board
     for col, row in itertools.product(range(5), range(6)):
-        pygame.draw.rect(
-            screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
+        pygame.draw.rect(screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
         piece_text = huge_font.render(board[row][col], True, gray)
         screen.blit(piece_text, (col * 80 + 110, row * 80 + 12))
 
@@ -145,17 +144,17 @@ while running:
             guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
             if guess == secret_word and row < 6:
                 game_over = True
-
-
+        
+        # This will print loser on the screen
         if turn == 6:
             game_over = True
             loser_text = huge_font.render('Loser!', True, white)
-            screen.blit(loser_text, (320, 440))
+            screen.blit(loser_text, (200, 480))
 
-
+        # This will print winner on the screen
         if game_over and turn < 6:
             winner_text = huge_font.render('Winner!', True, white)
-            screen.blit(winner_text, (320, 440))
+            screen.blit(winner_text, (200, 480))
 
     pygame.display.flip()
 pygame.quit()
