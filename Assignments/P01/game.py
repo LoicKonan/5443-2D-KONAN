@@ -9,14 +9,16 @@ import pygame
 pygame.init()
 pygame.mixer.init()
 
-
 # screen setup Colors
-white = (255, 255, 255)
-black = (0, 0, 0)
-green = (0, 255, 0)
-yellow = (255, 255, 0)
-gray = (128, 128, 128)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+YELLOW = (255, 255, 0)
+GRAY = (128, 128, 128)
 
+global KEY_WIDTH
+global KEY_HEIGHT
+global KEY_MARGIN
 # screen setup size constants
 WIDTH = 600
 HEIGHT = 800
@@ -46,6 +48,7 @@ clock = pygame.time.Clock()
 
 # This is the font.
 huge_font = pygame.font.Font("assets/FreeSansBold.otf", 56)
+letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
 
 # This is the KEY(CORRECT ANSWER).
 secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
@@ -59,18 +62,59 @@ letters = 0
 # This is the turn active.
 turn_active = True
 
+# Define the dimensions of the keyboard
+KEY_WIDTH = 40
+KEY_HEIGHT = 40
+KEY_MARGIN = 10
+
+# set up sound effects
+win_sound = pygame.mixer.Sound("win.wav")
+lose_sound = pygame.mixer.Sound("lose.wav")
+
+
 # This Function will draw the squares on the screen and determine the size and spaces.
 def draw_board():
     global turn
     global board
     for col, row in itertools.product(range(5), range(6)):
-        pygame.draw.rect(screen, white, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
-        piece_text = huge_font.render(board[row][col], True, gray)
+        pygame.draw.rect(
+            screen, WHITE, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
+        piece_text = huge_font.render(board[row][col], True, GRAY)
         screen.blit(piece_text, (col * 80 + 110, row * 80 + 12))
 
     # This indicate what turn you on (THE GREEN SQUARE).
     pygame.draw.rect(
-        screen, green, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
+        screen, GREEN, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
+
+
+# Define the alphabet
+ALPHABET = [" QWERTYUIOP ", " ASDFGHJKL  ", "  ZXCVBNM   "]
+
+
+def draw_keyboard(screen):
+    # Set the font and font size
+    font = pygame.font.Font("assets/FreeSansBold.otf", 36)
+
+    # Draw the keys for each row of the keyboard
+    y = 580
+    for row in ALPHABET:
+        x = 5
+
+        for char in row:
+            # Create a rectangular button for each key
+            key = pygame.Rect(x, y, KEY_WIDTH, KEY_HEIGHT)
+
+            # Draw the key and outline
+            pygame.draw.rect(screen, WHITE, key)
+            pygame.draw.rect(screen, GRAY, key, 1)
+
+            # Draw the character on the key
+            text = font.render(char, True, BLACK)
+            text_rect = text.get_rect(center=key.center)
+            screen.blit(text, text_rect)
+
+            x += KEY_WIDTH + KEY_MARGIN
+        y += KEY_HEIGHT + KEY_MARGIN
 
 
 # This Function will check if the word is correct.
@@ -82,10 +126,10 @@ def check_words():
     for col, row in itertools.product(range(5), range(6)):
         if secret_word[col] == board[row][col] and turn > row:
             pygame.draw.rect(
-                screen, green, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
+                screen, GREEN, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
 
         elif board[row][col] in secret_word and turn > row:
-            pygame.draw.rect(screen, yellow, [
+            pygame.draw.rect(screen, YELLOW, [
                              col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
 
 
@@ -94,9 +138,10 @@ running = True
 
 while running:
     clock.tick(fps)
-    screen.fill(black)
+    screen.fill(BLACK)
     check_words()
     draw_board()
+    draw_keyboard(screen)
 
     for event in pygame.event.get():
         # This is the quit event.
@@ -110,8 +155,7 @@ while running:
                 entry = entry.upper()
                 board[turn][letters] = entry
                 letters += 1
-                
-                
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_BACKSPACE and letters > 0:
                 board[turn][letters - 1] = ' '
@@ -123,14 +167,14 @@ while running:
                 turn = 0
                 letters = 0
                 game_over = False
-                secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
+                secret_word = words.WORDS[random.randint(
+                    0, len(words.WORDS) - 1)]
                 board = [[" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "]]
-
 
         # control turn active based on letters
         if letters == 5:
@@ -139,22 +183,24 @@ while running:
             turn_active = True
 
         # check if guess is correct, add game over conditions
-
         for row in range(6):
-            guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
+            guess = board[row][0] + board[row][1] + \
+                board[row][2] + board[row][3] + board[row][4]
             if guess == secret_word and row < 6:
                 game_over = True
-        
+
         # This will print loser on the screen
         if turn == 6:
             game_over = True
-            loser_text = huge_font.render('Loser!', True, white)
-            screen.blit(loser_text, (200, 480))
+            loser_text = letter_font.render('Loser!', True, WHITE)
+            screen.blit(loser_text, (200, 490))
+            win_sound.play()
 
         # This will print winner on the screen
         if game_over and turn < 6:
-            winner_text = huge_font.render('Winner!', True, white)
-            screen.blit(winner_text, (200, 480))
+            winner_text = letter_font.render('Winner!', True, WHITE)
+            screen.blit(winner_text, (200, 490))
+            lose_sound.play()
 
     pygame.display.flip()
 pygame.quit()

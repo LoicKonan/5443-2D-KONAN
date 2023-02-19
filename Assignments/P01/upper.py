@@ -1,4 +1,4 @@
-# Makine all the words in words.py to upper case and print it to a file call lists.py 
+# Making all the words in words.py to upper case and print it to a file call lists.py 
 import words
 import random
 import string
