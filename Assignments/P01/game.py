@@ -127,8 +127,7 @@ def check_words():
                 screen, GREEN, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
 
         elif board[row][col] in secret_word and turn > row:
-            pygame.draw.rect(screen, YELLOW, [
-                             col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
+            pygame.draw.rect(screen, YELLOW, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
 
 
 # game loop
@@ -165,8 +164,7 @@ while running:
                 turn = 0
                 letters = 0
                 game_over = False
-                secret_word = words.WORDS[random.randint(
-                    0, len(words.WORDS) - 1)]
+                secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
                 board = [[" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "],
                          [" ", " ", " ", " ", " "],
@@ -182,8 +180,7 @@ while running:
 
         # check if guess is correct, add game over conditions
         for row in range(6):
-            guess = board[row][0] + board[row][1] + \
-                board[row][2] + board[row][3] + board[row][4]
+            guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
             if guess == secret_word and row < 6:
                 game_over = True
 
