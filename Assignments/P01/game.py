@@ -104,7 +104,6 @@ def draw_keyboard(screen):
     y = 580
     for row in ALPHABET:
         x = 5
-
         for char in row:
             # Create a rectangular button for each key
             key = pygame.Rect(x, y, KEY_WIDTH, KEY_HEIGHT)
@@ -137,8 +136,6 @@ def check_words():
         # elif board[row][col] in secret_word and turn > row:
         else:
             pygame.draw.rect(screen, WHITE, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
-
-
 
 # game loop
 running = True
