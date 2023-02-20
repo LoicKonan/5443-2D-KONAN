@@ -22,9 +22,9 @@
 - The player can use the backspace key to delete the letter.
 
 - The player can use the enter key to validate the word.
-<img src="assets/pic.png ">
+<!-- <img src="assets/pic.png ">
 <img src="assets/pic0.png">
-<img src="assets/pic1.png">
+<img src="assets/pic1.png"> -->
 
 
 ### Files
@@ -32,4 +32,4 @@
 |   #   | File / Folder          | Description | Status                  |
 | :---: | ---------------------- | ----------- | ----------------------- |
 |   1   | [README.md](README.md) | README file | :ballot_box_with_check: |
-|  2    | [game.py](game.py)     | main file   | :ballot_box_with_check: |
+|   2   | [game.py](game.py)     | main file   | :ballot_box_with_check: |
