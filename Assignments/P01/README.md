@@ -24,8 +24,8 @@
   
 ### Examples
   
-<img src="assets/pic1.png" width="350" height= "450"> <img src="assets/pic.png"  width="350" height= "450">
-<img src="assets/pic.png"  width="350" height= "450"> <img src="assets/pic.png"  width="350" height= "450">
+<img src="assets/pic1.png" width="300" height= "450"> <img src="assets/pic.png"  width="300" height= "450">
+<img src="assets/pic.png"  width="300" height= "450"> <img src="assets/pic.png"  width="300" height= "450">
 
 
 ### Files
