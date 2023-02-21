@@ -31,8 +31,8 @@
   
 ### Examples
   
-<img src="assets/pic1.png" width="400" height= "500"> <img src="assets/pic.png"  width="400" height= "500">
-<img src="assets/pic.png"  width="400" height= "500"> <img src="assets/pic.png"  width="400" height= "500">
+<img src="assets/pic1.png" width="450" height= "550"> <img src="assets/pic.png"  width="450" height= "550">
+<img src="assets/pic.png"  width="450" height= "550"> <img src="assets/pic.png"  width="450" height= "550">
 
 ### Requirements
 
