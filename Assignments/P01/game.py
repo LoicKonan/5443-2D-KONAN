@@ -1,12 +1,10 @@
 import pygame
 import random
-import pygame.mixer
 import words
 import itertools
 
-
+# initialize pygame
 pygame.init()
-pygame.mixer.init()
 
 # screen setup colors
 WHITE      = (255, 255, 255)
@@ -26,10 +24,11 @@ huge_font   = pygame.font.Font("assets/FreeSansBold.otf", 56)
 letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
 small_font  = pygame.font.Font("assets/FreeSansBold.otf", 25)
 
+
+#
 class WordleGame:
+    
     def __init__(self):
-        pygame.init()
-        pygame.mixer.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.board  = [[" ", " ", " ", " ", " "],
                        [" ", " ", " ", " ", " "],
@@ -54,13 +53,7 @@ class WordleGame:
         self.game_over    = False
         self.turn_active  = True
         # self.secret_word  = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-
         self.secret_word = "ETHER"
-        # self.angle = 0
-        # self.rotate_speed = 1
-        # self.win_sound  = pygame.mixer.Sound("assets/win.ogg")
-        # self.lose_sound = pygame.mixer.Sound("assets/lost.mp3")
-
 
         pygame.display.set_caption("Wordle Game")
         self.icon = pygame.image.load("assets/Icon.png")
@@ -75,7 +68,6 @@ class WordleGame:
             self.draw_shape()
             self.Instruction()
             self.draw_board()
-
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -156,11 +148,7 @@ class WordleGame:
         if self.turn == 6:
             self.game_over   = True
             self.turn_active = False
-
-            # if self.secret_word in self.board:
-            #     # self.win_sound.play()
-            # else:
-            #     # self.lose_sound.play()   
+      
 
     
     def draw_board(self):
@@ -172,11 +160,13 @@ class WordleGame:
                 self.draw_lose()
        
     
+    
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
             self.handle_keydown(event)
         elif event.type == pygame.TEXTINPUT and self.turn_active and not self.game_over:
             self.handle_textinput(event)
+
 
 
     def handle_keydown(self, event):
@@ -195,6 +185,7 @@ class WordleGame:
             self.turn_active = True
 
 
+
     def handle_textinput(self, event):
         entry = event.__getattribute__('text')
         if entry != " ":
@@ -203,18 +194,16 @@ class WordleGame:
             self.letters += 1
             
             
+            
     def draw_win(self):
         self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
 
         # Good Job message
         win_text = huge_font.render("Good Job!!!", True, GREEN)
         self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 700])
-        
         # Display the secret word
         secret_text = huge_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
-        
-
         # Play again message.
         again_text = small_font.render("Press Enter or Space to play again", True, GREEN)
         self.screen.blit(again_text, [WIDTH / 2 - 200, HEIGHT - 250])
@@ -234,7 +223,6 @@ class WordleGame:
         # Display the secret word
         secret_text = huge_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
-
         # instructions to play again.
         text = small_font.render("Press Enter or Space to play again", True, RED)
         self.screen.blit(text, [WIDTH / 2 - 200, HEIGHT - 250])
@@ -247,6 +235,7 @@ class WordleGame:
                         self.reset_game()
                         return
                     pygame.display.flip()
+
 
 
     def reset_game(self):
@@ -263,6 +252,7 @@ class WordleGame:
         
         self.turn_active = True
         self.game_over   = False            
+ 
  
                 
 if __name__ == "__main__":
