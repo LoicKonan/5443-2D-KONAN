@@ -128,7 +128,6 @@ class WordleGame:
                 pygame.draw.rect(self.screen, GREEN, [i * 80 + 100, j * 80 + self.dist_Top, self.box_height, self.box_width], 0, 6)
                 # pygame.draw.rect(self.screen, GREEN, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
 
-
             elif self.board[j][i] in self.secret_word and self.turn > j:
                 pygame.draw.rect(self.screen, YELLOW, [i * 80 + 100, j * 80 + self.dist_Top, self.box_height, self.box_width], 0, 6)
             #   pygame.draw.rect(self.screen, YELLOW, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
@@ -149,7 +148,6 @@ class WordleGame:
             self.game_over   = True
             self.turn_active = False
       
-
     
     def draw_board(self):
         if self.game_over:
