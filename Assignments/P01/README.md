@@ -21,9 +21,8 @@
 - The player can use the backspace key to delete the letter.
 
 - The player can use the enter key to validate the word.
-<!-- <img src="assets/pic.png ">
-<img src="assets/pic0.png">
-<img src="assets/pic1.png"> -->
+<img src="assets/pic.png ">
+<img src="assets/pic1.png">
 
 
 ### Files
