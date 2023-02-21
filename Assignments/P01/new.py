@@ -40,16 +40,17 @@ class WordleGame:
         self.letters = 0
         self.turn_active = True
         self.secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-        # self.secret_word = "ETHER"
         self.game_over = False
         self.KEY_WIDTH = 40
         self.KEY_HEIGHT = 40
         self.KEY_MARGIN = 10
+        self.clock = pygame.time.Clock()
+        
+        # self.secret_word = "ETHER"
         # self.angle = 0
         # self.rotate_speed = 5
-        self.win_sound  = pygame.mixer.Sound("assets/win.ogg")
-        self.lose_sound = pygame.mixer.Sound("assets/lost.mp3")
-        self.clock = pygame.time.Clock()
+        # self.win_sound  = pygame.mixer.Sound("assets/win.ogg")
+        # self.lose_sound = pygame.mixer.Sound("assets/lost.mp3")
 
         pygame.display.set_caption("Wordle Game")
         self.icon = pygame.image.load("assets/Icon.png")
@@ -122,10 +123,11 @@ class WordleGame:
         if self.turn == 6:
             self.game_over = True
             self.turn_active = False
-            if self.secret_word in self.board:
-                self.win_sound.play()
-            else:
-                self.lose_sound.play()
+            
+            # if self.secret_word in self.board:
+            #     # self.win_sound.play()
+            # else:
+            #     # self.lose_sound.play()
                 
                 
     def draw_board(self):
@@ -135,7 +137,7 @@ class WordleGame:
             self.draw_letters()
             # self.draw_turn()
             # self.draw_secret_word()
-            self.draw_keyboard()
+            # self.draw_keyboard()
             
     def draw_game_over(self):
         if self.secret_word in self.board:
@@ -145,10 +147,10 @@ class WordleGame:
             
             
     def draw_win(self):
-        text = huge_font.render("You Win!", True, GREEN)
-        self.screen.blit(text, [WIDTH / 2 - 100, HEIGHT / 2 - 50])
-        text = small_font.render("Press Space to play again", True, GREEN)
-        self.screen.blit(text, [WIDTH / 2 - 100, HEIGHT / 2 + 50])
+        win_text = huge_font.render("You Win!", True, GREEN)
+        self.screen.blit(win_text, [WIDTH / 2 - 100, HEIGHT / 2 - 50])
+        again_text = small_font.render("Press Space to play again", True, GREEN)
+        self.screen.blit(again_text, [WIDTH / 2 - 100, HEIGHT / 2 + 50])
         pygame.display.flip()
         while True:
             for event in pygame.event.get():
@@ -160,13 +162,13 @@ class WordleGame:
                     
                     
     def draw_lose(self):
-        text = huge_font.render("You Lose!", True, RED)
-        self.screen.blit(text, [WIDTH / 2 - 100, HEIGHT / 2 - 50])
+        lose_text = huge_font.render("You Lose!", True, RED)
+        self.screen.blit(lose_text, [WIDTH / 2 - 100, HEIGHT / 2 - 50])
         text = small_font.render("Press Space to play again", True, RED)
         self.screen.blit(text, [WIDTH / 2 - 100, HEIGHT / 2 + 50])
         # Display the secret word
-        text = huge_font.render(self.secret_word, True, RED)
-        self.screen.blit(text, [WIDTH / 2 - 100, HEIGHT / 2 + 100])
+        secret_text = huge_font.render(self.secret_word, True, RED)
+        self.screen.blit(secret_text, [WIDTH / 2 - 100, HEIGHT / 2 + 100])
         pygame.display.flip()
         while True:
             for event in pygame.event.get():
@@ -177,17 +179,20 @@ class WordleGame:
                     pygame.display.flip()
                     
                     
+                    
+    # This function will draw the letter entered by the player in GRAY
+    # It will also draw the rectangle in which the player enter the letters in WHITE
+    # It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
     def draw_letters(self):
         for i, j in itertools.product(range(6), range(5)):
-            text = letter_font.render(self.board[i][j], True, WHITE)
-            self.screen.blit(text, [j * 100 + 50, i * 100 + 50])
-   
-        
-    # This function will draw the keyboard on the screen
-    def draw_keyboard(self):
-        pass
-        
+            pygame.draw.rect(self.screen, WHITE, [j * 80, i * 80 + 12, 65, 65], 2, 5)
+            text = letter_font.render(self.board[i][j], True, GRAY)
+            self.screen.blit(text, (i * 80 + 110, j * 80 + 12))
+        pygame.draw.rect(self.screen, GREEN, [82, self.turn * 80 + 5, WIDTH - 180, 77], 4, 10)
+        # pygame.draw.rect(self.screen, GREEN, [0, 600, 100 * self.turn, 100])
             
+                
+                
                 
 if __name__ == "__main__":
     game = WordleGame()
