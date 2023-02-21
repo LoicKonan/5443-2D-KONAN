@@ -12,14 +12,14 @@
 ### Description
 
 - This is a **Wordle game** in pygame.
-- The goal is to find the word in the grid.
+- The goal is to find **the word** in the grid.
 - The player can use the backspace key to delete the letter.
 - **Wordle** is a guessing game in which players try to guess a secret word by making multiple attempts.
 - This game features a five-letter word, and players have **six attempts** to guess it correctly.
-- After each guess, the game provides feedback in the form of colored squares
+- After each guess, the game provides feedback in the form of **colored squares**
 - The colored squares indicate which letters in the guess match the secret word and are in the correct position.
-- Players can use this feedback to eliminate incorrect letters and narrow down their subsequent guesses.
-- The game ends when the player guesses the word correctly or runs out of attempts.
+- Players can use this feedback to _**eliminate incorrect letters**_ and narrow down their subsequent guesses.
+- The game ends when the _**player guesses the word correctly or runs out of attempts.**_
 
 ### Instructions
 
@@ -31,8 +31,8 @@
   
 ### Examples
   
-<img src="assets/pic1.png" width="450" height= "550"> <img src="assets/pic.png"  width="450" height= "550">
-<img src="assets/pic.png"  width="450" height= "550"> <img src="assets/pic.png"  width="450" height= "550">
+<img src="assets/pic1.png" width="500" height= "600"> <img src="assets/pic.png"  width="500" height= "600">
+<img src="assets/pic.png"  width="500" height= "600"> <img src="assets/pic.png"  width="500" height= "600">
 
 ### Requirements
 
