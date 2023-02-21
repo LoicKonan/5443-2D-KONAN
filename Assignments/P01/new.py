@@ -8,7 +8,7 @@ import itertools
 pygame.init()
 pygame.mixer.init()
 
-# screen setup iors
+# screen setup colors
 WHITE      = (255, 255, 255)
 BLACK      = (0  ,   0,   0)
 GREEN      = (0  , 255,   0)
@@ -24,7 +24,7 @@ HEIGHT = 800
 # This is the font.
 huge_font   = pygame.font.Font("assets/FreeSansBold.otf", 56)
 letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
-small_font  = pygame.font.Font("assets/FreeSansBold.otf", 30)
+small_font  = pygame.font.Font("assets/FreeSansBold.otf", 25)
 
 class WordleGame:
     def __init__(self):
@@ -46,7 +46,7 @@ class WordleGame:
         self.box_height        = 65
         self.green_box_height  = 80
         self.dist_Left         = 100
-        self.dist_Top          = 180
+        self.dist_Top          = 120
         
         
         self.clock        = pygame.time.Clock()
@@ -61,7 +61,6 @@ class WordleGame:
         # self.lose_sound = pygame.mixer.Sound("assets/lost.mp3")
 
 
-
         pygame.display.set_caption("Wordle Game")
         self.icon = pygame.image.load("assets/Icon.png")
         pygame.display.set_icon(self.icon)
@@ -70,6 +69,7 @@ class WordleGame:
         while True:
             self.clock.tick(60)
             self.screen.fill(BLACK)
+            self.Instruction()
             self.check_words()
             self.draw_board()
 
@@ -82,13 +82,29 @@ class WordleGame:
 
             pygame.display.flip()
             
-            
+     
+    # This function will display the instruction on the screen
+    # consist of 3 rectangle, one green, one yellow and one red.
+    # if the rectangle is GREEN it means that the letter is part of the word and in the right column,
+    # if the rectangle is YELLOW it means the letter is part of the word but not in the right column,
+    # if the rectangle is RED the letter are not part of the word.
+    def Instruction(self):
+        pygame.draw.rect(self.screen, GREEN,  [90, 635, 25, 25], 0, 6)
+        pygame.draw.rect(self.screen, YELLOW, [90, 685, 25, 25], 0, 6)
+        pygame.draw.rect(self.screen, RED,    [90, 730, 25, 25], 0, 6)
+        Instruction_text = small_font.render("Correct Letter / right spot", True, WHITE)
+        self.screen.blit(Instruction_text, (130, 630))
+        Instruction_text = small_font.render("Correct Letter / not in the right spot", True, WHITE)
+        self.screen.blit(Instruction_text, (130, 680))
+        Instruction_text = small_font.render("Wrong Letter", True, WHITE)
+        self.screen.blit(Instruction_text, (130, 725))
+           
             
     # This Function will display a Title Wordle one letter at a time
     # It will also display the wordle in the middle of the screen
     def draw_title(self):
         title = huge_font.render("WORDLE", True, GREEN)
-        self.screen.blit(title, (WIDTH / 2 - 125, 50))
+        self.screen.blit(title, (WIDTH / 2 - 125, 10))
     
     
     # This function will draw the letter entered by the player in GRAY
@@ -135,9 +151,13 @@ class WordleGame:
     
     def draw_board(self):
         if self.game_over:
+            # CALL THIS FUNCTION TO CLEAR THE SCREEN.
+            self.screen.fill(BLACK)
+            
             self.draw_game_over()
         else:
             self.draw_title()
+            # self.Instruction()
             self.draw_shape()
             # self.draw_keyboard()
             
@@ -189,7 +209,7 @@ class WordleGame:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key in [pygame.K_SPACE, pygame.K_ENTER]:
                         self.reset_game()
                         return
                     pygame.display.flip()
@@ -209,7 +229,7 @@ class WordleGame:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key in [pygame.K_SPACE, pygame.K_RETURN]:
+                    if event.key in [pygame.K_SPACE, pygame.K_ENTER]:
                         self.reset_game()
                         return
                     pygame.display.flip()
