@@ -4,176 +4,266 @@ import pygame.mixer
 import words
 import itertools
 
+
 pygame.init()
 pygame.mixer.init()
 
-# screen setup Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GREEN = (0, 255, 0)
-YELLOW = (255, 255, 0)
-GRAY = (128, 128, 128)
-
-global KEY_WIDTH
-global KEY_HEIGHT
-global KEY_MARGIN
+# screen setup colors
+WHITE      = (255, 255, 255)
+BLACK      = (0  ,   0,   0)
+GREEN      = (0  , 255,   0)
+YELLOW     = (255, 255,   0)
+GRAY       = (128, 128, 128)
+RED        = (255,   0,   0)
+Blueviolet = (176,196,222)
 
 # screen setup size constants
 WIDTH  = 600
 HEIGHT = 800
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-
-# screen Title and Icon Image.
-pygame.display.set_caption("Wordle Game")
-ICON = pygame.image.load("assets/Icon.png")
-pygame.display.set_icon(ICON)
-
-# screen square 6 x 5 matrix
-board = [[" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "],
-         [" ", " ", " ", " ", " "]]
-
-# This is the turn.
-turn = 0
-
-# This is the frame rate.
-fps = 60
-
-# This is the clock.
-clock = pygame.time.Clock()
 
 # This is the font.
-huge_font = pygame.font.Font("assets/FreeSansBold.otf", 56)
+huge_font   = pygame.font.Font("assets/FreeSansBold.otf", 56)
 letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
+small_font  = pygame.font.Font("assets/FreeSansBold.otf", 25)
 
-# This is the KEY(CORRECT ANSWER).
-# secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-secret_word = "ETHER"
+class WordleGame:
+    def __init__(self):
+        pygame.init()
+        pygame.mixer.init()
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.board  = [[" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "]]
+        self.turn              = 0
+        self.letters           = 0
+        self.KEY_WIDTH         = 40
+        self.KEY_HEIGHT        = 40
+        self.KEY_MARGIN        = 10
+        self.box_width         = 65
+        self.box_height        = 65
+        self.green_box_height  = 80
+        self.dist_Left         = 100
+        self.dist_Top          = 120
+        
+        
+        self.clock        = pygame.time.Clock()
+        self.game_over    = False
+        self.turn_active  = True
+        # self.secret_word  = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
+
+        self.secret_word = "ETHER"
+        # self.angle = 0
+        # self.rotate_speed = 1
+        # self.win_sound  = pygame.mixer.Sound("assets/win.ogg")
+        # self.lose_sound = pygame.mixer.Sound("assets/lost.mp3")
 
 
-# This is the game over.
-game_over = False
+        pygame.display.set_caption("Wordle Game")
+        self.icon = pygame.image.load("assets/Icon.png")
+        pygame.display.set_icon(self.icon)
 
-# No letters has been entered yet.
-letters = 0
+    def run(self):
+        while True:
+            self.clock.tick(60)
+            self.screen.fill(BLACK)
+            self.Instruction()
+            self.check_words()
+            self.draw_board()
 
-# This is the turn active.
-turn_active = True
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
 
-# Define the dimensions of the keyboard
-KEY_WIDTH = 40
-KEY_HEIGHT = 40
-KEY_MARGIN = 10
+                self.handle_events(event)
 
-
-# set up the rotation angle and speed
-angle = 0
-rotate_speed = 5
-
-# set up sound effects
-win_sound  = pygame.mixer.Sound("assets/win.ogg")
-lose_sound = pygame.mixer.Sound("assets/lost.mp3")
-
-
-# This Function will draw the squares on the screen and determine the size and spaces.
-def draw_board():
-    global turn
-    global board
-    global piece_text
-    for col, row in itertools.product(range(5), range(6)):
-        pygame.draw.rect(screen, WHITE, [col * 80 + 100, row * 80 + 12, 65, 65], 2, 6)
-        piece_text = huge_font.render(board[row][col], True, GRAY)
-        screen.blit(piece_text, (col * 80 + 110, row * 80 + 12))
-
-    # This indicate what turn you on (THE GREEN SQUARE).
-    pygame.draw.rect(screen, GREEN, [82, turn * 80 + 5, WIDTH - 180, 77], 4, 10)
-
-# This Function will check if the word is correct.
-def check_words():
-    global board
-    global turn
-    global secret_word
+            pygame.display.flip()
+            
+     
+     
+    # This Function will display a Title Wordle one letter at a time
+    # It will also display the wordle in the middle of the screen
+    def draw_title(self):
+        title = huge_font.render("WORDLE", True, GREEN)
+        self.screen.blit(title, (WIDTH / 2 - 125, 10))
     
-    # This will check if the word is correct.
-    for col, row in itertools.product(range(5), range(6)):
-        if secret_word[col] == board[row][col] and turn > row:
-            pygame.draw.rect(screen, GREEN, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
+        
+        
+    # This function will display the instruction on the screen
+    # consist of 3 rectangle, one green, one yellow and one red.
+    # if the rectangle is GREEN it means that the letter is part of the word and in the right column,
+    # if the rectangle is YELLOW it means the letter is part of the word but not in the right column,
+    # if the rectangle is RED the letter are not part of the word.
+    def Instruction(self):
+        pygame.draw.rect(self.screen, GREEN,  [90, 635, 25, 25], 0, 6)
+        pygame.draw.rect(self.screen, YELLOW, [90, 685, 25, 25], 0, 6)
+        pygame.draw.rect(self.screen, RED,    [90, 730, 25, 25], 0, 6)
+        Instruction_text = small_font.render("Correct Letter / right spot", True, WHITE)
+        self.screen.blit(Instruction_text, (130, 630))
+        Instruction_text = small_font.render("Correct Letter / not in the right spot", True, WHITE)
+        self.screen.blit(Instruction_text, (130, 680))
+        Instruction_text = small_font.render("Wrong Letter", True, WHITE)
+        self.screen.blit(Instruction_text, (130, 725))
+    
+    
+    # This function will draw the letter entered by the player in GRAY
+    # It will also draw the rectangle in which the player enter the letters in WHITE
+    # It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
+    def draw_shape(self):
+        for i, j in itertools.product(range(5), range(6)):
+            pygame.draw.rect(self.screen, WHITE, [i * 80 + self.dist_Left, j * 80 + self.dist_Top, self.box_width, self.box_height], 2, 5)
+            Letters_text = letter_font.render(self.board[j][i], True, GRAY)
+            self.screen.blit(Letters_text, (i * 80 + (self.dist_Left + 15), j * 80 + self.dist_Top))
+        pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 17), self.turn * 80 + (self.dist_Top - 8), WIDTH - 180, self.green_box_height], 4, 10)
+    
+    
+    
+    # This function call def check_words(self): will check if guess is correct, add game over conditions
+    # it will also check if each letter entered is contain in the word. if the letter is part of the word
+    # and in the right column it will draw the rectangle green, if the letter is part of the word
+    # but not in the right column it will draw the rectangle yellow, if the letter are not part of the word
+    # it will draw the rectangle red.
+    def check_words(self):
+        if self.turn == 6:
+            self.game_over   = True
+            self.turn_active = False
 
-        elif board[row][col] in secret_word and turn > row:
-            pygame.draw.rect(screen, YELLOW, [col * 80 + 100, row * 80 + 12, 65, 65], 0, 6)
+            # if self.secret_word in self.board:
+            #     # self.win_sound.play()
+            # else:
+            #     # self.lose_sound.play()
 
-# game loop
-running = True
-while running:
-    clock.tick(fps)
-    screen.fill(BLACK)
-    check_words()
-    draw_board()
+        for i, j in itertools.product(range(5), range(6)):
+            if self.secret_word[i] == self.board[j][i] and self.turn > j:
+                pygame.draw.rect(self.screen, GREEN, [i * 80 + 100, j * 80 + self.dist_Top, self.box_height, self.box_width], 0, 6)
+                # pygame.draw.rect(self.screen, GREEN, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
 
-    for event in pygame.event.get():
-        # This is the quit event.
-        if event.type == pygame.QUIT:
-            running = False
 
-        # add player controls for letter entry, backspacing, checking guesses and restarting
-        if event.type == pygame.TEXTINPUT and turn_active and not game_over:
-            entry = event.__getattribute__('text')
-            if entry != " ":
-                entry = entry.upper()
-                board[turn][letters] = entry
-                letters += 1
+            elif self.board[j][i] in self.secret_word and self.turn > j:
+                pygame.draw.rect(self.screen, YELLOW, [i * 80 + 100, j * 80 + self.dist_Top, self.box_height, self.box_width], 0, 6)
+            #   pygame.draw.rect(self.screen, YELLOW, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSPACE and letters > 0:
-                board[turn][letters - 1] = ' '
-                letters -= 1
-            if event.key == pygame.K_RETURN and not game_over:
-                turn += 1
-                letters = 0
-            if event.key == pygame.K_RETURN and game_over:
-                turn = 0
-                letters = 0
-                game_over = False
-                secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-                board = [[" ", " ", " ", " ", " "],
-                         [" ", " ", " ", " ", " "],
-                         [" ", " ", " ", " ", " "],
-                         [" ", " ", " ", " ", " "],
-                         [" ", " ", " ", " ", " "],
-                         [" ", " ", " ", " ", " "]]
+            # When the letter is not part of the word.  The letter will stay RED.
+            elif self.board[j][i] != self.secret_word[i] and self.turn > j:
+                pygame.draw.rect(self.screen, RED, [i * 80 + 100, j * 80 + self.dist_Top, self.box_height, self.box_width], 0, 6)     
 
-        # control turn active based on letters
-        if letters == 5:
-            turn_active = False
-        if letters < 5:
-            turn_active = True
 
         # check if guess is correct, add game over conditions
         for row in range(6):
-            guess = board[row][0] + board[row][1] + board[row][2] + board[row][3] + board[row][4]
-            if guess == secret_word and row < 6: 
-                game_over = True
-
-        # This will print loser on the screen
-        if turn == 6:
-            game_over = True
-            loser_text = letter_font.render('Loser!', True, WHITE)
-            screen.blit(loser_text, (200, 490))
-            # lose_sound.play()
+            guess = self.board[row][0] + self.board[row][1] + self.board[row][2] + self.board[row][3] + self.board[row][4]
+            if guess == self.secret_word and row < 6: 
+                self.game_over = True
+                self.draw_win()
             
-            # Display the secret message below.
-            secret_message = letter_font.render(secret_word, True, GREEN)
-            screen.blit(secret_message, (200, 725))
+    
+    
+    def draw_board(self):
+        if self.game_over:
+            self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
+            self.draw_game_over()
+        else:
+            self.draw_title()
+            self.draw_shape()
+            
+    
+    def handle_events(self, event):
+        if event.type == pygame.KEYDOWN:
+            self.handle_keydown(event)
+        elif event.type == pygame.TEXTINPUT and self.turn_active and not self.game_over:
+            self.handle_textinput(event)
 
 
-        # This will print winner on the screen
-        if game_over and turn < 6:
-            winner_text = huge_font.render('Winner!', True, WHITE)
-            screen.blit(winner_text, (200, 490))
-            win_sound.play()
+    def handle_keydown(self, event):
+        if event.key == pygame.K_BACKSPACE and self.letters > 0:
+            self.board[self.turn][self.letters - 1] = ' '
+            self.letters -= 1
+        elif event.key == pygame.K_RETURN and not self.game_over:
+            self.turn += 1
+            self.letters = 0
+        elif event.key == pygame.K_RETURN:
+            self.reset_game()
 
-    pygame.display.flip()
-pygame.quit()
+        if self.letters == 5:
+            self.turn_active = False
+        if self.letters < 5:
+            self.turn_active = True
+
+
+    def handle_textinput(self, event):
+        entry = event.__getattribute__('text')
+        if entry != " ":
+            entry = entry.upper()
+            self.board[self.turn][self.letters] = entry
+            self.letters += 1
+
+
+    def draw_game_over(self):
+        if self.secret_word in self.board:
+            self.draw_win()
+        else:
+            self.draw_lose()
+            
+            
+    def draw_win(self):
+        win_text = huge_font.render("Good Job!!!", True, GREEN)
+        self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 500])
+        again_text = small_font.render("Press Enter or Space to play again", True, GREEN)
+        self.screen.blit(again_text, [WIDTH / 2 - 200, HEIGHT - 250])
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key in [pygame.K_SPACE, pygame.K_RETURN]:
+                        self.reset_game()
+                        return
+                    pygame.display.flip()
+                    
+                    
+                    
+    def draw_lose(self):
+        # Display the secret word
+        secret_text = huge_font.render(self.secret_word, True, WHITE)
+        self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
+
+        # instructions to play again.
+        text = small_font.render("Press Enter or Space to play again", True, RED)
+        self.screen.blit(text, [WIDTH / 2 - 200, HEIGHT - 250])
+        pygame.display.flip()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key in [pygame.K_SPACE, pygame.K_RETURN]:
+                        self.reset_game()
+                        return
+                    pygame.display.flip()
+
+
+    def reset_game(self):
+        self.turn        = 0
+        self.letters     = 0
+        self.game_over   = False
+        self.secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]        
+        self.board       = [  [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "]]
+        
+        self.turn_active = True
+        self.game_over   = False            
+                    
+    
+    # def draw_keyboard(self):
+    #     pass
+                
+                
+if __name__ == "__main__":
+    game = WordleGame()
+    game.run()
+    
+    
