@@ -47,8 +47,8 @@ class WordleGame:
         self.clock        = pygame.time.Clock()
         
         self.secret_word = "ETHER"
-        # self.angle = 0
-        # self.rotate_speed = 5
+        self.angle = 0
+        self.rotate_speed = 1
         # self.win_sound  = pygame.mixer.Sound("assets/win.ogg")
         # self.lose_sound = pygame.mixer.Sound("assets/lost.mp3")
 
@@ -74,20 +74,27 @@ class WordleGame:
             
             
             
+    # This Function will display a Title Wordle one letter at a time
+    # It will also display the wordle in the middle of the screen
+    def draw_title(self):
+        title = huge_font.render("WORDLE", True, YELLOW)
+        self.screen.blit(title, (WIDTH / 2 - 125, 50))
+    
+    
     # This function will draw the letter entered by the player in GRAY
     # It will also draw the rectangle in which the player enter the letters in WHITE
     # It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
-    def blueprint(self):
+    def draw_shape(self):
         box_width, box_height, green_box_height = 65, 65, 80
         dist_Left, dist_Top   = 100, 180
         for i, j in itertools.product(range(5), range(6)):
             pygame.draw.rect(self.screen, WHITE, [i * 80 + dist_Left, j * 80 + dist_Top, box_width, box_height], 2, 5)
             text = letter_font.render(self.board[j][i], True, GRAY)
-            self.screen.blit(text, (i * 80 + (dist_Left + 10), j * 100 + dist_Top))
+            self.screen.blit(text, (i * 80 + (dist_Left + 10), j * 80 + dist_Top))
         pygame.draw.rect(self.screen, GREEN, [(dist_Left - 17), self.turn * 80 + (dist_Top - 8), WIDTH - 180, green_box_height], 4, 10)
-           
-           
-
+    
+    
+    
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
             self.handle_keydown(event)
@@ -150,7 +157,8 @@ class WordleGame:
         if self.game_over:
             self.draw_game_over()
         else:
-            self.blueprint()
+            self.draw_title()
+            self.draw_shape()
             # self.draw_keyboard()
             
     def draw_game_over(self):
