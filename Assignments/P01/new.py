@@ -168,11 +168,12 @@ class WordleGame:
             self.draw_lose()
             
             
+            
     def draw_win(self):
-        win_text = huge_font.render("You Win!", True, GREEN)
-        self.screen.blit(win_text, [WIDTH / 2 - 100, HEIGHT / 2 - 50])
+        win_text = huge_font.render("Good shit!!!", True, GREEN)
+        self.screen.blit(win_text, [WIDTH / 2 - 125, HEIGHT / 2 - 50])
         again_text = small_font.render("Press Space to play again", True, GREEN)
-        self.screen.blit(again_text, [WIDTH / 2 - 100, HEIGHT / 2 + 50])
+        self.screen.blit(again_text, [WIDTH / 2 - 125, HEIGHT / 2 + 50])
         pygame.display.flip()
         while True:
             for event in pygame.event.get():
@@ -183,16 +184,18 @@ class WordleGame:
                     pygame.display.flip()
                     
                     
+                    
+                    
     def draw_lose(self):
-        lose_text = huge_font.render("You Lose!", True, RED)
-        self.screen.blit(lose_text, [WIDTH / 2 - 100, HEIGHT / 2 - 50])
-        text = small_font.render("Press Space to play again", True, RED)
-        self.screen.blit(text, [WIDTH / 2 - 100, HEIGHT / 2 + 50])
-        
         # Display the secret word
-        secret_text = huge_font.render(self.secret_word, True, RED)
-        self.screen.blit(secret_text, [WIDTH / 2 - 100, HEIGHT / 2 + 100])
+        secret_text = huge_font.render(self.secret_word, True, WHITE)
+        self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
+        
+        # instructions to play again.
+        text = small_font.render("Press Space to play again", True, RED)
+        self.screen.blit(text, [WIDTH / 2 - 180, HEIGHT - 250])
         pygame.display.flip()
+        
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -200,6 +203,8 @@ class WordleGame:
                         self.reset_game()
                         return
                     pygame.display.flip()
+                    
+                    
     
     # def draw_keyboard(self):
     #     pass
