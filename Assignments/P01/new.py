@@ -17,36 +17,36 @@ GRAY   = (128, 128, 128)
 RED    = (255, 0, 0)
 
 # screen setup size constants
-WIDTH = 600
+WIDTH  = 600
 HEIGHT = 800
 
 # This is the font.
-huge_font = pygame.font.Font("assets/FreeSansBold.otf", 56)
+huge_font   = pygame.font.Font("assets/FreeSansBold.otf", 56)
 letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
-small_font = pygame.font.Font("assets/FreeSansBold.otf", 30)
+small_font  = pygame.font.Font("assets/FreeSansBold.otf", 30)
 
 class WordleGame:
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        self.board = [[" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "],
-                      [" ", " ", " ", " ", " "]]
-        self.turn = 0
-        self.letters = 0
-        self.turn_active = True
-        self.secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-        self.game_over = False
-        self.KEY_WIDTH = 40
-        self.KEY_HEIGHT = 40
-        self.KEY_MARGIN = 10
-        self.clock = pygame.time.Clock()
+        self.board  = [[" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "],
+                       [" ", " ", " ", " ", " "]]
+        self.turn         = 0
+        self.letters      = 0
+        self.turn_active  = True
+        # self.secret_word  = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
+        self.game_over    = False
+        self.KEY_WIDTH    = 40
+        self.KEY_HEIGHT   = 40
+        self.KEY_MARGIN   = 10
+        self.clock        = pygame.time.Clock()
         
-        # self.secret_word = "ETHER"
+        self.secret_word = "ETHER"
         # self.angle = 0
         # self.rotate_speed = 5
         # self.win_sound  = pygame.mixer.Sound("assets/win.ogg")
@@ -104,24 +104,24 @@ class WordleGame:
 
 
     def reset_game(self):
-        self.turn = 0
-        self.letters = 0
-        self.game_over = False
+        self.turn        = 0
+        self.letters     = 0
+        self.game_over   = False
         self.secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]        
-        self.board = [  [" ", " ", " ", " ", " "],
-                        [" ", " ", " ", " ", " "],
-                        [" ", " ", " ", " ", " "],
-                        [" ", " ", " ", " ", " "],
-                        [" ", " ", " ", " ", " "],
-                        [" ", " ", " ", " ", " "]]
+        self.board       = [  [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "],
+                              [" ", " ", " ", " ", " "]]
         
         self.turn_active = True
-        self.game_over  = False
+        self.game_over   = False
         
         
     def check_words(self):
         if self.turn == 6:
-            self.game_over = True
+            self.game_over   = True
             self.turn_active = False
             
             # if self.secret_word in self.board:
@@ -184,14 +184,14 @@ class WordleGame:
     # It will also draw the rectangle in which the player enter the letters in WHITE
     # It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
     def draw_letters(self):
-        for i, j in itertools.product(range(6), range(5)):
-            pygame.draw.rect(self.screen, WHITE, [j * 80, i * 80 + 12, 65, 65], 2, 5)
-            text = letter_font.render(self.board[i][j], True, GRAY)
-            self.screen.blit(text, (i * 80 + 110, j * 80 + 12))
-        pygame.draw.rect(self.screen, GREEN, [82, self.turn * 80 + 5, WIDTH - 180, 77], 4, 10)
-        # pygame.draw.rect(self.screen, GREEN, [0, 600, 100 * self.turn, 100])
+        box_width, box_height, green_box_height = 65, 65, 80
+        dist_Left, dist_Top   = 100, 180
+        for i, j in itertools.product(range(5), range(6)):
+            pygame.draw.rect(self.screen, WHITE, [i * 80 + dist_Left, j * 80 + dist_Top, box_width, box_height], 2, 5)
+            text = letter_font.render(self.board[j][i], True, GRAY)
+            self.screen.blit(text, (i * 80 + (dist_Left + 10), j * 100 + dist_Top))
+        pygame.draw.rect(self.screen, GREEN, [(dist_Left - 17), self.turn * 80 + (dist_Top - 8), WIDTH - 180, green_box_height], 4, 10)
             
-                
                 
                 
 if __name__ == "__main__":
