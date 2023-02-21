@@ -34,6 +34,13 @@
 <img src="assets/pic1.png" width="500" height= "600"> <img src="assets/pic.png"  width="500" height= "600">
 <img src="assets/pic.png"  width="500" height= "600"> <img src="assets/pic.png"  width="500" height= "600">
 
+
+### Example Command
+    
+    ```bash
+    python game.py
+    ```
+    
 ### Requirements
 
 - Python 3.8.5
@@ -43,7 +50,6 @@
 
 - Install Python 3.8.5
 - Install Pygame 2.0.1
-
 
 
 ### Files
