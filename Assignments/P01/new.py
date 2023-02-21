@@ -71,6 +71,22 @@ class WordleGame:
                 self.handle_events(event)
 
             pygame.display.flip()
+            
+            
+            
+    # This function will draw the letter entered by the player in GRAY
+    # It will also draw the rectangle in which the player enter the letters in WHITE
+    # It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
+    def blueprint(self):
+        box_width, box_height, green_box_height = 65, 65, 80
+        dist_Left, dist_Top   = 100, 180
+        for i, j in itertools.product(range(5), range(6)):
+            pygame.draw.rect(self.screen, WHITE, [i * 80 + dist_Left, j * 80 + dist_Top, box_width, box_height], 2, 5)
+            text = letter_font.render(self.board[j][i], True, GRAY)
+            self.screen.blit(text, (i * 80 + (dist_Left + 10), j * 100 + dist_Top))
+        pygame.draw.rect(self.screen, GREEN, [(dist_Left - 17), self.turn * 80 + (dist_Top - 8), WIDTH - 180, green_box_height], 4, 10)
+           
+           
 
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
@@ -134,9 +150,7 @@ class WordleGame:
         if self.game_over:
             self.draw_game_over()
         else:
-            self.draw_letters()
-            # self.draw_turn()
-            # self.draw_secret_word()
+            self.blueprint()
             # self.draw_keyboard()
             
     def draw_game_over(self):
@@ -166,6 +180,7 @@ class WordleGame:
         self.screen.blit(lose_text, [WIDTH / 2 - 100, HEIGHT / 2 - 50])
         text = small_font.render("Press Space to play again", True, RED)
         self.screen.blit(text, [WIDTH / 2 - 100, HEIGHT / 2 + 50])
+        
         # Display the secret word
         secret_text = huge_font.render(self.secret_word, True, RED)
         self.screen.blit(secret_text, [WIDTH / 2 - 100, HEIGHT / 2 + 100])
@@ -177,21 +192,9 @@ class WordleGame:
                         self.reset_game()
                         return
                     pygame.display.flip()
-                    
-                    
-                    
-    # This function will draw the letter entered by the player in GRAY
-    # It will also draw the rectangle in which the player enter the letters in WHITE
-    # It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
-    def draw_letters(self):
-        box_width, box_height, green_box_height = 65, 65, 80
-        dist_Left, dist_Top   = 100, 180
-        for i, j in itertools.product(range(5), range(6)):
-            pygame.draw.rect(self.screen, WHITE, [i * 80 + dist_Left, j * 80 + dist_Top, box_width, box_height], 2, 5)
-            text = letter_font.render(self.board[j][i], True, GRAY)
-            self.screen.blit(text, (i * 80 + (dist_Left + 10), j * 100 + dist_Top))
-        pygame.draw.rect(self.screen, GREEN, [(dist_Left - 17), self.turn * 80 + (dist_Top - 8), WIDTH - 180, green_box_height], 4, 10)
-            
+    
+    # def draw_keyboard(self):
+    #     pass
                 
                 
 if __name__ == "__main__":
