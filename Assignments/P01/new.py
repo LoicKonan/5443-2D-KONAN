@@ -141,7 +141,12 @@ class WordleGame:
         self.turn_active = True
         self.game_over   = False
         
-        
+    
+    # This fuction call def check_words(self): will check if guess is correct, add game over conditions
+    # it will also check if each letter entered is contain in the word. if the letter is part of the word
+    # and in the right column it will draw the rectangle green, if the letter is part of the word
+    # but not in the right column it will draw the rectangle yellow, if the letter are not part of the word
+    # it will draw the rectangle red.
     def check_words(self):
         if self.turn == 6:
             self.game_over   = True
@@ -151,6 +156,14 @@ class WordleGame:
             #     # self.win_sound.play()
             # else:
             #     # self.lose_sound.play()
+        for i in range(5):
+            if self.board[self.turn][i] == self.secret_word[i]:
+                pygame.draw.rect(self.screen, GREEN, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
+            elif self.board[self.turn][i] in self.secret_word:
+                pygame.draw.rect(self.screen, YELLOW, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
+            else:
+                pygame.draw.rect(self.screen, RED, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
+    
                 
                 
     def draw_board(self):

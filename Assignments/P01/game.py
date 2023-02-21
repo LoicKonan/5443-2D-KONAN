@@ -50,8 +50,8 @@ huge_font = pygame.font.Font("assets/FreeSansBold.otf", 56)
 letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
 
 # This is the KEY(CORRECT ANSWER).
-secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-# secret_word = "ETHER"
+# secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
+secret_word = "ETHER"
 
 
 # This is the game over.
