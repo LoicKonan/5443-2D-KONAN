@@ -37,6 +37,7 @@ class WordleGame:
                        [" ", " ", " ", " ", " "],
                        [" ", " ", " ", " ", " "],
                        [" ", " ", " ", " ", " "]]
+        
         self.turn              = 0
         self.letters           = 0
         self.KEY_WIDTH         = 40
@@ -69,9 +70,12 @@ class WordleGame:
         while True:
             self.clock.tick(60)
             self.screen.fill(BLACK)
-            self.Instruction()
             self.check_words()
+            self.draw_title()
+            self.draw_shape()
+            self.Instruction()
             self.draw_board()
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -89,7 +93,6 @@ class WordleGame:
     def draw_title(self):
         title = huge_font.render("WORDLE", True, GREEN)
         self.screen.blit(title, (WIDTH / 2 - 125, 10))
-    
         
         
     # This function will display the instruction on the screen
@@ -127,14 +130,6 @@ class WordleGame:
     # but not in the right column it will draw the rectangle yellow, if the letter are not part of the word
     # it will draw the rectangle red.
     def check_words(self):
-        if self.turn == 6:
-            self.game_over   = True
-            self.turn_active = False
-
-            # if self.secret_word in self.board:
-            #     # self.win_sound.play()
-            # else:
-            #     # self.lose_sound.play()
 
         for i, j in itertools.product(range(5), range(6)):
             if self.secret_word[i] == self.board[j][i] and self.turn > j:
@@ -157,17 +152,25 @@ class WordleGame:
             if guess == self.secret_word and row < 6: 
                 self.game_over = True
                 self.draw_win()
-            
-    
+                
+        if self.turn == 6:
+            self.game_over   = True
+            self.turn_active = False
+
+            # if self.secret_word in self.board:
+            #     # self.win_sound.play()
+            # else:
+            #     # self.lose_sound.play()   
+
     
     def draw_board(self):
         if self.game_over:
             self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
-            self.draw_game_over()
-        else:
-            self.draw_title()
-            self.draw_shape()
-            
+            if self.secret_word in self.board:
+                self.draw_win()
+            else:
+                self.draw_lose()
+       
     
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
@@ -198,21 +201,25 @@ class WordleGame:
             entry = entry.upper()
             self.board[self.turn][self.letters] = entry
             self.letters += 1
-
-
-    def draw_game_over(self):
-        if self.secret_word in self.board:
-            self.draw_win()
-        else:
-            self.draw_lose()
             
             
     def draw_win(self):
+        self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
+
+        # Good Job message
         win_text = huge_font.render("Good Job!!!", True, GREEN)
-        self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 500])
+        self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 700])
+        
+        # Display the secret word
+        secret_text = huge_font.render(self.secret_word, True, WHITE)
+        self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
+        
+
+        # Play again message.
         again_text = small_font.render("Press Enter or Space to play again", True, GREEN)
         self.screen.blit(again_text, [WIDTH / 2 - 200, HEIGHT - 250])
         pygame.display.flip()
+        
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -256,11 +263,7 @@ class WordleGame:
         
         self.turn_active = True
         self.game_over   = False            
-                    
-    
-    # def draw_keyboard(self):
-    #     pass
-                
+ 
                 
 if __name__ == "__main__":
     game = WordleGame()
