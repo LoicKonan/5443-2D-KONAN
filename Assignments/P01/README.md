@@ -13,7 +13,6 @@
 
 - This is a wordle game in pygame.
 - The goal is to find the word in the grid. The word is hidden in the grid.
-- The word can be found horizontally, vertically, or diagonally.
 
 ### Instructions
 
