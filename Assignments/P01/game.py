@@ -149,6 +149,28 @@ class WordleGame:
             self.turn_active = False
       
     
+    # This function calculate the game score.
+    # if the user get a green square that is equal to = 10
+    # if the user get a yellow square that is equal to = 5
+    # if the user get a red square that is equal to = 0
+    def calculate_score(self):
+        score = 0
+        for i, j in itertools.product(range(5), range(6)):
+            if self.secret_word[i] == self.board[j][i] and self.turn > j:
+                score += 10
+            elif self.board[j][i] in self.secret_word and self.turn > j:
+                score += 5
+        return score
+    
+    
+    
+    # This function will display the score on the screen when you lose or win on top of the screen.
+    def display_score(self):
+        score = self.calculate_score()
+        score_text = letter_font.render("Score: " + str(score), True, WHITE)
+        self.screen.blit(score_text, ((WIDTH / 2) - 110, 25))
+        
+    
     def draw_board(self):
         if self.game_over:
             self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
@@ -164,7 +186,6 @@ class WordleGame:
             self.handle_keydown(event)
         elif event.type == pygame.TEXTINPUT and self.turn_active and not self.game_over:
             self.handle_textinput(event)
-
 
 
     def handle_keydown(self, event):
@@ -195,6 +216,7 @@ class WordleGame:
             
     def draw_win(self):
         self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
+        self.display_score()
 
         # Good Job message
         win_text = huge_font.render("Good Job!!!", True, GREEN)
@@ -218,6 +240,8 @@ class WordleGame:
                     
                     
     def draw_lose(self):
+        
+        self.display_score()
         # Display the secret word
         secret_text = huge_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
