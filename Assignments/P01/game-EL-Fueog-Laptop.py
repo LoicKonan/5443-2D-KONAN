@@ -18,8 +18,8 @@ RED        = (255,   0,   0)
 Blueviolet = (176,196,222)
 
 # screen setup size constants
-WIDTH  = 600
-HEIGHT = 630
+WIDTH  = 700
+HEIGHT = 600
 
 # This is the font.
 huge_font   = pygame.font.Font("assets/FreeSansBold.otf", 56)
@@ -40,11 +40,14 @@ class WordleGame:
         
         self.turn              = 0
         self.letters           = 0
-        self.box_width         = 45
-        self.box_height        = 45
-        self.green_box_height  = 60
+        self.KEY_WIDTH         = 40
+        self.KEY_HEIGHT        = 40
+        self.KEY_MARGIN        = 10
+        self.box_width         = 65
+        self.box_height        = 65
+        self.green_box_height  = 80
         self.dist_Left         = 100
-        self.dist_Top          = 90
+        self.dist_Top          = 120
         
         
         self.clock        = pygame.time.Clock()
