@@ -21,15 +21,14 @@
 - The player can use the backspace key to delete the letter.
 
 - The player can use the enter key to validate the word.
-<img src="assets/pic1.png" width="300" height= "400">
-<img src="assets/pic.png"  width="300" height= "400">
-<img src="assets/pic.png"  width="300" height= "400">
-<img src="assets/pic.png"  width="300" height= "400">
+<img src="assets/pic1.png" width="300" height= "400"> <img src="assets/pic.png"  width="300" height= "400">
+<img src="assets/pic.png"  width="300" height= "400"> <img src="assets/pic.png"  width="300" height= "400">
 
 
 ### Files
 
-|   #   | File / Folder          | Description | Status                  |
-| :---: | ---------------------- | ----------- | ----------------------- |
-|   1   | [README.md](README.md) | README file | :ballot_box_with_check: |
-|   2   | [game.py](game.py)     | main file   | :ballot_box_with_check: |
+|   #   | File / Folder            | Description | Status                  |
+| :---: | ----------------------   | ----------- | ----------------------- |
+|   1   | [README.md](README.md)   | README file | :ballot_box_with_check: |
+|   2   | [game.py](game.py)       | main file   | :ballot_box_with_check: |
+|   3   | [assets](./assets)       | assets      | :ballot_box_with_check: |
