@@ -264,9 +264,9 @@ class WordleGame:
     #########################################################################################
     # def handle_events(self, event):
     #   
-    #   -
-    #   -
-    #   -
+    #   - Responsible for handling events such as keyboard inputs.
+    #   - The handle_keydown method is called when the user presses a key on the keyboard 
+    #   - The handle_textinput method is called when the user enters text input
     #
     #########################################################################################
     
