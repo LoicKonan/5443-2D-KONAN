@@ -148,15 +148,25 @@ class WordleGame:
         self.screen.blit(title, (WIDTH / 2 - 110, HEIGHT - 625))
         
         
-    # This function will display the instruction on the screen
-    # consist of 3 rectangle, one green, one yellow and one red.
-    # if the rectangle is GREEN it means that the letter is part of the word and in the right column,
-    # if the rectangle is YELLOW it means the letter is part of the word but not in the right column,
-    # if the rectangle is RED the letter are not part of the word.
+    ########################################################################################
+    # def Instruction(self):
+    #
+    #   - This function will display the instruction on the screen
+    #   - 3 rectangle, Green, Yellow and Red.
+    #   - GREEN means the letter is part of the word and in the right position,
+    #   - YELLOW means the letter is part of the word but not in the right position,
+    #   - RED means the letter are not part of the word.
+    #
+    ########################################################################################
+
     def Instruction(self):
+        
+        # Draw the different rectangles.
         pygame.draw.rect(self.screen, GREEN,  [WIDTH - 560, HEIGHT - 150, self.box_width - 30, self.box_height - 30], 5, 4)
         pygame.draw.rect(self.screen, YELLOW, [WIDTH - 560, HEIGHT - 100, self.box_width - 30, self.box_height - 30], 5, 4)
         pygame.draw.rect(self.screen, RED,    [WIDTH - 560, HEIGHT - 50,  self.box_width - 30, self.box_height - 30], 5, 4)
+        
+        # Display the instruction text
         Instruction_text = small_font.render("Correct Letter / right spot", True, WHITE)
         self.screen.blit(Instruction_text, (WIDTH - 520, HEIGHT - 148))
         Instruction_text = small_font.render("Correct Letter / not in the right spot", True, WHITE)
