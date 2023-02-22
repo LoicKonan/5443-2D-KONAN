@@ -308,7 +308,7 @@ class WordleGame:
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
 
         # GAME OVER YOU LOSE!!!
-        lose_text = small_font.render("GAME OVER YOU LOSER!!!", True, RED)
+        lose_text = small_font.render("GAME OVER ............. LOSER!!!", True, RED)
         self.screen.blit(lose_text, (WIDTH / 2 - 160, HEIGHT - 180))
         
         # instructions to play again.
