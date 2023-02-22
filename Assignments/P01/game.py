@@ -29,10 +29,10 @@
 #
 #  
 ##############################################################################################
-import pygame
-import random
-import words
-import itertools
+import pygame 
+import random 
+import words   
+import itertools 
 
 # initialize pygame
 pygame.init()
@@ -71,7 +71,7 @@ class WordleGame:
     #
     #         - Constructor
     #         - Initializes the game screen with the dimensions WIDTH and HEIGHT.
-    #         - Initializes 2D list with 6 rows and 5 columns filled with empty spaces.
+    #         - Initializes 2-D list with 6 rows and 5 columns filled with empty spaces.
     #         - Sets the initial values for game variables.
     #         - Loads and sets the game window's caption and icon.
     #
@@ -191,7 +191,6 @@ class WordleGame:
     ########################################################################################
 
     def draw_shape(self):
-        #
         for i, j in itertools.product(range(5), range(6)):
             # The rectangle that will contain the letter.
             pygame.draw.rect(self.screen, WHITE, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 3, 8)
@@ -203,25 +202,18 @@ class WordleGame:
         # Draw the rectangle that show what row you on.
         pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 6), self.turn * 65 + (self.dist_Top - 25), WIDTH - 270, self.green_box_height - 10], 3, 10)
     
+
     
-    
-    # This function call def check_words(self): will check if guess is correct, add game over conditions
-    # it will also check if each letter entered is contain in the word. if the letter is part of the word
-    # and in the right column it will draw the rectangle green, if the letter is part of the word
-    # but not in the right column it will draw the rectangle yellow, if the letter are not part of the word
-    # it will draw the rectangle red.
-    
-    ########################################################################################
+    ##############################################################################
     # def check_words(self):
     #
     #   - This function will check the entered word by the user.
     #   - It will compare the entered word with the secret word and
     #   - set the appropriate values for the green, yellow and red color boxes.
     #
-    ########################################################################################
+    ##############################################################################
     
     def check_words(self):
-        #
         for i, j in itertools.product(range(5), range(6)):
             # When the letter is part of the word and in the right position. The square will turn GREEN.
             if self.secret_word[i] == self.board[j][i] and self.turn > j:
@@ -239,25 +231,44 @@ class WordleGame:
         for row in range(6):
             guess = self.board[row][0] + self.board[row][1] + self.board[row][2] + self.board[row][3] + self.board[row][4]
             
-            #
+            # If the guess is correct, then game over and go to the draw_win function.
             if guess == self.secret_word and row < 6: 
                 self.game_over = True
                 self.draw_win()
-        #        
+        
+        # After the last guess it Game over, you can't type no more.    
         if self.turn == 6:
             self.game_over   = True
             self.turn_active = False
 
 
-    
+    ##############################################################################
+    # def result(self):
+    #   
+    #   - Clear the screen 
+    #   - Call the right method depending if the player won or lost the game.
+    #
+    #
+    ##############################################################################
+
     def result(self):
         if self.game_over:
-            self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
+            self.screen.fill(BLACK)             
             if self.secret_word in self.board:
                 self.draw_win()
             else:
                 self.draw_lose()
        
+       
+    
+    #########################################################################################
+    # def handle_events(self, event):
+    #   
+    #   -
+    #   -
+    #   -
+    #
+    #########################################################################################
     
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:
@@ -266,6 +277,16 @@ class WordleGame:
             self.handle_textinput(event)
 
 
+
+    ##############################################################################
+    # def handle_keydown(self, event):
+    #   
+    #   -
+    #   -
+    #   -
+    #
+    ########################################################################################
+    
     def handle_keydown(self, event):
         if event.key == pygame.K_BACKSPACE and self.letters > 0:
             self.board[self.turn][self.letters - 1] = ' '
@@ -282,12 +303,22 @@ class WordleGame:
             self.turn_active = True
 
 
+
+    ##############################################################################
+    # def handle_textinput(self, event):
+    #   
+    #   -
+    #   -
+    #   -
+    #
+    ########################################################################################
     def handle_textinput(self, event):
         entry = event.__getattribute__('text')
         if entry != " ":
             entry = entry.upper()
             self.board[self.turn][self.letters] = entry
             self.letters += 1
+            
             
             
  #########################################################
@@ -384,6 +415,7 @@ class WordleGame:
         
         self.turn_active = True
         self.game_over   = False            
+ 
  
                 
 #######################
