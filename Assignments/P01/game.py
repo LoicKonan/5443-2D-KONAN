@@ -148,7 +148,7 @@ class WordleGame:
         self.screen.blit(title, (WIDTH / 2 - 110, HEIGHT - 625))
         
         
-    ########################################################################################
+    ###################################################################################
     # def Instruction(self):
     #
     #   - This function will display the instruction on the screen
@@ -157,7 +157,7 @@ class WordleGame:
     #   - YELLOW means the letter is part of the word but not in the right position,
     #   - RED means the letter are not part of the word.
     #
-    ########################################################################################
+    ####################################################################################
 
     def Instruction(self):
         
@@ -179,16 +179,22 @@ class WordleGame:
     # def draw_shape(self):
     #
     #   - This function will draw the letter entered by the player in GRAY
-    #   - It will also draw the rectangle in which the player enter the letters in WHITE
-    #   - It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
+    #   - It will draw the rectangle in which the player enter the letters in WHITE
+    #   - It will draw a Green rectangle to show what row you on.
     #
     ########################################################################################
 
     def draw_shape(self):
+        
         for i, j in itertools.product(range(5), range(6)):
+            # The rectangle that will contain the letter.
             pygame.draw.rect(self.screen, WHITE, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 3, 8)
+            
+            # The letter that will be entered by the player.
             Letters_text = letter_font.render(self.board[j][i], True, GRAY)
             self.screen.blit(Letters_text, (i * 65 + (self.dist_Left + 10), j * 65 + self.dist_Top - 21))
+            
+        # Draw the rectangle that show what row you on.
         pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 6), self.turn * 65 + (self.dist_Top - 25), WIDTH - 270, self.green_box_height - 10], 3, 10)
     
     
