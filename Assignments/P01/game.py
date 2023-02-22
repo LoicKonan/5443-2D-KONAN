@@ -10,21 +10,19 @@ pygame.mixer.init()
 
 # screen setup colors
 WHITE      = (255, 255, 255)
-BLACK      = (0  ,   0,   0)
-GREEN      = (0  , 255,   0)
+BLACK      = (  0,   0,   0)
+GREEN      = (  0, 255,   0)
 YELLOW     = (255, 255,   0)
 GRAY       = (128, 128, 128)
 RED        = (255,   0,   0)
-Blueviolet = (176,196,222)
 
 # screen setup size constants
 WIDTH  = 600
 HEIGHT = 630
 
 # This is the font.
-huge_font   = pygame.font.Font("assets/FreeSansBold.otf", 56)
-letter_font = pygame.font.Font("assets/FreeSansBold.otf", 50)
-small_font  = pygame.font.Font("assets/FreeSansBold.otf", 25)
+letter_font   = pygame.font.Font("assets/FreeSansBold.otf", 40)
+small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 
 class WordleGame:
     def __init__(self):
@@ -51,17 +49,14 @@ class WordleGame:
         self.game_over    = False
         self.turn_active  = True
         # self.secret_word  = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-
         self.secret_word = "ETHER"
-        # self.angle = 0
-        # self.rotate_speed = 1
-        # self.win_sound  = pygame.mixer.Sound("assets/win.ogg")
-        # self.lose_sound = pygame.mixer.Sound("assets/lost.mp3")
+        
 
 
         pygame.display.set_caption("Wordle Game")
         self.icon = pygame.image.load("assets/Icon.png")
         pygame.display.set_icon(self.icon)
+
 
     def run(self):
         while True:
@@ -88,8 +83,8 @@ class WordleGame:
     # This Function will display a Title Wordle one letter at a time
     # It will also display the wordle in the middle of the screen
     def draw_title(self):
-        title = huge_font.render("WORDLE", True, GREEN)
-        self.screen.blit(title, (WIDTH / 2 - 125, 10))
+        title = letter_font.render("WORDLE", True, GREEN)
+        self.screen.blit(title, (WIDTH / 2 - 100, HEIGHT - 625))
         
         
     # This function will display the instruction on the screen
@@ -98,9 +93,9 @@ class WordleGame:
     # if the rectangle is YELLOW it means the letter is part of the word but not in the right column,
     # if the rectangle is RED the letter are not part of the word.
     def Instruction(self):
-        pygame.draw.rect(self.screen, GREEN,  [90, 635, 25, 25], 0, 6)
-        pygame.draw.rect(self.screen, YELLOW, [90, 685, 25, 25], 0, 6)
-        pygame.draw.rect(self.screen, RED,    [90, 730, 25, 25], 0, 6)
+        pygame.draw.rect(self.screen, GREEN,  [WIDTH - 550, HEIGHT - 70, self.box_width - 30, self.box_height - 30], 0, 2)
+        pygame.draw.rect(self.screen, YELLOW, [WIDTH - 550, HEIGHT - 50, self.box_width - 30, self.box_height - 30], 0, 2)
+        pygame.draw.rect(self.screen, RED,    [WIDTH - 550, HEIGHT - 30, self.box_width - 30, self.box_height - 30], 0, 2)
         Instruction_text = small_font.render("Correct Letter / right spot", True, WHITE)
         self.screen.blit(Instruction_text, (130, 630))
         Instruction_text = small_font.render("Correct Letter / not in the right spot", True, WHITE)
@@ -204,11 +199,11 @@ class WordleGame:
         self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
 
         # Good Job message
-        win_text = huge_font.render("Good Job!!!", True, GREEN)
+        win_text = letter_font.render("Good Job!!!", True, GREEN)
         self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 700])
         
         # Display the secret word
-        secret_text = huge_font.render(self.secret_word, True, WHITE)
+        secret_text = letter_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
         
 
@@ -229,7 +224,7 @@ class WordleGame:
                     
     def draw_lose(self):
         # Display the secret word
-        secret_text = huge_font.render(self.secret_word, True, WHITE)
+        secret_text = letter_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
 
         # instructions to play again.
