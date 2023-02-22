@@ -65,7 +65,7 @@ class WordleGame:
             self.draw_title()
             self.draw_shape()
             self.Instruction()
-            self.draw_board()
+            self.result()
 
 
             for event in pygame.event.get():
@@ -145,7 +145,7 @@ class WordleGame:
             self.turn_active = False
 
     
-    def draw_board(self):
+    def result(self):
         if self.game_over:
             self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
             if self.secret_word in self.board:
@@ -186,8 +186,8 @@ class WordleGame:
             
             
     def draw_win(self):
-        self.screen.fill(BLACK)             # CALL THIS FUNCTION TO CLEAR THE SCREEN.
-
+        self.screen.fill(BLACK)             
+        
         # Good Job message
         win_text = letter_font.render("Good Job!!!", True, GREEN)
         self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 10])
@@ -199,7 +199,7 @@ class WordleGame:
 
         # Play again message.
         again_text = small_font.render("Press Enter or Space to play again", True, GREEN)
-        self.screen.blit(again_text, [WIDTH / 2 - 200, HEIGHT - 250])
+        self.screen.blit(again_text, [WIDTH / 2 - 180, HEIGHT - 250])
         pygame.display.flip()
         
         while True:
@@ -219,7 +219,7 @@ class WordleGame:
 
         # instructions to play again.
         text = small_font.render("Press Enter or Space to play again", True, RED)
-        self.screen.blit(text, [WIDTH / 2 - 200, HEIGHT - 250])
+        self.screen.blit(text, [WIDTH / 2 - 180, HEIGHT - 250])
         pygame.display.flip()
 
         while True:
@@ -229,7 +229,7 @@ class WordleGame:
                         self.reset_game()
                         return
                     pygame.display.flip()
-
+  
 
     def reset_game(self):
         self.turn        = 0
