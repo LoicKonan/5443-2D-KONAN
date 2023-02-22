@@ -175,9 +175,15 @@ class WordleGame:
         self.screen.blit(Instruction_text, (WIDTH - 520, HEIGHT - 48))
     
     
-    # This function will draw the letter entered by the player in GRAY
-    # It will also draw the rectangle in which the player enter the letters in WHITE
-    # It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
+    ########################################################################################
+    # def draw_shape(self):
+    #
+    #   - This function will draw the letter entered by the player in GRAY
+    #   - It will also draw the rectangle in which the player enter the letters in WHITE
+    #   - It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
+    #
+    ########################################################################################
+
     def draw_shape(self):
         for i, j in itertools.product(range(5), range(6)):
             pygame.draw.rect(self.screen, WHITE, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 3, 8)
@@ -192,12 +198,24 @@ class WordleGame:
     # and in the right column it will draw the rectangle green, if the letter is part of the word
     # but not in the right column it will draw the rectangle yellow, if the letter are not part of the word
     # it will draw the rectangle red.
+    
+    ########################################################################################
+    # def check_words(self):
+    #
+    #   - This function will check the entered word by the user.
+    #   - It will compare the entered word with the secret word and
+    #   - set the appropriate values for the green, yellow and red color boxes.
+    #
+    ########################################################################################
+    
     def check_words(self):
-
+        #
         for i, j in itertools.product(range(5), range(6)):
+            # When the letter is part of the word and in the right position. The square will turn GREEN.
             if self.secret_word[i] == self.board[j][i] and self.turn > j:
                 pygame.draw.rect(self.screen, GREEN, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 0, 8)
-
+                
+            # When the letter is part of the word but not in the right position. The square will turn YELLOW.
             elif self.board[j][i] in self.secret_word and self.turn > j:
                 pygame.draw.rect(self.screen, YELLOW, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 0, 8)
 
@@ -208,13 +226,16 @@ class WordleGame:
         # check if guess is correct, add game over conditions
         for row in range(6):
             guess = self.board[row][0] + self.board[row][1] + self.board[row][2] + self.board[row][3] + self.board[row][4]
+            
+            #
             if guess == self.secret_word and row < 6: 
                 self.game_over = True
                 self.draw_win()
-                
+        #        
         if self.turn == 6:
             self.game_over   = True
             self.turn_active = False
+
 
     
     def result(self):
