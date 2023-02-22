@@ -55,8 +55,6 @@ small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 
 class WordleGame:
     def __init__(self):
-        pygame.init()
-        pygame.mixer.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.board  = [[" ", " ", " ", " ", " "],
                        [" ", " ", " ", " ", " "],
