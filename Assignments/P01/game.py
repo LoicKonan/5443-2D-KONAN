@@ -222,13 +222,13 @@ class WordleGame:
         # Display the secret word
         secret_text = letter_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
-        
 
         # Play again message.
         again_text = small_font.render("Press Enter or Space to play again", True, GREEN)
         self.screen.blit(again_text, [WIDTH / 2 - 180, HEIGHT - 250])
         pygame.display.flip()
         
+        # This while loop listens for events until the user either closes the game or Hit SPACE/ENTER. 
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -237,10 +237,13 @@ class WordleGame:
                         return
                     pygame.display.flip()
                     
-                    
-                    
+    '''
     def draw_lose(self):
-       
+        - Tell them to press Enter or Space to play again
+        - Show the correct word
+    
+    '''                                
+    def draw_lose(self):
         # Display the secret word
         secret_text = letter_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
@@ -249,12 +252,12 @@ class WordleGame:
         lose_text = small_font.render("GAME OVER YOU LOSER!!!", True, RED)
         self.screen.blit(lose_text, (WIDTH / 2 - 160, HEIGHT - 180))
         
-        
         # instructions to play again.
         text = small_font.render("Press Enter or Space to play again", True, RED)
         self.screen.blit(text, [WIDTH / 2 - 180, HEIGHT - 250])
         pygame.display.flip()
 
+        # This while loop listens for events until the user either closes the game or presses SPACE/ENTER. 
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -263,7 +266,16 @@ class WordleGame:
                         return
                     pygame.display.flip()
   
-
+  
+  
+    '''
+    def reset_game(self):
+        - resets the state of the game by reinitialize the game's data attributes to their initial values.
+        - clears the player's previous guesses by resetting the game board with blank spaces.
+        - resets the game-over status of the game to False.
+        - generates a new secret word for the player to guess. 
+    
+    '''
     def reset_game(self):
         self.turn        = 0
         self.letters     = 0
@@ -280,6 +292,10 @@ class WordleGame:
         self.game_over   = False            
  
                 
+                
+'''
+    Main Driver
+'''               
 if __name__ == "__main__":
     game = WordleGame()
     game.run()
