@@ -143,7 +143,7 @@ class WordleGame:
     ##########################################################
     # def draw_title(self):
     #
-    #   - This Function will display Wordle as a Title.
+    #   - This method will display Wordle as a Title.
     #
     ##########################################################
     
@@ -156,7 +156,7 @@ class WordleGame:
     ###################################################################################
     # def Instruction(self):
     #
-    #   - This function will display the instruction on the screen
+    #   - This method will display the instruction on the screen
     #   - 3 rectangle, Green, Yellow and Red.
     #   - GREEN means the letter is part of the word and in the right position,
     #   - YELLOW means the letter is part of the word but not in the right position,
@@ -184,7 +184,7 @@ class WordleGame:
     ########################################################################################
     # def draw_shape(self):
     #
-    #   - This function will draw the letter entered by the player in GRAY
+    #   - This method will draw the letter entered by the player in GRAY
     #   - It will draw the rectangle in which the player enter the letters in WHITE
     #   - It will draw a Green rectangle to show what row you on.
     #
@@ -207,7 +207,7 @@ class WordleGame:
     ##############################################################################
     # def check_words(self):
     #
-    #   - This function will check the entered word by the user.
+    #   - This method will check the entered word by the user.
     #   - It will compare the entered word with the secret word and
     #   - set the appropriate values for the green, yellow and red color boxes.
     #
@@ -231,7 +231,7 @@ class WordleGame:
         for row in range(6):
             guess = self.board[row][0] + self.board[row][1] + self.board[row][2] + self.board[row][3] + self.board[row][4]
             
-            # If the guess is correct, then game over and go to the draw_win function.
+            # If the guess is correct, then game over and go to the draw_win method.
             if guess == self.secret_word and row < 6: 
                 self.game_over = True
                 self.draw_win()
@@ -281,7 +281,7 @@ class WordleGame:
     ########################################################################
     # def handle_keydown(self, event):
     #   
-    #   - The function handles different key press events in the game.
+    #   - The method handles different key press events in the game.
     #
     #########################################################################
     
@@ -297,7 +297,7 @@ class WordleGame:
             self.turn += 1
             self.letters = 0
             
-        # If Enter key and the game is over, the function resets the game.
+        # If Enter key and the game is over, the method resets the game.
         elif event.key == pygame.K_RETURN:
             self.reset_game()
             
