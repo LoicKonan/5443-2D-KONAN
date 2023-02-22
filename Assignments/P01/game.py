@@ -28,7 +28,6 @@
 #      Date:             02/21/2023
 #
 #  
-#  
 ##############################################################################################
 import pygame
 import random
@@ -220,7 +219,7 @@ class WordleGame:
         
         # Good Job message
         win_text = letter_font.render("Good Job!!!", True, GREEN)
-        self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 10])
+        self.screen.blit(win_text, (WIDTH / 2 - 160, HEIGHT - 180))
         
         # Display the secret word
         secret_text = letter_font.render(self.secret_word, True, WHITE)
@@ -243,10 +242,16 @@ class WordleGame:
                     
                     
     def draw_lose(self):
+       
         # Display the secret word
         secret_text = letter_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
 
+        # GAME OVER YOU LOSE!!!
+        lose_text = small_font.render("GAME OVER YOU LOSER!!!", True, RED)
+        self.screen.blit(lose_text, (WIDTH / 2 - 160, HEIGHT - 180))
+        
+        
         # instructions to play again.
         text = small_font.render("Press Enter or Space to play again", True, RED)
         self.screen.blit(text, [WIDTH / 2 - 180, HEIGHT - 250])
