@@ -200,7 +200,7 @@ class WordleGame:
             self.screen.blit(Letters_text, (i * 65 + (self.dist_Left + 10), j * 65 + self.dist_Top - 21))
             
         # Draw the rectangle that show what row you on.
-        pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 6), self.turn * 65 + (self.dist_Top - 25), WIDTH - 270, self.green_box_height - 10], 3, 10)
+        pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 6), self.turn * 65 + (self.dist_Top - 25), WIDTH - 275, self.green_box_height - 10], 3, 10)
     
 
     
