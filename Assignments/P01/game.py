@@ -7,11 +7,11 @@
 #      Course:           CMPS 5443 
 #      Semester:         Spring 2023
 #      Description:
-#                        This This is a Wordle game in pygame.
+#                        This is a Wordle game in pygame.
 #                        Wordle is a guessing game in which players try to 
 #                        guess a secret word by making multiple attempts.
-#                        The game features a five-letter word, and players have 
-#                        6 to guess it correctly. After each guess, the game provides 
+#                        The game features 5 word, and players have 
+#                        6 chances to guess it correctly. After each guess, the game provides 
 #                        feedback in the form of colored squares.
 #                        The colored squares indicate which letters in the guess match the 
 #                        secret word and are in the correct position.
@@ -21,7 +21,7 @@
 #  
 #
 #      Usage:
-#                        python game.py          : driver program
+#                        python game.py          - driver program
 #
 #      Files:            game.py, words.py, assets/Icon.png, assets/FreeSansBold.otf
 #
