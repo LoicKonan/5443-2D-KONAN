@@ -1,2 +1,0 @@
-
-        pygame.mixer.init()

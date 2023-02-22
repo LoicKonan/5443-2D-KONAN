@@ -20,7 +20,7 @@ WIDTH  = 600
 HEIGHT = 630
 
 # This is the font.
-letter_font   = pygame.font.Font("assets/FreeSansBold.otf", 30)
+letter_font   = pygame.font.Font("assets/FreeSansBold.otf", 45)
 small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 
 class WordleGame:
@@ -92,9 +92,9 @@ class WordleGame:
     # if the rectangle is YELLOW it means the letter is part of the word but not in the right column,
     # if the rectangle is RED the letter are not part of the word.
     def Instruction(self):
-        pygame.draw.rect(self.screen, GREEN,  [WIDTH - 560, HEIGHT - 150, self.box_width - 30, self.box_height - 30], 0, 4)
-        pygame.draw.rect(self.screen, YELLOW, [WIDTH - 560, HEIGHT - 100, self.box_width - 30, self.box_height - 30], 0, 4)
-        pygame.draw.rect(self.screen, RED,    [WIDTH - 560, HEIGHT - 50,  self.box_width - 30, self.box_height - 30], 0, 4)
+        pygame.draw.rect(self.screen, GREEN,  [WIDTH - 560, HEIGHT - 150, self.box_width - 30, self.box_height - 30], 5, 4)
+        pygame.draw.rect(self.screen, YELLOW, [WIDTH - 560, HEIGHT - 100, self.box_width - 30, self.box_height - 30], 5, 4)
+        pygame.draw.rect(self.screen, RED,    [WIDTH - 560, HEIGHT - 50,  self.box_width - 30, self.box_height - 30], 5, 4)
         Instruction_text = small_font.render("Correct Letter / right spot", True, WHITE)
         self.screen.blit(Instruction_text, (WIDTH - 520, HEIGHT - 148))
         Instruction_text = small_font.render("Correct Letter / not in the right spot", True, WHITE)
@@ -110,7 +110,7 @@ class WordleGame:
         for i, j in itertools.product(range(5), range(6)):
             pygame.draw.rect(self.screen, WHITE, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 3, 8)
             Letters_text = letter_font.render(self.board[j][i], True, GRAY)
-            self.screen.blit(Letters_text, (i * 65 + (self.dist_Left + 9), j * 65 + self.dist_Top - 24))
+            self.screen.blit(Letters_text, (i * 65 + (self.dist_Left + 15), j * 65 + self.dist_Top - 12))
         pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 6), self.turn * 65 + (self.dist_Top - 25), WIDTH - 270, self.green_box_height - 10], 3, 10)
     
     
