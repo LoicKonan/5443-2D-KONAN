@@ -278,27 +278,35 @@ class WordleGame:
 
 
 
-    ##############################################################################
+    ########################################################################
     # def handle_keydown(self, event):
     #   
-    #   -
-    #   -
-    #   -
+    #   - The function handles different key press events in the game.
     #
-    ########################################################################################
+    #########################################################################
     
     def handle_keydown(self, event):
+        
+        # If the user presses the backspace deletes the last typed letter from the board.
         if event.key == pygame.K_BACKSPACE and self.letters > 0:
             self.board[self.turn][self.letters - 1] = ' '
             self.letters -= 1
+            
+        # If Enter key and the game is not over, moves to the next turn and resets the letter count to 0.    
         elif event.key == pygame.K_RETURN and not self.game_over:
             self.turn += 1
             self.letters = 0
+            
+        # If Enter key and the game is over, the function resets the game.
         elif event.key == pygame.K_RETURN:
             self.reset_game()
-
+            
+        
+        # You can only enter word with 5 letters.
         if self.letters == 5:
             self.turn_active = False
+            
+        # If you enter less than 5 letters, then you can enter a letter
         if self.letters < 5:
             self.turn_active = True
 
