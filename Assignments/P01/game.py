@@ -2,7 +2,7 @@
 #  
 #      Author:           Loic Konan
 #      Email:            loickonan.lk@gmail.com
-#      Label:            Wordle
+#      Label:            Wordle Game
 #      Title:            Program 1
 #      Course:           CMPS 5443 
 #      Semester:         Spring 2023
@@ -57,17 +57,17 @@ small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 ##############################################################################################
 # class WordleGame:
 #
-#   This is the main class of the game
-#   It will display the title, the instruction, the wordle, the letter entered by the player
-#   It will also check if the word entered by the player is correct or not.
-#   It will also check if the player has won or lost the game.
+#   - This is the main class of the game
+#   - It will display the title, the instruction, the wordle, the letter entered by the player
+#   - It will also check if the word entered by the player is correct or not.
+#   - It will also check if the player has won or lost the game.
 #
 ##############################################################################################
 class WordleGame:
     
     ########################################################################################
     #     def __init__(self):
-        
+    #
     #         - Constructor
     #         - Initializes the game screen with the dimensions WIDTH and HEIGHT.
     #         - Initializes 2D list with 6 rows and 5 columns filled with empty spaces.
@@ -245,7 +245,6 @@ class WordleGame:
             entry = entry.upper()
             self.board[self.turn][self.letters] = entry
             self.letters += 1
-            
             
             
  #########################################################
