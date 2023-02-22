@@ -1,6 +1,5 @@
 import pygame
 import random
-import pygame.mixer
 import words
 import itertools
 
@@ -21,7 +20,7 @@ WIDTH  = 600
 HEIGHT = 630
 
 # This is the font.
-letter_font   = pygame.font.Font("assets/FreeSansBold.otf", 40)
+letter_font   = pygame.font.Font("assets/FreeSansBold.otf", 30)
 small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 
 class WordleGame:
@@ -38,10 +37,10 @@ class WordleGame:
         
         self.turn              = 0
         self.letters           = 0
-        self.box_width         = 45
-        self.box_height        = 45
-        self.green_box_height  = 60
-        self.dist_Left         = 100
+        self.box_width         = 60
+        self.box_height        = 60
+        self.green_box_height  = 73
+        self.dist_Left         = 130
         self.dist_Top          = 90
         
         
@@ -84,7 +83,7 @@ class WordleGame:
     # It will also display the wordle in the middle of the screen
     def draw_title(self):
         title = letter_font.render("WORDLE", True, GREEN)
-        self.screen.blit(title, (WIDTH / 2 - 100, HEIGHT - 625))
+        self.screen.blit(title, (WIDTH / 2 - 80, HEIGHT - 625))
         
         
     # This function will display the instruction on the screen
@@ -93,15 +92,15 @@ class WordleGame:
     # if the rectangle is YELLOW it means the letter is part of the word but not in the right column,
     # if the rectangle is RED the letter are not part of the word.
     def Instruction(self):
-        pygame.draw.rect(self.screen, GREEN,  [WIDTH - 550, HEIGHT - 70, self.box_width - 30, self.box_height - 30], 0, 2)
-        pygame.draw.rect(self.screen, YELLOW, [WIDTH - 550, HEIGHT - 50, self.box_width - 30, self.box_height - 30], 0, 2)
-        pygame.draw.rect(self.screen, RED,    [WIDTH - 550, HEIGHT - 30, self.box_width - 30, self.box_height - 30], 0, 2)
+        pygame.draw.rect(self.screen, GREEN,  [WIDTH - 560, HEIGHT - 150, self.box_width - 30, self.box_height - 30], 0, 4)
+        pygame.draw.rect(self.screen, YELLOW, [WIDTH - 560, HEIGHT - 100, self.box_width - 30, self.box_height - 30], 0, 4)
+        pygame.draw.rect(self.screen, RED,    [WIDTH - 560, HEIGHT - 50,  self.box_width - 30, self.box_height - 30], 0, 4)
         Instruction_text = small_font.render("Correct Letter / right spot", True, WHITE)
-        self.screen.blit(Instruction_text, (130, 630))
+        self.screen.blit(Instruction_text, (WIDTH - 520, HEIGHT - 148))
         Instruction_text = small_font.render("Correct Letter / not in the right spot", True, WHITE)
-        self.screen.blit(Instruction_text, (130, 680))
+        self.screen.blit(Instruction_text, (WIDTH - 520, HEIGHT - 100))
         Instruction_text = small_font.render("Wrong Letter", True, WHITE)
-        self.screen.blit(Instruction_text, (130, 725))
+        self.screen.blit(Instruction_text, (WIDTH - 520, HEIGHT - 48))
     
     
     # This function will draw the letter entered by the player in GRAY
@@ -109,10 +108,10 @@ class WordleGame:
     # It will also highlight the whole 5 letters word enter by the user in green to show the turn he is on.
     def draw_shape(self):
         for i, j in itertools.product(range(5), range(6)):
-            pygame.draw.rect(self.screen, WHITE, [i * 80 + self.dist_Left, j * 80 + self.dist_Top, self.box_width, self.box_height], 2, 5)
+            pygame.draw.rect(self.screen, WHITE, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 3, 8)
             Letters_text = letter_font.render(self.board[j][i], True, GRAY)
-            self.screen.blit(Letters_text, (i * 80 + (self.dist_Left + 15), j * 80 + self.dist_Top))
-        pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 17), self.turn * 80 + (self.dist_Top - 8), WIDTH - 180, self.green_box_height], 4, 10)
+            self.screen.blit(Letters_text, (i * 65 + (self.dist_Left + 9), j * 65 + self.dist_Top - 24))
+        pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 6), self.turn * 65 + (self.dist_Top - 25), WIDTH - 270, self.green_box_height - 10], 3, 10)
     
     
     
@@ -125,18 +124,14 @@ class WordleGame:
 
         for i, j in itertools.product(range(5), range(6)):
             if self.secret_word[i] == self.board[j][i] and self.turn > j:
-                pygame.draw.rect(self.screen, GREEN, [i * 80 + 100, j * 80 + self.dist_Top, self.box_height, self.box_width], 0, 6)
-                # pygame.draw.rect(self.screen, GREEN, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
-
+                pygame.draw.rect(self.screen, GREEN, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 0, 8)
 
             elif self.board[j][i] in self.secret_word and self.turn > j:
-                pygame.draw.rect(self.screen, YELLOW, [i * 80 + 100, j * 80 + self.dist_Top, self.box_height, self.box_width], 0, 6)
-            #   pygame.draw.rect(self.screen, YELLOW, [i * 80 + 100, self.turn * 80 + 180, 65, 65], 0, 5)
+                pygame.draw.rect(self.screen, YELLOW, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 0, 8)
 
             # When the letter is not part of the word.  The letter will stay RED.
             elif self.board[j][i] != self.secret_word[i] and self.turn > j:
-                pygame.draw.rect(self.screen, RED, [i * 80 + 100, j * 80 + self.dist_Top, self.box_height, self.box_width], 0, 6)     
-
+                pygame.draw.rect(self.screen, RED, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 0, 8)
 
         # check if guess is correct, add game over conditions
         for row in range(6):
@@ -148,11 +143,6 @@ class WordleGame:
         if self.turn == 6:
             self.game_over   = True
             self.turn_active = False
-
-            # if self.secret_word in self.board:
-            #     # self.win_sound.play()
-            # else:
-            #     # self.lose_sound.play()   
 
     
     def draw_board(self):
@@ -200,7 +190,7 @@ class WordleGame:
 
         # Good Job message
         win_text = letter_font.render("Good Job!!!", True, GREEN)
-        self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 700])
+        self.screen.blit(win_text, [WIDTH / 2 - 150, HEIGHT - 10])
         
         # Display the secret word
         secret_text = letter_font.render(self.secret_word, True, WHITE)
