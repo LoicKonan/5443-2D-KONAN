@@ -1,3 +1,35 @@
+##############################################################################################
+#  
+#      Author:           Loic Konan
+#      Email:            loickonan.lk@gmail.com
+#      Label:            Wordle
+#      Title:            Program 1
+#      Course:           CMPS 5443 
+#      Semester:         Spring 2023
+#      Description:
+#                        This This is a Wordle game in pygame.
+#                        Wordle is a guessing game in which players try to 
+#                        guess a secret word by making multiple attempts.
+#                        The game features a five-letter word, and players have 
+#                        6 to guess it correctly. After each guess, the game provides 
+#                        feedback in the form of colored squares.
+#                        The colored squares indicate which letters in the guess match the 
+#                        secret word and are in the correct position.
+#                        Players can use this feedback to eliminate incorrect letters
+#                        and narrow down their subsequent guesses. The game ends when the 
+#                        player guesses the word correctly or runs out of attempts.
+#  
+#
+#      Usage:
+#                        python game.py          : driver program
+#
+#      Files:            game.py, words.py, assets/Icon.png, assets/FreeSansBold.otf
+#
+#      Date:             02/21/2023
+#
+#  
+#  
+##############################################################################################
 import pygame
 import random
 import words

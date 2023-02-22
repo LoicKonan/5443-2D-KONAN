@@ -12,7 +12,7 @@
 ### Description
 
 - This is a **Wordle game** in pygame.
-- The goal is to find **the word** in the grid.
+- The goal is to find **the secret word**.
 - The player can use the backspace key to delete the letter.
 - **Wordle** is a guessing game in which players try to guess a secret word by making multiple attempts.
 - This game features a five-letter word, and players have **six attempts** to guess it correctly.
