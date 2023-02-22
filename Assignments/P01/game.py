@@ -65,6 +65,7 @@ small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 ##############################################################################################
 class WordleGame:
     
+    
     ########################################################################################
     #     def __init__(self):
     #
@@ -105,6 +106,7 @@ class WordleGame:
         self.secret_word = "ETHER"
 
 
+
     ########################################################################################
     # def run(self):
     #
@@ -137,15 +139,18 @@ class WordleGame:
             pygame.display.flip()
             
      
+     
     ##########################################################
     # def draw_title(self):
     #
     #   - This Function will display Wordle as a Title.
     #
     ##########################################################
+    
     def draw_title(self):
         title = letter_font.render("WORDLE", True, GREEN)
         self.screen.blit(title, (WIDTH / 2 - 110, HEIGHT - 625))
+        
         
         
     ###################################################################################
@@ -175,6 +180,7 @@ class WordleGame:
         self.screen.blit(Instruction_text, (WIDTH - 520, HEIGHT - 48))
     
     
+    
     ########################################################################################
     # def draw_shape(self):
     #
@@ -185,7 +191,7 @@ class WordleGame:
     ########################################################################################
 
     def draw_shape(self):
-        
+        #
         for i, j in itertools.product(range(5), range(6)):
             # The rectangle that will contain the letter.
             pygame.draw.rect(self.screen, WHITE, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 3, 8)
