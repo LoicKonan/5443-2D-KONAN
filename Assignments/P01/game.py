@@ -54,7 +54,6 @@ letter_font   = pygame.font.Font("assets/FreeSansBold.otf", 45)
 small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 
 
-
 ##############################################################################################
 # class WordleGame:
 #
@@ -66,6 +65,16 @@ small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 ##############################################################################################
 class WordleGame:
     
+    ########################################################################################
+    #     def __init__(self):
+        
+    #         - Constructor
+    #         - Initializes the game screen with the dimensions WIDTH and HEIGHT.
+    #         - Initializes 2D list with 6 rows and 5 columns filled with empty spaces.
+    #         - Sets the initial values for game variables.
+    #         - Loads and sets the game window's caption and icon.
+    #
+    ########################################################################################
     
     def __init__(self):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -83,19 +92,30 @@ class WordleGame:
         self.green_box_height  = 73
         self.dist_Left         = 130
         self.dist_Top          = 90
-        
-        
-        self.clock        = pygame.time.Clock()
+
         self.game_over    = False
         self.turn_active  = True
-        # self.secret_word  = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
-        self.secret_word = "ETHER"
-        
-        
+        self.clock        = pygame.time.Clock()
+
         pygame.display.set_caption("Wordle Game")
         self.icon = pygame.image.load("assets/Icon.png")
         pygame.display.set_icon(self.icon)
+        
+        # self.secret_word  = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
+        self.secret_word = "ETHER"
 
+
+    ########################################################################################
+    # def run(self):
+    #
+    #   - This method is the main game loop, which runs as long as the game is active.
+    #   - Uses the pygame clock object to regulate the frame rate to 60 frames per second.
+    #   - Fills the screen with the color black to clear the previous frame.
+    #   - Calls other methods that draw various game elements on the screen.
+    #   - Handles user events, such as keyboard input, updates the game state accordingly.
+    #   - Flips the display to show the updated frame on the screen.
+    #
+    ########################################################################################
 
     def run(self):
         while True:
