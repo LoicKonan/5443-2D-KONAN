@@ -127,7 +127,6 @@ class WordleGame:
             self.Instruction()
             self.result()
 
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -138,9 +137,12 @@ class WordleGame:
             pygame.display.flip()
             
      
-     
-    # This Function will display a Title Wordle one letter at a time
-    # It will also display the wordle in the middle of the screen
+    ##########################################################
+    # def draw_title(self):
+    #
+    #   - This Function will display Wordle as a Title.
+    #
+    ##########################################################
     def draw_title(self):
         title = letter_font.render("WORDLE", True, GREEN)
         self.screen.blit(title, (WIDTH / 2 - 110, HEIGHT - 625))
