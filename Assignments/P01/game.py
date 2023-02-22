@@ -312,16 +312,16 @@ class WordleGame:
 
 
 
-    ##############################################################################
+    ##################################################################################
     # def handle_textinput(self, event):
     #   
-    #   -
-    #   -
-    #   -
+    #   - This handle text input events that occur when a player enters a letter.
     #
-    ########################################################################################
+    ##################################################################################
     def handle_textinput(self, event):
         entry = event.__getattribute__('text')
+        
+        # if the user entered a letter, make it uppercase and assigns it to a position
         if entry != " ":
             entry = entry.upper()
             self.board[self.turn][self.letters] = entry
