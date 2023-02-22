@@ -35,9 +35,8 @@ import random
 import words
 import itertools
 
-
+# initialize pygame
 pygame.init()
-pygame.mixer.init()
 
 # screen setup colors
 WHITE      = (255, 255, 255)
@@ -82,8 +81,7 @@ class WordleGame:
         # self.secret_word  = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
         self.secret_word = "ETHER"
         
-
-
+        
         pygame.display.set_caption("Wordle Game")
         self.icon = pygame.image.load("assets/Icon.png")
         pygame.display.set_icon(self.icon)
