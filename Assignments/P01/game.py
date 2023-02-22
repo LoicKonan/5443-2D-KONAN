@@ -53,7 +53,20 @@ HEIGHT = 630
 letter_font   = pygame.font.Font("assets/FreeSansBold.otf", 45)
 small_font    = pygame.font.Font("assets/FreeSansBold.otf", 20)
 
+
+
+##############################################################################################
+# class WordleGame:
+#
+#   This is the main class of the game
+#   It will display the title, the instruction, the wordle, the letter entered by the player
+#   It will also check if the word entered by the player is correct or not.
+#   It will also check if the player has won or lost the game.
+#
+##############################################################################################
 class WordleGame:
+    
+    
     def __init__(self):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.board  = [[" ", " ", " ", " ", " "],
@@ -211,8 +224,11 @@ class WordleGame:
             self.board[self.turn][self.letters] = entry
             self.letters += 1
             
+            
+            
  #########################################################
  # def draw_win(self):
+ #
  #     - Tell them to Hit Enter or Space to play again
  #     - Show the correct word
  #     - Show the Good Job message
@@ -243,6 +259,8 @@ class WordleGame:
                         self.reset_game()
                         return
                     pygame.display.flip()
+                    
+                    
                     
 ########################################################
 # def draw_lose(self):
