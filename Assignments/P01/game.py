@@ -83,7 +83,7 @@ class WordleGame:
     # It will also display the wordle in the middle of the screen
     def draw_title(self):
         title = letter_font.render("WORDLE", True, GREEN)
-        self.screen.blit(title, (WIDTH / 2 - 80, HEIGHT - 625))
+        self.screen.blit(title, (WIDTH / 2 - 110, HEIGHT - 625))
         
         
     # This function will display the instruction on the screen
@@ -110,7 +110,7 @@ class WordleGame:
         for i, j in itertools.product(range(5), range(6)):
             pygame.draw.rect(self.screen, WHITE, [i * 65 + self.dist_Left, j * 65 + self.dist_Top - 20, self.box_width - 8, self.box_height - 8], 3, 8)
             Letters_text = letter_font.render(self.board[j][i], True, GRAY)
-            self.screen.blit(Letters_text, (i * 65 + (self.dist_Left + 15), j * 65 + self.dist_Top - 12))
+            self.screen.blit(Letters_text, (i * 65 + (self.dist_Left + 10), j * 65 + self.dist_Top - 21))
         pygame.draw.rect(self.screen, GREEN, [(self.dist_Left - 6), self.turn * 65 + (self.dist_Top - 25), WIDTH - 270, self.green_box_height - 10], 3, 10)
     
     
