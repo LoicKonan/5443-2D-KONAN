@@ -453,31 +453,6 @@ class WordleGame:
             # For a yellow Box +=5
             elif self.board[row][col] in self.secret_word:
                 score += 5
-                
-            # If the player guess 5 consecutive green on the first column the score should automatically be 1000 points
-            elif row == 0 and col == 0:
-                score += 1000
-                
-            # If the player guess 5 consecutive green on the second column the score should automatically be 900 points
-            elif row == 1 and col == 1:
-                score += 900
-                
-            # If the player guess 5 consecutive green on the third column the score should automatically be 800 points
-            elif row == 2 and col == 2:
-                score += 800
-                
-            # If the player guess 5 consecutive green on the fourth column the score should automatically be 700 points
-            elif row == 3 and col == 3:
-                score += 700
-                
-            # If the player guess 5 consecutive green on the fifth column the score should automatically be 600 points
-            elif row == 4 and col == 4:
-                score += 600
-                
-            # If the player guess 5 consecutive green on the sixth column the score should automatically be 500 points
-            elif row == 5 and col == 5:
-                score += 500
-
     
         score_text = small_font.render("Score: " + str(score), True, WHITE)
         self.screen.blit(score_text, [WIDTH - 150, 20])
