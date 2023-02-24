@@ -123,11 +123,14 @@ class WordleGame:
         while True:
             self.clock.tick(60)
             self.screen.fill(BLACK)
+            self.timer()
             self.check_words1()
             self.draw_title()
             self.draw_shape()
             self.Instruction()
             self.result()
+            self.score()
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -339,8 +342,12 @@ class WordleGame:
  #########################################################
             
     def draw_win(self):
-        self.screen.fill(BLACK)             
         
+        # Calling these functions   
+        self.screen.fill(BLACK)             
+        self.timer()
+        self.score()
+             
         # Good Job message
         win_text = letter_font.render("Good Job!!!", True, GREEN)
         self.screen.blit(win_text, (WIDTH / 2 - 160, HEIGHT - 180))
@@ -375,6 +382,11 @@ class WordleGame:
 ########################################################
 
     def draw_lose(self):
+        
+        # Calling these functions
+        self.timer()
+        self.score()
+        
         # Display the secret word
         secret_text = letter_font.render(self.secret_word, True, WHITE)
         self.screen.blit(secret_text, [WIDTH / 2 - 90, HEIGHT - 500])
@@ -396,6 +408,72 @@ class WordleGame:
                         self.reset_game()
                         return
                     pygame.display.flip()
+                    
+  
+  
+  
+
+##############################################################################################
+# def timer(self):
+#
+#     - This method will show a 60 seconds clock to the player on the top left of the screen. 
+#     - The clock will start counting down from 60 seconds when the game starts.
+#     - The clock will stop counting down when the game is over.
+#     - The clock will reset to 60 seconds when the player starts a new game.
+#     - When the clock get to 0 seconds and the player wasn't able to guess the correct word the game 
+#     - will go to the draw_lose function. 
+#
+#
+##############################################################################################                  
+    def timer(self):
+        if not self.game_over:
+            self.time = 60 - self.turn
+            if self.time == 0:
+                self.game_over = True
+                self.draw_lose()
+            text = small_font.render("Time: " + str(self.time), True, WHITE)
+            self.screen.blit(text, [WIDTH - 580, 20])
+            pygame.display.flip()
+
+
+
+##############################################################################################
+# def score(self):
+#
+#     - This method will show the player's score on the top right of the screen.
+#     - The score will start at 0 when the game starts.
+#     - The score will increase by 10 point for every correct letter guessed and correct position.
+#     - The score will decrease by 5 points for every correct letter guessed and wrong position.
+#     - The score will reset to 0 when the player starts a new game.
+#     - The player get a total of 5000 points if he get the correct word on the first try.
+#     - The player get a total of 4000 points if he get the correct word on the second try.
+#     - The player get a total of 3000 points if he get the correct word on the third try.
+#     - The player get a total of 2000 points if he get the correct word on the fourth try.
+#     - The player get a total of 1000 points if he get the correct word on the fifth try.
+#     - The player get a total of 500 points if he get the correct word on the sixth try.    
+#
+##############################################################################################   
+  
+    def score(self):
+        if self.game_over:
+            return
+        if self.turn == 0:
+            self.points = 5000
+        elif self.turn == 1:
+            self.points = 4000
+        elif self.turn == 2:
+            self.points = 3000
+        elif self.turn == 3:
+            self.points = 2000
+        elif self.turn == 4:
+            self.points = 1000
+        elif self.turn == 5:
+            self.points = 500
+        else:
+            self.points = 0
+        text = small_font.render("Score: " + str(self.points), True, WHITE)
+        self.screen.blit(text, [WIDTH - 130, 20])
+        pygame.display.flip()
   
   
   
