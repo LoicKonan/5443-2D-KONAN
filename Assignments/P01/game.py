@@ -23,7 +23,7 @@
 #      Usage:
 #                        python game.py          - driver program
 #
-#      Files:            game.py, words.py, assets/Icon.png, assets/FreeSansBold.otf
+#      Files:            game.py, words1.py, assets/Icon.png, assets/FreeSansBold.otf
 #
 #      Date:             02/21/2023
 #
@@ -31,7 +31,7 @@
 ##############################################################################################
 import pygame 
 import random 
-import words   
+import words1   
 import itertools 
 
 # initialize pygame
@@ -102,7 +102,7 @@ class WordleGame:
         self.icon = pygame.image.load("assets/Icon.png")
         pygame.display.set_icon(self.icon)
         
-        # self.secret_word  = words.WORDS[random.randint(0, len(words.WORDS) - 1)]
+        # self.secret_word  = words1.WORDS1[random.randint(0, len(words1.WORDS1) - 1)]
         self.secret_word = "ETHER"
 
 
@@ -123,7 +123,7 @@ class WordleGame:
         while True:
             self.clock.tick(60)
             self.screen.fill(BLACK)
-            self.check_words()
+            self.check_words1()
             self.draw_title()
             self.draw_shape()
             self.Instruction()
@@ -205,7 +205,7 @@ class WordleGame:
 
     
     ##############################################################################
-    # def check_words(self):
+    # def check_words1(self):
     #
     #   - This method will check the entered word by the user.
     #   - It will compare the entered word with the secret word and
@@ -213,7 +213,7 @@ class WordleGame:
     #
     ##############################################################################
     
-    def check_words(self):
+    def check_words1(self):
         for i, j in itertools.product(range(5), range(6)):
             # When the letter is part of the word and in the right position. The square will turn GREEN.
             if self.secret_word[i] == self.board[j][i] and self.turn > j:
@@ -413,7 +413,7 @@ class WordleGame:
         self.turn        = 0
         self.letters     = 0
         self.game_over   = False
-        self.secret_word = words.WORDS[random.randint(0, len(words.WORDS) - 1)]        
+        self.secret_word = words1.WORDS1[random.randint(0, len(words1.WORDS1) - 1)]        
         self.board       = [  [" ", " ", " ", " ", " "],
                               [" ", " ", " ", " ", " "],
                               [" ", " ", " ", " ", " "],
