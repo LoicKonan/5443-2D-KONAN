@@ -123,7 +123,6 @@ class WordleGame:
         while True:
             self.clock.tick(60)
             self.screen.fill(BLACK)
-            self.timer()
             self.check_words1()
             self.draw_title()
             self.draw_shape()
@@ -345,7 +344,6 @@ class WordleGame:
         
         # Calling these functions   
         self.screen.fill(BLACK)             
-        self.timer()
         self.score()
              
         # Good Job message
@@ -382,9 +380,8 @@ class WordleGame:
 ########################################################
 
     def draw_lose(self):
-        
-        # Calling these functions
-        self.timer()
+
+        # Calling these functions        
         self.score()
         
         # Display the secret word
@@ -410,11 +407,9 @@ class WordleGame:
                     pygame.display.flip()
                     
   
-  
-  
 
 ##############################################################################################
-# def timer(self):
+# def timer_T(self):
 #
 #     - This method will show a 60 seconds clock to the player on the top left of the screen. 
 #     - The clock will start counting down from 60 seconds when the game starts.
@@ -425,15 +420,7 @@ class WordleGame:
 #
 #
 ##############################################################################################                  
-    def timer(self):
-        if not self.game_over:
-            self.time = 60 - self.turn
-            if self.time == 0:
-                self.game_over = True
-                self.draw_lose()
-            text = small_font.render("Time: " + str(self.time), True, WHITE)
-            self.screen.blit(text, [WIDTH - 580, 20])
-            pygame.display.flip()
+
 
 
 
@@ -442,40 +429,25 @@ class WordleGame:
 #
 #     - This method will show the player's score on the top right of the screen.
 #     - The score will start at 0 when the game starts.
-#     - The score will increase by 10 point for every correct letter guessed and correct position.
-#     - The score will decrease by 5 points for every correct letter guessed and wrong position.
+#     - The score will increase by 10 point for every green box
+#     - The score will increase by 5 point for every yellow box
 #     - The score will reset to 0 when the player starts a new game.
-#     - The player get a total of 5000 points if he get the correct word on the first try.
-#     - The player get a total of 4000 points if he get the correct word on the second try.
-#     - The player get a total of 3000 points if he get the correct word on the third try.
-#     - The player get a total of 2000 points if he get the correct word on the fourth try.
-#     - The player get a total of 1000 points if he get the correct word on the fifth try.
-#     - The player get a total of 500 points if he get the correct word on the sixth try.    
+#     - The player will see the score in the draw_win and draw_lose screen.
 #
 ##############################################################################################   
   
     def score(self):
-        if self.game_over:
-            return
-        if self.turn == 0:
-            self.points = 5000
-        elif self.turn == 1:
-            self.points = 4000
-        elif self.turn == 2:
-            self.points = 3000
-        elif self.turn == 3:
-            self.points = 2000
-        elif self.turn == 4:
-            self.points = 1000
-        elif self.turn == 5:
-            self.points = 500
-        else:
-            self.points = 0
-        text = small_font.render("Score: " + str(self.points), True, WHITE)
-        self.screen.blit(text, [WIDTH - 130, 20])
-        pygame.display.flip()
-  
-  
+        score = 0
+        for row, col in itertools.product(range(5), range(5)):
+            if self.board[row][col] == self.secret_word[col]:
+                score += 10
+            elif self.board[row][col] in self.secret_word:
+                score += 5
+        score_text = small_font.render("Score: " + str(score), True, WHITE)
+        self.screen.blit(score_text, [WIDTH - 110, 20])
+
+        return score
+        
   
 ##############################################################################################
 # def reset_game(self):
