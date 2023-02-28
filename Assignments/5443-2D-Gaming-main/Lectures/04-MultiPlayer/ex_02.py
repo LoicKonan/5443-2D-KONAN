@@ -52,11 +52,13 @@ while running:
 
     # handle events
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if (
+            event.type != pygame.QUIT
+            and event.type == pygame.KEYDOWN
+            and event.key == pygame.K_ESCAPE
+            or event.type == pygame.QUIT
+        ):
             running = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                running = False
 
     # move the dot based on key input
     keys = pygame.key.get_pressed()
