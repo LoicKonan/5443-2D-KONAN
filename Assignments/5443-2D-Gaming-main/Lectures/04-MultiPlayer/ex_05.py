@@ -134,15 +134,15 @@ class GameManager:
         self.localPlayer = None
 
     def addPlayer(self,player,local=False):
-        if not player.id in self.players:
+        if player.id not in self.players:
             self.players[player.id] = player
-        
+
         if local:
             self.localPlayer = self.players[player.id]
 
     def draw(self):
         for id,player in self.players.items():
-            if not id == self.localPlayer:
+            if id != self.localPlayer:
                 player.draw()
 
     def callBack(self, ch, method, properties, body):
@@ -157,14 +157,12 @@ class GameManager:
         Returns:
             dictionary: results of callback
         """
-        results = {}
-        results['game'] = method.exchange
-        results['exchange'] = method.exchange
+        results = {'game': method.exchange, 'exchange': method.exchange}
         body = json.loads(body.decode('utf-8'))
         for k,v in body.items():
             results[k] = v
 
-        if not results['sender'] in self.players:
+        if results['sender'] not in self.players:
             self.players[results['sender']] = BasicPlayer(self.screen)
             print(len(self.players))
         else:
@@ -194,44 +192,45 @@ def main(creds):
     manager = GameManager(screen)
 
     localPlayer = Player(screen,creds,manager.callBack)
-    
+
     manager.addPlayer(localPlayer,True)
-   
+
 
     # set the window title
     pygame.display.set_caption(f"{creds['user']}")
 
     # create list for lookup for keys 0-9
-    # The keys 0-9 are ascii 48-57 
-    numericKeys = [x for x in range(0,58)]
+    # The keys 0-9 are ascii 48-57
+    numericKeys = list(range(58))
 
     # run the game loop
     running = True
     while running:
-        
+
         # clear the screen
         screen.fill((255, 255, 255))
 
         # handle events
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if (
+                event.type != pygame.QUIT
+                and event.type == pygame.KEYDOWN
+                and event.key == pygame.K_ESCAPE
+                or event.type == pygame.QUIT
+            ):
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
 
-                # get the keys 0-9 if pressed
-                elif event.key in numericKeys:
-                    print(f"You pressed: {48-event.key}")
-                    # choose current dot by which key pressed
-                    currentPlayer = 48 - event.key
+            elif event.type == pygame.KEYDOWN and event.key in numericKeys:
+                print(f"You pressed: {48-event.key}")
+                # choose current dot by which key pressed
+                currentPlayer = 48 - event.key
 
         # move the dot based on key input
         keys = pygame.key.get_pressed()
         localPlayer.update(keys)
 
         manager.draw()
-        
+
         # update the screen
         pygame.display.flip()
 
