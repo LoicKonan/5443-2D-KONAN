@@ -1,2 +1,0 @@
-## Hangman - Starter Code
-#### None
