@@ -57,13 +57,13 @@ class Game:
         for object in self.gameObjects:
             object.update()
 
-            if object.type == "tank" or object.type == "Projectile1" or object.type == "Projectile2":
+            if object.type in ["tank", "Projectile1", "Projectile2"]:
                 object.applyForce(Vector2(0, self.velocity))  # gravity
 
             if object.type == "tank":
                 self.checkTankWithWall(object)
 
-            if object.type == "Projectile1" or object.type == "Projectile2":
+            if object.type in ["Projectile1", "Projectile2"]:
                 self.checkProjectileCollision(object)
                 if object.destroy:
                     self.gameObjects.remove(object)
@@ -71,7 +71,7 @@ class Game:
                     self.gameObjects.append(Explosion(Vector2(object.pos.x - 32,object.pos.y - 32)))
                     sounds.play("explosion")
 
-                    if isinstance(object, Projectile) or isinstance(object, Missile):
+                    if isinstance(object, (Projectile, Missile)):
                         self.currentTurn *= -1
                     break
 
@@ -96,16 +96,14 @@ class Game:
 
     def checkTankWithWall(self, tank):
         for otherObj in self.gameObjects:
-            if utils.collide(tank, otherObj):
-                if otherObj.type == "wall":
-                    otherObj.onWallCollide(tank)
+            if utils.collide(tank, otherObj) and otherObj.type == "wall":
+                otherObj.onWallCollide(tank)
 
     def checkProjectileCollision(self,projectile):
         for otherObj in self.gameObjects:
-            if utils.collide(projectile, otherObj):
-                if otherObj.type == "wall":
-                    otherObj.destroy = True
-                    projectile.destroy = True
+            if utils.collide(projectile, otherObj) and otherObj.type == "wall":
+                otherObj.destroy = True
+                projectile.destroy = True
 
         if projectile.destroy:
             for otherObj in self.gameObjects:
@@ -135,14 +133,10 @@ class Game:
 
         if key == pygame.K_q:
             self.velocity -= 0.1
-            if self.velocity < 0.1:
-                self.velocity = 0.1
+            self.velocity = max(self.velocity, 0.1)
         elif key == pygame.K_e:
             self.velocity += 0.1
-            if self.velocity > 1:
-                self.velocity = 1
-
-
+            self.velocity = min(self.velocity, 1)
 
 
     def onKeyUp(self, key):
