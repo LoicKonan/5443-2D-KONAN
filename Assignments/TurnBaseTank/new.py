@@ -49,6 +49,8 @@ class Game:
         utils.drawText(Vector2(10, 180), "hold mouse : shoot".format(self.velocity), (244, 244, 244), 24)
         utils.drawText(Vector2(10, 220), "(left : normal, right: missile)".format(self.velocity),(244, 244, 244), 24)
         utils.drawText(Vector2(10, 260), "W : special".format(self.velocity), (244, 244, 244), 24)
+       
+       
         for obj in self.gameObjects:
             # if utils.distance(obj.pos.x, obj.pos.y, 200, 500) < 50:
             #     continue

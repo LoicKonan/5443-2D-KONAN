@@ -207,50 +207,78 @@ class Game:
         if self.winner is not None:
             return
 
+        # If the camera is following an object, also return
         if utils.camera.target is not None:
             return
+        
+        # If it's player 1's turn, call the onMouseDown function for tank1
         if self.currentTurn == -1:
             self.tank1.onMouseDown(event)
+            
+        # If it's player 2's turn, call the onMouseDown function for tank2
         else:
             self.tank2.onMouseDown(event)
 
+
+        # This function is called when a mouse button is released
     def onMouseUp(self, event):
+        # If there is already a winner, the game is over, so return
         if self.winner is not None:
             return
+        # If the camera is following an object, also return
         if utils.camera.target is not None:
             return
 
+        # If it's player 1's turn, call the onMouseUp function for tank1
         if self.currentTurn == -1:
-            self.tank1.onMouseUp(event)
+            # Get the projectile from tank1
             projectile = self.tank1.getProjectile()
+            # Set the type of the projectile to "Projectile1"
             projectile.type = "Projectile1"
+            # Add the projectile to the list of game objects
             self.gameObjects.append(projectile)
+            # Make the camera follow the projectile
             utils.camera.follow(projectile)
 
-            if isinstance(projectile,Projectile):
-                self.currentProjectile = projectile
-            elif isinstance(projectile,Missile):
-                projectile.setTarget(self.tank2)
-            sounds.play("projectile")
-
-        else:
-            self.tank2.onMouseUp(event)
-            projectile = self.tank2.getProjectile()
-            projectile.type = "Projectile2"
-            self.gameObjects.append(projectile)
-            utils.camera.follow(projectile)
+            # If the projectile is a Projectile, set it as the current projectile
             if isinstance(projectile, Projectile):
                 self.currentProjectile = projectile
+            # If it's a Missile, set the target to tank2
             elif isinstance(projectile, Missile):
-                projectile.setTarget(self.tank1)
+                projectile.setTarget(self.tank2)
+            # Play the sound for firing the projectile
             sounds.play("projectile")
 
+        # If it's player 2's turn, call the onMouseUp function for tank2
+        else:
+            # Get the projectile from tank2
+            projectile = self.tank2.getProjectile()
+            # Set the type of the projectile to "Projectile2"
+            projectile.type = "Projectile2"
+            # Add the projectile to the list of game objects
+            self.gameObjects.append(projectile)
+            # Make the camera follow the projectile
+            utils.camera.follow(projectile)
+            
+            # If the projectile is a Projectile, set it as the current projectile
+            if isinstance(projectile, Projectile):
+                self.currentProjectile = projectile
+            # If it's a Missile, set the target to tank1
+            elif isinstance(projectile, Missile):
+                projectile.setTarget(self.tank1)
+            # Play the sound for firing the projectile
+            sounds.play("projectile")
+
+    # This function is called to draw the game
     def draw(self):
+        # Draw the text for the controls
         utils.drawText(Vector2(10, 100), "gravity (Q-E): " + "{:.2f}".format(self.velocity) , (244, 244, 244), 24)
         utils.drawText(Vector2(10, 140), "A/D : move".format(self.velocity), (244, 244, 244), 24)
         utils.drawText(Vector2(10, 180), "hold mouse : shoot".format(self.velocity), (244, 244, 244), 24)
         utils.drawText(Vector2(10, 220), "(left : normal, right: missile)".format(self.velocity),(244, 244, 244), 24)
         utils.drawText(Vector2(10, 260), "W : special".format(self.velocity), (244, 244, 244), 24)
+
+        
         for obj in self.gameObjects:
             # if utils.distance(obj.pos.x, obj.pos.y, 200, 500) < 50:
             #     continue
@@ -260,6 +288,7 @@ class Game:
 
         if self.winner == -1:
             utils.drawText(Vector2(500, 100), "Player 1 win!", (244, 23, 23), 43)
+            
         elif self.winner == 1:
             utils.drawText(Vector2(500, 100), "Player 2 win!", (244, 23, 23), 43)
 
