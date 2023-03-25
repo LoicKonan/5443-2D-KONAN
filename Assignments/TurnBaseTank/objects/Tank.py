@@ -92,29 +92,39 @@ class Tank(GameObject):
             utils.screen.blit(particleImg, (self.shootSheetPos.x - utils.camera.pos.x + 100,self.shootSheetPos.y- utils.camera.pos.y ))
 
 
+    # This method is responsible for rotating the cannon based on the mouse position
     def rotateCannon(self):
+        
+        # Get mouse position and cannon position
         mouseX, mouseY = pygame.mouse.get_pos()
         cannonX = self.pos.x - 67
         cannonY = self.pos.y + self.shotY
 
+        # Calculate the direction and angle of the cannon
         dirX = mouseX - cannonX
         dirY = mouseY - cannonY
         angle = math.degrees(math.atan2(dirY, dirX))
         a = angle
         angle += 90
+        
+        # Limit the cannon's angle of rotation
         if angle < -70:
             angle = -70
+            
         elif angle > 70:
             angle = 70
 
         if a + 90 < -70:
             a = -70 - 90
+            
         elif a + 90 > 70:
             a = 70 - 90
 
+        # Set the cannon's angle and shooting direction
         self.angle = angle
         self.shootDir = Vector2(math.cos(math.radians(a)), math.sin(math.radians(a))).normalize()
 
+    # This method is called when the mouse button is pressed down
     def onMouseDown(self, event):
         if event.button == 1:
             self.isMissie = False
@@ -125,11 +135,13 @@ class Tank(GameObject):
         self.projectileSpeed = 5
         pass
 
+    # This method is called when the mouse button is released
     def onMouseUp(self, event):
         self.shotY = 7
         self.holding = False
         self.particleScale = 10
 
+    # This method creates a projectile object with a given force and projectile type
     def getProjectile(self):
         force = self.shootDir * self.projectileSpeed
         if self.isMissie:
@@ -138,28 +150,37 @@ class Tank(GameObject):
             projectile = Projectile(self.projectilePos, force, "Projectile1")
         return projectile
 
+    # This method is called when a key is released
     def onKeyUp(self, keycode):
         if keycode == pygame.K_a:
             if self.vel.x == -self.speed:
                 self.vel.x = 0
+        
         elif keycode == pygame.K_d:  #
             if self.vel.x == self.speed:
                 self.vel.x = 0
 
+    # This method is called when a key is pressed down
     def onKeyDown(self, keycode):
-        if keycode == pygame.K_a:  # press a move left
+        # press a move left
+        if keycode == pygame.K_a:  
             if not self.flip:
                 self.flip = True
             self.vel.x = -self.speed
-        elif keycode == pygame.K_d:  # press d move right
+        
+        # press d move right
+        elif keycode == pygame.K_d:  
             if self.flip:
                 self.flip = False
             self.vel.x = self.speed
-        elif keycode == pygame.K_SPACE:  # press space jump
+            
+        # press space jump
+        elif keycode == pygame.K_SPACE:  
             if not self.jumping:
                 self.jumping = True
                 self.pos.y -= 5
                 self.applyForce(Vector2(0, -12.81))
 
+    # This method is called to set the character's state when they are on the ground
     def setOnGround(self, onGround):
         self.jumping = False
