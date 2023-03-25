@@ -10,6 +10,8 @@ class Utils():
     # Initialize the Utils class and set some default values
     def __init__(self):
         pygame.init()
+        
+        # set the game window size and initialize game variables
         self.height = 720
         self.width = 1280
         self.gameOver = False
@@ -20,6 +22,8 @@ class Utils():
         self.fps = 0
         self.fpsCounter = 0
         self.fpsTimeCount = 0
+        
+        # create a camera object
         self.camera = Camera()
 
     # Method to calculate deltaTime
@@ -33,6 +37,7 @@ class Utils():
 
     # Method to show frames per second (fps) on the screen
     def showFps(self):
+        # calculate fps
         self.fpsTimeCount += self.deltaTime()
         self.fpsCounter += 1
         if self.fpsTimeCount > 1:
@@ -40,6 +45,7 @@ class Utils():
             self.fps = self.fpsCounter
             self.fpsCounter = 0
 
+        # draw fps on screen
         if self.fps >= 50:
             self.drawText(Vector2(0,0),"fps: " + str(self.fps),(23,233,23),16)
         else:
