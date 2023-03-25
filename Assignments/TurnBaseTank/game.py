@@ -12,6 +12,7 @@ from utils.util import utils
 
 class Game:
     def __init__(self):
+        # Initialize all variables and game objects
         self.map = None
         self.winner = None
         self.currentTurn = None
@@ -22,16 +23,20 @@ class Game:
         self.velocity = 0.58
         self.currentProjectile = None
 
+        # Start a new game
         self.newGame()
 
 
     def newGame(self):
+        # Reset variables and game objects for a new game
         self.currentTurn = -1
         self.winner = None
         self.gameObjects = []
         self.map = MapGenerator()
         self.tank1 = Tank(Vector2(200, 100))
         self.tank2 = Tank(Vector2(1070, 100))
+        
+        # Add game objects to the list
         self.gameObjects += self.map.gameObjects
         self.gameObjects.append(self.tank1)
         self.gameObjects.append(self.tank2)
@@ -39,52 +44,65 @@ class Game:
         utils.camera.follow(None)
 
     def update(self):
-
+        # Update the camera position
         utils.camera.update()
 
+        # Rotate the cannon of the current tank based on whose turn it is
         if self.currentTurn == -1:
             self.tank1.rotateCannon()
         else:
             self.tank2.rotateCannon()
 
+        # Check if a tank has gone out of bounds
         if self.tank1.pos.y > 2000:
             self.winner = 1
             return
+        
         if self.tank2.pos.y > 2000:
             self.winner = -1
             return
 
+        # Update all game objects and apply gravity to tanks and projectiles
         for object in self.gameObjects:
             object.update()
 
             if object.type in ["tank", "Projectile1", "Projectile2"]:
                 object.applyForce(Vector2(0, self.velocity))  # gravity
 
+            # Check for collisions between tanks and walls
             if object.type == "tank":
                 self.checkTankWithWall(object)
 
+            # Check for collisions between projectiles and walls
             if object.type in ["Projectile1", "Projectile2"]:
                 self.checkProjectileCollision(object)
+                
+                # Remove the projectile and add an explosion effect if it collides with a wall
                 if object.destroy:
                     self.gameObjects.remove(object)
                     utils.camera.follow(None)
                     self.gameObjects.append(Explosion(Vector2(object.pos.x - 32,object.pos.y - 32)))
                     sounds.play("explosion")
 
+                    # Change the turn if the projectile was a Projectile or a Missile
                     if isinstance(object, (Projectile, Missile)):
                         self.currentTurn *= -1
                     break
 
+            # Check for collisions between Projectile1 and Tank2        
             if object.type == "Projectile1" and utils.collide(object,self.tank2) and self.tank2 is not None:
                 self.winner = -1
+                
                 if self.gameObjects.__contains__(self.tank2):
                     self.gameObjects.remove(self.tank2)
                 self.gameObjects.append(Explosion(self.tank2.pos))
                 sounds.play("explosion")
                 return
 
+            # Check for collisions between Projectile2 and Tank1
             if object.type == "Projectile2" and utils.collide(object,self.tank1) and self.tank1 is not None:
                 self.winner = 1
+                
                 if self.gameObjects.__contains__(self.tank1):
                     self.gameObjects.remove(self.tank1)
                 self.gameObjects.append(Explosion(self.tank1.pos))
