@@ -109,32 +109,49 @@ class Game:
                 sounds.play("explosion")
                 return
 
+            # removes walls that are marked to be destroyed from the gameObjects list
             if object.destroy and object.type == "wall":
                 self.gameObjects.remove(object)
 
+    # This method checks for collision between a tank and a wall
     def checkTankWithWall(self, tank):
+        
+        # iterate through all game objects and check for collision and object type
         for otherObj in self.gameObjects:
             if utils.collide(tank, otherObj) and otherObj.type == "wall":
+                # call onWallCollide method on wall object
                 otherObj.onWallCollide(tank)
 
+    # This method checks for collision between a projectile and a wall
     def checkProjectileCollision(self,projectile):
+        
+        # iterate through all game objects and check for collision and object type
         for otherObj in self.gameObjects:
             if utils.collide(projectile, otherObj) and otherObj.type == "wall":
+                # set destroy flag to true for both objects
                 otherObj.destroy = True
                 projectile.destroy = True
-
+                
+        # if projectile is destroyed
         if projectile.destroy:
+            
+            # iterate through all game objects and check for collision and object type
             for otherObj in self.gameObjects:
                 if otherObj.type == "wall" and utils.distance(projectile.pos.x,projectile.pos.y,otherObj.pos.x,otherObj.pos.y) < 50:
+                    # set destroy flag to true for wall object
                     otherObj.destroy = True
 
-    def onKeyDown(self, key):
 
+    # This method handles keyboard key press events
+    def onKeyDown(self, key):
+        # if there is a winner
         if self.winner is not None:
+            # if space key is pressed, start new game
             if key == pygame.K_SPACE:
                 self.newGame()
             return
 
+        # if w key is pressed and there is a current projectile
         if key == pygame.K_w and self.currentProjectile is not None:
             p1, p2 = self.currentProjectile.getProjectiles()
             self.gameObjects.append(p1)
