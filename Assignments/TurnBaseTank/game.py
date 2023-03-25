@@ -153,37 +153,57 @@ class Game:
 
         # if w key is pressed and there is a current projectile
         if key == pygame.K_w and self.currentProjectile is not None:
+            # get two projectiles from current projectile
             p1, p2 = self.currentProjectile.getProjectiles()
+           
+            # add both projectiles to game objects
             self.gameObjects.append(p1)
             self.gameObjects.append(p2)
+            
+            # set current projectile to None and play sound
             self.currentProjectile = None
             sounds.play("split")
 
+        # if camera has a target, return
         if utils.camera.target is not None:
             return
+        
+        # if it's player 1's turn call onKeyDown method on tank1 object
         if self.currentTurn == -1:
             self.tank1.onKeyDown(key)
+            
+        # else if it's player 2's turn call onKeyDown method on tank2 object
         else:
             self.tank2.onKeyDown(key)
 
+        # if q key is pressed, decrease velocity
         if key == pygame.K_q:
             self.velocity -= 0.1
             self.velocity = max(self.velocity, 0.1)
+            
+        # if e key is pressed, increase velocity
         elif key == pygame.K_e:
             self.velocity += 0.1
             self.velocity = min(self.velocity, 1)
 
 
+    # This method handles keyboard key release events
     def onKeyUp(self, key):
+        # if there is a winner, return
         if self.winner is not None:
             return
 
+        # if it's player 1's turn, call onKeyUp method on tank1 object
         if self.currentTurn == -1:
             self.tank1.onKeyUp(key)
+            
+        # if it's player 2's turn, call onKeyUp method on tank2 object
         else:
             self.tank2.onKeyUp(key)
 
+    # This method handles mouse button down events
     def onMouseDown(self, event):
+        # if there is a winner, return
         if self.winner is not None:
             return
 

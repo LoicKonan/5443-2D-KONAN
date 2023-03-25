@@ -1,58 +1,5 @@
 
 class Game:
-    def checkTankWithWall(self, tank):
-        for otherObj in self.gameObjects:
-            if utils.collide(tank, otherObj) and otherObj.type == "wall":
-                otherObj.onWallCollide(tank)
-
-    def checkProjectileCollision(self,projectile):
-        for otherObj in self.gameObjects:
-            if utils.collide(projectile, otherObj) and otherObj.type == "wall":
-                otherObj.destroy = True
-                projectile.destroy = True
-
-        if projectile.destroy:
-            for otherObj in self.gameObjects:
-                if otherObj.type == "wall" and utils.distance(projectile.pos.x,projectile.pos.y,otherObj.pos.x,otherObj.pos.y) < 50:
-                    otherObj.destroy = True
-
-    def onKeyDown(self, key):
-
-        if self.winner is not None:
-            if key == pygame.K_SPACE:
-                self.newGame()
-            return
-
-        if key == pygame.K_w and self.currentProjectile is not None:
-            p1, p2 = self.currentProjectile.getProjectiles()
-            self.gameObjects.append(p1)
-            self.gameObjects.append(p2)
-            self.currentProjectile = None
-            sounds.play("split")
-
-        if utils.camera.target is not None:
-            return
-        if self.currentTurn == -1:
-            self.tank1.onKeyDown(key)
-        else:
-            self.tank2.onKeyDown(key)
-
-        if key == pygame.K_q:
-            self.velocity -= 0.1
-            self.velocity = max(self.velocity, 0.1)
-        elif key == pygame.K_e:
-            self.velocity += 0.1
-            self.velocity = min(self.velocity, 1)
-
-
-    def onKeyUp(self, key):
-        if self.winner is not None:
-            return
-
-        if self.currentTurn == -1:
-            self.tank1.onKeyUp(key)
-        else:
-            self.tank2.onKeyUp(key)
 
     def onMouseDown(self, event):
         if self.winner is not None:
