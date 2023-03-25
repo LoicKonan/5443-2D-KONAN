@@ -6,12 +6,12 @@ from utils.util import utils
 class GameObject:
 
     def __init__(self, pos, img, type=""):
-        self.pos = pos
-        self.img = img
+        self.pos  = pos
+        self.img  = img
         self.type = type
 
-        self.vel = Vector2(0, 0)
-        self.acc = Vector2(0, 0)
+        self.vel  = Vector2(0, 0)
+        self.acc  = Vector2(0, 0)
         self.destroy = False
 
     def update(self):
