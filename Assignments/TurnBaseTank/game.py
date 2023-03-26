@@ -272,15 +272,19 @@ class Game:
         # Play the sound for firing the projectile
         sounds.play("projectile")
 
+
+
     # This function is called to draw the game
     def draw(self):
-        # Draw the text for the controls
-        utils.drawText(Vector2(10, 100), "gravity (Q-E): " + "{:.2f}".format(self.velocity) , (244, 244, 244), 24)
-        utils.drawText(Vector2(10, 140), "A/D : move".format(self.velocity), (244, 244, 244), 24)
-        utils.drawText(Vector2(10, 180), "hold mouse : shoot".format(self.velocity), (244, 244, 244), 24)
-        utils.drawText(Vector2(10, 220), "(left : normal, right: missile)".format(self.velocity),(244, 244, 244), 24)
-        utils.drawText(Vector2(10, 260), "W : special".format(self.velocity), (244, 244, 244), 24)
+    #     # Draw the text for the controls
+    #     utils.drawText(Vector2(10, 100), "gravity (Q-E): " + "{:.2f}".format(self.velocity) , (244, 244, 244), 24)
+    #     utils.drawText(Vector2(10, 140), "A/D : move".format(self.velocity), (244, 244, 244), 24)
+    #     utils.drawText(Vector2(10, 180), "hold mouse : shoot".format(self.velocity), (244, 244, 244), 24)
+    #     utils.drawText(Vector2(10, 220), "(left : normal, right: missile)".format(self.velocity),(244, 244, 244), 24)
+    #     utils.drawText(Vector2(10, 260), "W : special".format(self.velocity), (244, 244, 244), 24)
 
+        
+        
         
         #  iterates through each game object in the gameObjects list
         for obj in self.gameObjects:

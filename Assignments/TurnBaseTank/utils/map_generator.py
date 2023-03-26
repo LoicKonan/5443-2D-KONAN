@@ -1,7 +1,5 @@
 import random
-
 from pygame import Vector2
-
 from objects.gameObject import GameObject
 from utils.assets_manager import assetsManager
 
@@ -46,23 +44,26 @@ class MapGenerator:
         self.gameObjects = []
         self.platforms = []
 
-        # Generate a random number between 0 and 2
-        r = random.randrange(0,3)
+        # Generate a random of Map number between 0 and 2
+        Map = random.randrange(0,1)
 
-        if r == 0:
-            self.platforms.append( Platform(Vector2(50,650),20,100) )
+        if Map == 0:
+            self.platforms.append(Platform(Vector2(50,650),20,100) )
             self.platforms.append(Platform(Vector2(1050, 650), 20, 100))
-       
-        elif r == 1:
-            self.platforms.append(Platform(Vector2(50, 550), 20, 100))
-            self.platforms.append(Platform(Vector2(1050, 550), 20, 100))
-            self.platforms.append(Platform(Vector2(620, 450), 15, 15))
-            self.platforms.append(Platform(Vector2(820, 500), 15, 15))
-            self.platforms.append(Platform(Vector2(720, 250), 30, 30))
-       
-        elif r == 2:
+            
+            
+        elif Map == 1:
             self.platforms.append(Platform(Vector2(50, 550), 2, 350))
             self.platforms.append(Platform(Vector2(50, 330), 2, 350))
+            
+       
+        # elif Map == 2:
+        #     self.platforms.append(Platform(Vector2(50, 550), 20, 100))
+        #     self.platforms.append(Platform(Vector2(1050, 550), 20, 100))
+        #     self.platforms.append(Platform(Vector2(620, 450), 15, 15))
+        #     self.platforms.append(Platform(Vector2(820, 500), 15, 15))
+        #     self.platforms.append(Platform(Vector2(720, 250), 30, 30))
+        
 
         # Add the game objects of each platform to the list of game objects in the map
         for platform in self.platforms:

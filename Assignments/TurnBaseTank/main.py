@@ -1,4 +1,5 @@
 import pygame
+import random
 from game import Game
 from utils.util import utils
 
@@ -6,10 +7,29 @@ from utils.util import utils
 # Create a new Game instance
 game = Game()
 
+
+# Generate a random of background number between 0 and 2
+background = random.randrange(0,2)
+
+# Load background from the assets folder
+if background == 0:
+    game.background = pygame.transform.scale(pygame.image.load("assets/background.jpg"),(utils.width, utils.height))
+    
+# Load background2 from the assets folder
+elif background == 1:
+    game.background = pygame.transform.scale(pygame.image.load("assets/some.jpg"),(utils.width, utils.height))
+    
+# Load background3.from the assets folder
+elif background == 2:
+    game.background = pygame.transform.scale(pygame.image.load("assets/new.png"),(utils.width, utils.height))
+    
 # Game loop
 while True:
     # Set the background color of the screen to dark green
-    utils.screen.fill((0, 0, 0), (0, 0, utils.width, utils.height))
+    # utils.screen.fill((0, 0, 0), (0, 0, utils.width, utils.height))
+    
+    utils.screen.blit(game.background, (0, 0))
+   
     
     # Initialize the delta time used for animation and movement updates
     utils.initDeltaTime()

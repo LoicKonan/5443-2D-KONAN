@@ -69,7 +69,7 @@ class Missile(GameObject):
         # increment the missile's lifespan counter
         self.deathTime += utils.deltaTime()
         # if the missile has been alive for more than 100 milliseconds destroy it.
-        if self.deathTime >= 3:
+        if self.deathTime >= 10:
             self.destroy = True
 
         # if the missile has gone off the bottom of the screen destroy it.
