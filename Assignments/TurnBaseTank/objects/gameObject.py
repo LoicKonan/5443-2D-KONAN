@@ -46,10 +46,7 @@ class GameObject:
         wallRect.w += 4
         wallRect.h += 4
         playerRect = player.getRect()
-        
-        # if self.timeToflip != 0:
-        #     player.pos = Vector2((player.pos.x + self.vel.x), player.pos.y)
-        # wall collide with player , top ,left,right, bottom
+       
         
         # top
         if playerRect.y + playerRect.height > wallRect.y > playerRect.y:

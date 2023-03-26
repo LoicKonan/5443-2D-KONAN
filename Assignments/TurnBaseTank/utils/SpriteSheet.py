@@ -19,15 +19,15 @@ class SpriteSheet: # check santa.png
 
         # Load texture and calculate number of rows and columns
         self.texture = texture
-        self.rows = rows
-        self.cols = cols
+        self.rows    = rows
+        self.cols    = cols
 
         # Create a list to store the frames, Divide texture into frames
-        self.sheet = texture
+        self.sheet  = texture
         self.frames = []
         
         # Get width and height of sprite sheet
-        self.width = self.sheet.get_rect().width
+        self.width  = self.sheet.get_rect().width
         self.height = self.sheet.get_rect().height
 
         # Calculate size of each row and column in sprite sheet
@@ -42,7 +42,6 @@ class SpriteSheet: # check santa.png
 
     # Method to extract image from sprite sheet based on a specific rectangle
     def image_at(self, rectangle, colorkey=None):
-        """Load a specific image from a specific rectangle."""
         # Loads image from x, y, x+offset, y+offset.
         rect = pygame.Rect(rectangle)
         image = pygame.Surface(rect.size).convert()

@@ -13,7 +13,6 @@ class Explosion(GameObject):
         # specifying the number of rows and columns in the image
         self.animSheet = SpriteSheet(assetsManager.get("explo1"), 1, 12)
         
-        # Set the range of frames to play for the animation,
         # specifying the start frame index, end frame index, frame duration, and whether the animation should loop
         self.animSheet.setPlay(0, 11, 0.1, False)
         

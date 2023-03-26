@@ -258,6 +258,7 @@ class Game:
             projectile.type = "Projectile2"
             # Add the projectile to the list of game objects
             self.gameObjects.append(projectile)
+            
             # Make the camera follow the projectile
             utils.camera.follow(projectile)
 
