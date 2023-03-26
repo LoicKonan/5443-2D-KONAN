@@ -46,7 +46,6 @@ class GameObject:
         wallRect.w += 4
         wallRect.h += 4
         playerRect = player.getRect()
-       
         
         # top
         if playerRect.y + playerRect.height > wallRect.y > playerRect.y:

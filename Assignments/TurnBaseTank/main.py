@@ -2,13 +2,14 @@ import pygame
 from game import Game
 from utils.util import utils
 
+
 # Create a new Game instance
 game = Game()
 
 # Game loop
 while True:
     # Set the background color of the screen to dark green
-    utils.screen.fill((22, 122, 122), (0, 0, utils.width, utils.height))
+    utils.screen.fill((0, 0, 0), (0, 0, utils.width, utils.height))
     
     # Initialize the delta time used for animation and movement updates
     utils.initDeltaTime()
@@ -37,8 +38,8 @@ while True:
     # Draw the current frame using the Game instance
     game.draw()
 
-    # Display the current frame rate on the screen
-    utils.showFps()
+    # # Display the current frame rate on the screen
+    # utils.showFps()
 
     # Update the screen with the new frame
     pygame.display.flip()

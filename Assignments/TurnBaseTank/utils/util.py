@@ -61,7 +61,7 @@ class Utils():
     def distance(self, x1, y1, x2, y2):
         return math.sqrt(math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2) * 1.0);
 
-    # Method to check for AABB collision between two boxes
+    # Method to check for  collision between two boxes
     def collide(self, a, b):  
         rect = a.getRect()
         r = b.getRect()
