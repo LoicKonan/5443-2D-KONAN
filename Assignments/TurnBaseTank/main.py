@@ -7,20 +7,15 @@ from utils.util import utils
 # Create a new Game instance
 game = Game()
 
-
 # Generate a random of background number between 0 and 2
-background = random.randrange(0,2)
-
-# Load background from the assets folder
-if background == 0:
-    game.background = pygame.transform.scale(pygame.image.load("assets/background.jpg"),(utils.width, utils.height))
+background = random.randrange(0,1)
     
 # Load background2 from the assets folder
-elif background == 1:
+if background == 0:
     game.background = pygame.transform.scale(pygame.image.load("assets/some.jpg"),(utils.width, utils.height))
     
 # Load background3.from the assets folder
-elif background == 2:
+elif background == 1:
     game.background = pygame.transform.scale(pygame.image.load("assets/new.png"),(utils.width, utils.height))
     
 # Game loop

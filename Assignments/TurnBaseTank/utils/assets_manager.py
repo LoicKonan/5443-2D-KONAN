@@ -5,7 +5,6 @@ class AssetsManager:
         # Dictionary of assets, where the key is a string representing the name of the asset,
         # and the value is the loaded image file with transparency
         self.assets = {
-            'background': pygame.image.load("assets/background.jpg").convert_alpha(),
             'cell': pygame.image.load("assets/cell.png").convert_alpha(),
             'tank': pygame.image.load("assets/tank.png").convert_alpha(),
             'cannon': pygame.image.load("assets/cannon.png").convert_alpha(),

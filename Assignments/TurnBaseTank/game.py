@@ -41,11 +41,11 @@ class Game:
         self.gameObjects.append(self.tank1)
         self.gameObjects.append(self.tank2)
 
-        utils.camera.follow(None)
+        # utils.camera.follow(None)
 
     def update(self):
         # Update the camera position
-        utils.camera.update()
+        # utils.camera.update()
 
         # Rotate the cannon of the current tank based on whose turn it is
         if self.currentTurn == -1:
@@ -81,7 +81,7 @@ class Game:
                 # Remove the projectile and add an explosion effect if it collides with a wall
                 if object.destroy:
                     self.gameObjects.remove(object)
-                    utils.camera.follow(None)
+                    # utils.camera.follow(None)
                     self.gameObjects.append(Explosion(Vector2(object.pos.x - 32,object.pos.y - 32)))
                     sounds.play("explosion")
 
@@ -166,8 +166,8 @@ class Game:
             sounds.play("split")
 
         # if camera has a target, return
-        if utils.camera.target is not None:
-            return
+        # if utils.camera.target is not None:
+        #     return
         
         # if it's player 1's turn call onKeyDown method on tank1 object
         if self.currentTurn == -1:
@@ -209,8 +209,8 @@ class Game:
             return
 
         # If the camera is following an object, also return
-        if utils.camera.target is not None:
-            return
+        # if utils.camera.target is not None:
+        #     return
         
         # If it's player 1's turn, call the onMouseDown function for tank1
         if self.currentTurn == -1:
@@ -227,8 +227,8 @@ class Game:
         if self.winner is not None:
             return
         # If the camera is following an object, also return
-        if utils.camera.target is not None:
-            return
+        # if utils.camera.target is not None:
+        #     return
 
         # If it's player 1's turn, call the onMouseUp function for tank1
         if self.currentTurn == -1:
@@ -241,7 +241,7 @@ class Game:
             # Add the projectile to the list of game objects
             self.gameObjects.append(projectile)
             # Make the camera follow the projectile
-            utils.camera.follow(projectile)
+            # utils.camera.follow(projectile)
 
             # If the projectile is a Projectile, set it as the current projectile
             if isinstance(projectile, Projectile):
@@ -260,7 +260,7 @@ class Game:
             self.gameObjects.append(projectile)
             
             # Make the camera follow the projectile
-            utils.camera.follow(projectile)
+            # utils.camera.follow(projectile)
 
             # If the projectile is a Projectile, set it as the current projectile
             if isinstance(projectile, Projectile):
@@ -283,7 +283,6 @@ class Game:
     #     utils.drawText(Vector2(10, 220), "(left : normal, right: missile)".format(self.velocity),(244, 244, 244), 24)
     #     utils.drawText(Vector2(10, 260), "W : special".format(self.velocity), (244, 244, 244), 24)
 
-        
         
         
         #  iterates through each game object in the gameObjects list

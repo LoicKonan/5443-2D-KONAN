@@ -38,7 +38,7 @@ class Tank(GameObject):
 
 
     # Drawing the Tank object and its cannon
-    def draw(self):  # sourcery skip: extract-method, min-max-identity
+    def draw(self):  
         # Calculating the position of the cannon based on the Tank's position and shotY
         cannonX = self.pos.x - 67
         cannonY = self.pos.y + self.shotY
@@ -58,6 +58,7 @@ class Tank(GameObject):
         
         # Calling the parent draw method to draw the Tank object
         super().draw()
+        
 
         #  updating the shotY
         if self.holding:
