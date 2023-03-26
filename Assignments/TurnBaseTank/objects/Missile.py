@@ -14,6 +14,7 @@ from utils.util import utils
 
 class Missile(GameObject):
     def __init__(self, pos, force, pType):
+       
         # Initialize the missile's sprite sheet animation, position, and type.
         self.animSheet = SpriteSheet(assetsManager.get("missile"), 8, 8)
         self.animSheet.setPlay(0, 60, 0.001, True)
@@ -43,12 +44,9 @@ class Missile(GameObject):
             # if so, check if the missile is within 1000 pixels of the target then set the follow flag to True
             if utils.distance(self.pos.x, self.pos.y, self.target.pos.x + 500, self.target.pos.y + 32) < 1000:
                 self.follow = True
-                
-        # if the target is on the left side of the screen
-        else:
-            # check if the missile is within 1000 pixels of the target then set the follow flag to True
-            if utils.distance(self.pos.x, self.pos.y, self.target.pos.x - 500, self.target.pos.y + 32) < 1000:
-                self.follow = True
+
+        elif utils.distance(self.pos.x, self.pos.y, self.target.pos.x - 500, self.target.pos.y + 32) < 1000:
+            self.follow = True
 
         # If the missile is following the target
         if self.follow:
@@ -56,10 +54,10 @@ class Missile(GameObject):
             sounds.play("missile")
             # move the missile towards the current target
             self.moveTo(self.randomTargets[self.currentTarget])
-            
+
             # if the missile is close enough to the current target set the next target as the current target
             if self.currentTarget < 2 and \
-                    utils.distance(self.pos.x, self.pos.y, self.randomTargets[self.currentTarget].x, self.randomTargets[self.currentTarget].y ) < 100:
+                        utils.distance(self.pos.x, self.pos.y, self.randomTargets[self.currentTarget].x, self.randomTargets[self.currentTarget].y ) < 100:
                 self.currentTarget += 1
 
 
@@ -74,7 +72,7 @@ class Missile(GameObject):
         # if the missile has been alive for more than 100 milliseconds destroy it.
         if self.deathTime >= 100:
             self.destroy = True
-            
+
         # if the missile has gone off the bottom of the screen destroy it.
         if self.pos.y >= 2000:
             self.destroy = True
