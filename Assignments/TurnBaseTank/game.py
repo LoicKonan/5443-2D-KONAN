@@ -279,18 +279,22 @@ class Game:
         utils.drawText(Vector2(10, 260), "W : special".format(self.velocity), (244, 244, 244), 24)
 
         
+        #  iterates through each game object in the gameObjects list
         for obj in self.gameObjects:
-            # if utils.distance(obj.pos.x, obj.pos.y, 200, 500) < 50:
-            #     continue
-
+            # Draws the object on the screen at its position, taking into account the position of the camera
             utils.screen.blit(obj.img, (obj.pos.x - utils.camera.pos.x, obj.pos.y - utils.camera.pos.y))
+            
+            # Calls the draw method of the object
             obj.draw()
 
+        # If the game has been won by player 1, display a "Player 1 win!" message
         if self.winner == -1:
             utils.drawText(Vector2(500, 100), "Player 1 win!", (244, 23, 23), 43)
-            
+           
+        # If the game has been won by player 2, display a "Player 2 win!" message
         elif self.winner == 1:
             utils.drawText(Vector2(500, 100), "Player 2 win!", (244, 23, 23), 43)
 
+        # Display a message telling the user to press space to restart the game IF no one won.
         if self.winner is not None:
             utils.drawText(Vector2(500, 140), "Press 'space' to restart!", (166, 23, 23), 32)
