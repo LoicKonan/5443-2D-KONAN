@@ -25,11 +25,8 @@ elif background == 2:
     
 # Game loop
 while True:
-    # Set the background color of the screen to dark green
-    # utils.screen.fill((0, 0, 0), (0, 0, utils.width, utils.height))
-    
+    # Set the background color of the screen to dark green    
     utils.screen.blit(game.background, (0, 0))
-   
     
     # Initialize the delta time used for animation and movement updates
     utils.initDeltaTime()
