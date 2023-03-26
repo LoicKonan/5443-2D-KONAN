@@ -11,7 +11,7 @@ class Sounds:
             'missile': pygame.mixer.Sound("assets/missile.wav")
         }
         # Load and play background music
-        pygame.mixer.music.load("assets/snowfall.ogg")
+        pygame.mixer.music.load("assets/war.mp3")
         pygame.mixer.music.play(-1)
 
     def play(self, key):
