@@ -38,7 +38,7 @@ class Tank(GameObject):
 
 
     # Drawing the Tank object and its cannon
-    def draw(self):
+    def draw(self):  # sourcery skip: extract-method, min-max-identity
         # Calculating the position of the cannon based on the Tank's position and shotY
         cannonX = self.pos.x - 67
         cannonY = self.pos.y + self.shotY
@@ -46,9 +46,6 @@ class Tank(GameObject):
         
         # Rotating the cannon image based on the angle of the Tank
         rotated_image, rect = utils.rotate(self.cannonImg, self.angle, [cannonX, cannonY], offset)
-
-        # self.shootSheetPos = Vector2(rect.x + rect.w,rect.y - rect.h )
-
 
         # Calculating the position of the shootSheet based on the position and direction of the cannon
         if self.shootSheetPos is not None:
@@ -92,7 +89,7 @@ class Tank(GameObject):
             utils.screen.blit(particleImg, (self.shootSheetPos.x - utils.camera.pos.x + 100,self.shootSheetPos.y- utils.camera.pos.y ))
 
 
-    # This method is responsible for rotating the cannon based on the mouse position
+    # This method is responsible for rotating the cannon on the Tank sprite based on the position of the mouse.
     def rotateCannon(self):
         
         # Get mouse position and cannon position
@@ -100,25 +97,27 @@ class Tank(GameObject):
         cannonX = self.pos.x - 67
         cannonY = self.pos.y + self.shotY
 
-        # Calculate the direction and angle of the cannon
+        # Calculate the direction of the cannon
         dirX = mouseX - cannonX
         dirY = mouseY - cannonY
-        angle = math.degrees(math.atan2(dirY, dirX))
-        a = angle
-        angle += 90
         
+        # Calculate the angle of cannon on the Tank.
+        angle = math.degrees(math.atan2(dirY, dirX))
+        a = angle           # Store the original angle for use in limiting the cannon's angle of rotation
+        angle += 90         # Adjust the angle by 90 degrees to match the game's coordinate system
+
         # Limit the cannon's angle of rotation
-        if angle < -70:
+        if angle < -70:     # If the angle is less than -70 degrees, set it to -70 degrees
             angle = -70
-            
-        elif angle > 70:
+        
+        elif angle > 70:    # If the angle is greater than 70 degrees, set it to 70 degrees
             angle = 70
 
-        if a + 90 < -70:
-            a = -70 - 90
-            
-        elif a + 90 > 70:
-            a = 70 - 90
+        if a < -160:        # If the original angle is less than -160 degrees, set it to -160 degrees
+            a = -160
+        
+        elif a > -20:       # If the original angle is greater than -20 degrees, set it to -20 degrees
+            a = -20
 
         # Set the cannon's angle and shooting direction
         self.angle = angle
@@ -126,14 +125,10 @@ class Tank(GameObject):
 
     # This method is called when the mouse button is pressed down
     def onMouseDown(self, event):
-        if event.button == 1:
-            self.isMissie = False
-        else:
-            self.isMissie = True
+        self.isMissie = event.button != 1
         self.vel = Vector2(0, 0)
         self.holding = True
         self.projectileSpeed = 5
-        pass
 
     # This method is called when the mouse button is released
     def onMouseUp(self, event):
@@ -145,10 +140,9 @@ class Tank(GameObject):
     def getProjectile(self):
         force = self.shootDir * self.projectileSpeed
         if self.isMissie:
-            projectile = Missile(self.projectilePos,force,"Projectile1")
+            return Missile(self.projectilePos,force,"Projectile1")
         else:
-            projectile = Projectile(self.projectilePos, force, "Projectile1")
-        return projectile
+            return Projectile(self.projectilePos, force, "Projectile1")
 
     # This method is called when a key is released
     def onKeyUp(self, keycode):
@@ -156,7 +150,7 @@ class Tank(GameObject):
             if self.vel.x == -self.speed:
                 self.vel.x = 0
         
-        elif keycode == pygame.K_d:  #
+        elif keycode == pygame.K_d:  
             if self.vel.x == self.speed:
                 self.vel.x = 0
 
@@ -174,12 +168,12 @@ class Tank(GameObject):
                 self.flip = False
             self.vel.x = self.speed
             
-        # press space jump
-        elif keycode == pygame.K_SPACE:  
-            if not self.jumping:
-                self.jumping = True
-                self.pos.y -= 5
-                self.applyForce(Vector2(0, -12.81))
+        # # press space jump
+        # elif keycode == pygame.K_SPACE:  
+        #     if not self.jumping:
+        #         self.jumping = True
+        #         self.pos.y -= 5
+        #         self.applyForce(Vector2(0, -12.81))
 
     # This method is called to set the character's state when they are on the ground
     def setOnGround(self, onGround):

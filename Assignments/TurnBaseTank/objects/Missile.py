@@ -1,6 +1,5 @@
 import math
 import random
-
 import pygame
 from pygame import Vector2
 
@@ -70,11 +69,11 @@ class Missile(GameObject):
         # increment the missile's lifespan counter
         self.deathTime += utils.deltaTime()
         # if the missile has been alive for more than 100 milliseconds destroy it.
-        if self.deathTime >= 100:
+        if self.deathTime >= 3:
             self.destroy = True
 
         # if the missile has gone off the bottom of the screen destroy it.
-        if self.pos.y >= 2000:
+        if self.pos.y >= 1300:
             self.destroy = True
 
     # Move the missile towards the given target using steering behavior.

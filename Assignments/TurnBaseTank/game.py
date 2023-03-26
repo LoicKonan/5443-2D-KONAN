@@ -1,7 +1,6 @@
 import pygame
 from pygame import Vector2
 
-
 from objects.Explosion import Explosion
 from objects.Missile import Missile
 from objects.Projectile import Projectile
@@ -21,7 +20,7 @@ class Game:
         self.tank2 = None
         self.currentLevel = 0
         self.gameObjects = []
-        self.velocity = 0.58
+        self.velocity = 0.20
         self.currentProjectile = None
 
         # Start a new game
