@@ -1,4 +1,4 @@
-## Project 02 -  Tank Battle Gam
+## Project 02 -  Tank Battle Game
 
 - []: # **Language:** _markdown_
 - []: # **Title:** _Project 02_
