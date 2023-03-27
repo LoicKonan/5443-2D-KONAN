@@ -6,7 +6,7 @@
 | [02](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/01-A02) | [A02](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/01-A02) | [Github Setup](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/01-A02) | :heavy_check_mark: |
 | [03](./P01)       |  [P01](./P01) | [Wordle Game](./P01)    | :heavy_check_mark: |
 | [04](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/03-A03)       |  [A03](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/03-A03) | [Create server.](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/03-A03) |:heavy_check_mark:  |
-| [05](./P02)       |  [P02](./P02) | [TwoPlayer Game - Projectile Dual](./P02) | 🛑 :soon:|
+| [05](./P02)       |  [P02](./P02) | [TwoPlayer Game - Tank Battle Game](./P02) | 🛑 :soon:|
 | [06](./P03)       |  [P03](./P03) | [MultiPlayer Game - Space Battle](./P03)  | 🛑 :soon:|
 | [07](./P04)       |  [P04](./P04) | [P04](./P04) | 🛑 :soon:|
 | [08](./P05)       |  [P05](./P05) | [P05](./P05) | 🛑 :soon:|

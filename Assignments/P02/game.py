@@ -329,33 +329,3 @@ class Game:
             russia_flag = pygame.transform.scale(russia_flag, (300, 180))
             utils.screen.blit(russia_flag, (500, 200))
             utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
-
-
-
-        # # If the game has been won by player 1, display a "Player 1 win!" message
-        # if self.winner == -1:
-        #     utils.screen.fill((0, 0, 0))  # Clear the screen with black color
-        #     utils.drawText(Vector2(500, 100), "Player 1 win!!!", (244, 23, 23), 43) 
-        #     # Add USA Flag
-        #     pygame.image.load("assets/usa.jpg"),(utils.width, utils.height)
-             
-        #     utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
-         
-           
-        # # If the game has been won by player 2, display a "Player 2 win!" message
-        # elif self.winner == 1:
-        #     utils.screen.fill((0, 0, 0))  # Clear the screen with black color
-        #     utils.drawText(Vector2(500, 100), "Player 2 win!!!", (244, 23, 23), 43)
-        #     # Add Russia Flag
-        #     pygame.image.load("assets/russia.png"),(utils.width, utils.height)
-        #     utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
-        
-
-        # # Display a message telling the user to press space to restart the game IF no one won.
-        # if self.winner is not None:
-        #     utils.screen.fill((0, 0, 0))  # Clear the screen with black color
-        #     utils.drawText(Vector2(500, 140), "Press 'space' to restart!", (166, 23, 23), 32)
-            
-
-           
-   

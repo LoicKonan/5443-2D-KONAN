@@ -1,80 +1,62 @@
-# Build a worlde game in pygame.
-# This game should have flying in of letters when a word is entered
-# display a keyboard on the screen
-# display a loser to the screen if the player lose with a loser sound and ask him if he want to play again
-# or if the player win it should display winner with a winner sound and if the player want to play again. 
-
 import pygame
 import random
-import time
-import sys
-import os
-import math
-import string
+from game import Game
+from utils.util import utils
+pygame.font.init()
 
-# initialize pygame
-pygame.init()
+# Create a new Game instance
+game = Game()
 
-# create the screen
-screen = pygame.display.set_mode((800, 600))
-
-# Background
-background = pygame.image.load('background.jpg')
-
-# Title and Icon
-pygame.display.set_caption("killer Game")
-icon = pygame.image.load('icon.png')
-pygame.display.set_icon(icon)
-
-# Player
-playerImg = pygame.image.load('player.png')
-playerX = 370
-playerY = 480
-playerX_change = 0
-playerY_change = 0
-
-# Enemy
-enemyImg = []
-enemyX = []
-enemyY = []
-enemyX_change = []
-enemyY_change = []
-num_of_enemies = 6
-
-for i in range(num_of_enemies):
-    enemyImg.append(pygame.image.load('enemy.png'))
-    enemyX.append(random.randint(0, 735))
-    enemyY.append(random.randint(50, 150))
-    enemyX_change.append(4)
-    enemyY_change.append(40)
+# # Generate a random of background number between 0 and 2
+# background = random.randrange(0,2)
     
-# Bullet
-# Ready - You can't see the bullet on the screen
-# Fire - The bullet is currently moving
-bulletImg = pygame.image.load('bullet.png')
-bulletX = 0
-bulletY = 480
-bulletX_change = 0
-bulletY_change = 10
-bullet_state = "ready"
+# # Load background2 from the assets folder
+# if background == 0:
+#     game.background = pygame.transform.scale(pygame.image.load("assets/some.jpg"),(utils.width, utils.height))
+    
+# # Load background3.from the assets folder
+# elif background == 1:
+#     game.background = pygame.transform.scale(pygame.image.load("assets/new.png"),(utils.width, utils.height))
+    
+# # Just black color
+# elif background == 2:
+#     game.background = pygame.Surface((utils.width, utils.height))
+#     game.background.fill((0, 0, 0))
+    
+# Game loop
+while True:
+    # Set the background color of the screen to black    
+    utils.screen.fill((0, 0, 0), (0, 0, utils.width, utils.height))
 
-# Score
-score_value = 0
-font = pygame.font.Font('freesansbold.ttf', 32)
-score_text = font.render("Score: " + str(score_value), 1, (255, 255, 255))
+    # Initialize the delta time used for animation and movement updates
+    utils.initDeltaTime()
 
-# Game Over
-over_font = pygame.font.Font('freesansbold.ttf', 64)
-over_text = over_font.render("Game Over", 1, (255, 255, 255))
+    # Process all events in the Pygame event queue
+    for event in pygame.event.get():
+        # If the user closes the window, exit the program
+        if event.type == pygame.QUIT:
+            exit(0)
+        # If a key is pressed, call the onKeyDown method in the Game instance with the key as an argument
+        if event.type == pygame.KEYDOWN:
+            game.onKeyDown(event.key)
+        # If a key is released, call the onKeyUp method in the Game instance with the key as an argument
+        if event.type == pygame.KEYUP:
+            game.onKeyUp(event.key)
+        # If the mouse button is pressed, call the onMouseDown method in the Game instance with the event as an argument
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            game.onMouseDown(event)
+        # If the mouse button is released, call the onMouseUp method in the Game instance with the event as an argument
+        if event.type == pygame.MOUSEBUTTONUP:
+            game.onMouseUp(event)
 
-# Winner
-winner_font = pygame.font.Font('freesansbold.ttf', 64)
-winner_text = winner_font.render("Winner", 1, (255, 255, 255))
+    # Update the Game instance with the current delta time
+    game.update()
 
-# Loser
-loser_font = pygame.font.Font('freesansbold.ttf', 64)
-loser_text = loser_font.render("Loser", 1, (255, 255, 255))
+    # Draw the current frame using the Game instance
+    game.draw()
 
-# Play Again
-play_again_font = pygame.font.Font('freesansbold.ttf', 32)
-play_again_text = play_again_font.render("Play Again", 1, (255, 255, 255))
+    # # Display the current frame rate on the screen
+    # utils.showFps()
+
+    # Update the screen with the new frame
+    pygame.display.flip()
