@@ -47,4 +47,5 @@
 |   2   | [game.py](game.py)     | Game class  | :ballot_box_with_check: |
 |   3   | [README.md](README.md) | README file | :ballot_box_with_check: |
 |   4   | [assets](./assets)     | assets      | :ballot_box_with_check: |
-|   5   | [words.py](words.py)   | words       | :ballot_box_with_check: |
+|   5   | [objects](./objects)   | objects     | :ballot_box_with_check: |
+|   6   | [utils](./utils)       | utilities   | :ballot_box_with_check: |
