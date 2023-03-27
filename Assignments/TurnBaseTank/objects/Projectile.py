@@ -40,7 +40,7 @@ class Projectile(GameObject):
         self.deathTime += utils.deltaTime()
         if self.deathTime >= 3:
             self.destroy = True
-        if self.pos.y >= 721:
+        if self.pos.y >= 720:
             self.destroy = True
 
     # Create and return two mini projectiles with the missile's velocity and type.

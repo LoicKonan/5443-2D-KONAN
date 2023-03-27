@@ -39,7 +39,7 @@ class Missile(GameObject):
 
     def update(self):
         # Check if the target is on the right side of the screen
-        if self.target.pos.x > 700:
+        if self.target.pos.x > 1280:
             # if so, check if the missile is within 1000 pixels of the target then set the follow flag to True
             if utils.distance(self.pos.x, self.pos.y, self.target.pos.x + 500, self.target.pos.y + 32) < 1000:
                 self.follow = True
@@ -69,11 +69,11 @@ class Missile(GameObject):
         # increment the missile's lifespan counter
         self.deathTime += utils.deltaTime()
         # if the missile has been alive for more than 100 milliseconds destroy it.
-        if self.deathTime >= 10:
+        if self.deathTime >= 3:
             self.destroy = True
 
         # if the missile has gone off the bottom of the screen destroy it.
-        if self.pos.y >= 721:
+        if self.pos.y >= 7210:
             self.destroy = True
 
     # Move the missile towards the given target using steering behavior.

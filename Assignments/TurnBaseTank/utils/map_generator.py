@@ -54,16 +54,7 @@ class MapGenerator:
             
         elif Map == 1:
             self.platforms.append(Platform(Vector2(50, 550), 2, 350))
-            self.platforms.append(Platform(Vector2(50, 330), 2, 350))
-            
-       
-        # elif Map == 2:
-        #     self.platforms.append(Platform(Vector2(50, 550), 20, 100))
-        #     self.platforms.append(Platform(Vector2(1050, 550), 20, 100))
-        #     self.platforms.append(Platform(Vector2(620, 450), 15, 15))
-        #     self.platforms.append(Platform(Vector2(820, 500), 15, 15))
-        #     self.platforms.append(Platform(Vector2(720, 250), 30, 30))
-        
+            self.platforms.append(Platform(Vector2(50, 330), 2, 350))    
 
         # Add the game objects of each platform to the list of game objects in the map
         for platform in self.platforms:
