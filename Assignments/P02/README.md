@@ -4,7 +4,7 @@
 - []: # **Title:** _Project 02_
 - []: # **Language:** _markdown_
 - []: # **Path:** _README.md_
-- []: # **Author:** Loic_Konan, Md Abubakkar and Nitish Kumar Erelli
+- []: # **Author:** Loic Konan, Md Abubakkar and Nitish Kumar Erelli
 - []: # **Date:** _03/27/2023_
 - []: # **Description:** _Tank Battle Game in Pygame_
   
