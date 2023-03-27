@@ -316,7 +316,7 @@ class Game:
             # Add USA Flag
             usa_flag = pygame.image.load("assets/usa.jpg").convert_alpha()
             usa_flag = pygame.transform.scale(usa_flag, (300, 180))
-            utils.screen.blit(usa_flag, (600, 260))
+            utils.screen.blit(usa_flag, (500, 200))
             utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
         
         # If the game has been won by player 2, display a "Player 2 win!" message
@@ -327,7 +327,7 @@ class Game:
             # Add Russia Flag
             russia_flag = pygame.image.load("assets/russia.png").convert_alpha()
             russia_flag = pygame.transform.scale(russia_flag, (300, 180))
-            utils.screen.blit(russia_flag, (600, 260))
+            utils.screen.blit(russia_flag, (500, 200))
             utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
 
 
