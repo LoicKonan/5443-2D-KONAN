@@ -7,7 +7,6 @@ pygame.font.init()
 # Create a new Game instance
 game = Game()
 
-
 # # Generate a random of background number between 0 and 2
 # background = random.randrange(0,2)
     

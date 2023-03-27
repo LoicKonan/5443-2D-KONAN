@@ -280,10 +280,11 @@ class Game:
         
         # Draw game instructions and Title.
         utils.drawText(Vector2(400, 20), "Tank Battle Game", (244, 244, 244), 48)
-        utils.drawText(Vector2(520, 100), "Move: A/D", (244, 244, 244), 24)
-        utils.drawText(Vector2(520, 130), "Gravity: Q/E + : " + "{:.2f}".format(self.velocity), (244, 244, 244), 24)
-        utils.drawText(Vector2(520, 160), "Shoot: Mouse", (244, 244, 244), 24)
-        utils.drawText(Vector2(520, 190), "Special: W", (244, 244, 244), 24)
+        utils.drawText(Vector2(525, 100), "Move: A/D", (244, 244, 244), 24)
+        utils.drawText(Vector2(525, 130), "Shoot: Mouse", (244, 244, 244), 24)
+        utils.drawText(Vector2(525, 160), "Special: W", (244, 244, 244), 24)
+        utils.drawText(Vector2(480, 190), "Gravity: Q/E + : " + "{:.2f}".format(self.velocity), (244, 244, 244), 24)
+
        
         # Draw Team USA top left Corner and Top Right Corner Team RUSSIA
         utils.drawText(Vector2(110, 40), "Team USA", (100, 200, 219), 24)
@@ -306,15 +307,55 @@ class Game:
             # Calls the draw method of the object
             obj.draw()
 
+
         # If the game has been won by player 1, display a "Player 1 win!" message
         if self.winner == -1:
-            utils.drawText(Vector2(500, 100), "Player 1 win!", (244, 23, 23), 43)
-           
+            utils.screen.fill((0, 0, 0))  # Clear the screen with black color
+            utils.drawText(Vector2(500, 100), "Player 1 win!!!", (244, 23, 23), 43) 
+            
+            # Add USA Flag
+            usa_flag = pygame.image.load("assets/usa.jpg").convert_alpha()
+            usa_flag = pygame.transform.scale(usa_flag, (300, 180))
+            utils.screen.blit(usa_flag, (600, 260))
+            utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
+        
         # If the game has been won by player 2, display a "Player 2 win!" message
         elif self.winner == 1:
-            utils.drawText(Vector2(500, 100), "Player 2 win!", (244, 23, 23), 43)
+            utils.screen.fill((0, 0, 0))  # Clear the screen with black color
+            utils.drawText(Vector2(500, 100), "Player 2 win!!!", (244, 23, 23), 43)
+           
+            # Add Russia Flag
+            russia_flag = pygame.image.load("assets/russia.png").convert_alpha()
+            russia_flag = pygame.transform.scale(russia_flag, (300, 180))
+            utils.screen.blit(russia_flag, (600, 260))
+            utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
 
-        # Display a message telling the user to press space to restart the game IF no one won.
-        if self.winner is not None:
-            utils.drawText(Vector2(500, 140), "Press 'space' to restart!", (166, 23, 23), 32)
+
+
+        # # If the game has been won by player 1, display a "Player 1 win!" message
+        # if self.winner == -1:
+        #     utils.screen.fill((0, 0, 0))  # Clear the screen with black color
+        #     utils.drawText(Vector2(500, 100), "Player 1 win!!!", (244, 23, 23), 43) 
+        #     # Add USA Flag
+        #     pygame.image.load("assets/usa.jpg"),(utils.width, utils.height)
+             
+        #     utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
+         
+           
+        # # If the game has been won by player 2, display a "Player 2 win!" message
+        # elif self.winner == 1:
+        #     utils.screen.fill((0, 0, 0))  # Clear the screen with black color
+        #     utils.drawText(Vector2(500, 100), "Player 2 win!!!", (244, 23, 23), 43)
+        #     # Add Russia Flag
+        #     pygame.image.load("assets/russia.png"),(utils.width, utils.height)
+        #     utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
+        
+
+        # # Display a message telling the user to press space to restart the game IF no one won.
+        # if self.winner is not None:
+        #     utils.screen.fill((0, 0, 0))  # Clear the screen with black color
+        #     utils.drawText(Vector2(500, 140), "Press 'space' to restart!", (166, 23, 23), 32)
+            
+
+           
    
