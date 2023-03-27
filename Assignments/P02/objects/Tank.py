@@ -24,7 +24,7 @@ class Tank(GameObject):
         self.cannonImg = assetsManager.get("cannon")
         self.angle = 0
         self.shotY = 7
-
+        
         # Setting the initial holding, shootSheet, shootSheetPos, particleScale, projectilePos, 
         # shootDir, projectileSpeed, and isMissie of the Tank 
         self.holding = False
@@ -37,9 +37,13 @@ class Tank(GameObject):
         self.projectileSpeed = 1
         self.isMissie = False
 
+        # Add power variables for Tank 1 and Tank 2
+        self.power = 0
+        self.max_power = 100
+
 
     # Drawing the Tank object and its cannon
-    def draw(self):  
+    def draw(self):    # sourcery skip: extract-method, min-max-identity
         # Calculating the position of the cannon based on the Tank's position and shotY
         cannonX = self.pos.x - 67
         cannonY = self.pos.y + self.shotY
@@ -61,7 +65,7 @@ class Tank(GameObject):
         super().draw()
         
 
-        #  updating the shotY
+        # updating the shotY
         if self.holding:
             
             sounds.play("hold")
@@ -90,8 +94,22 @@ class Tank(GameObject):
             self.projectilePos = Vector2(self.pos.x + 20,self.pos.y)
 
             utils.screen.blit(particleImg, (self.shootSheetPos.x - utils.camera.pos.x + 100,self.shootSheetPos.y- utils.camera.pos.y ))
-
-
+            
+            
+        # Draw power meter for Tank
+        pygame.draw.rect(utils.screen, (255, 0, 0), (550,300, self.max_power, 25), 1)
+        pygame.draw.rect(utils.screen, (255, 0, 0), (550,300, self.power, 25))
+        
+  
+        # update power variables based on holding state
+        if self.holding:
+            if self.power < self.max_power:
+                self.power += 1
+        else:
+            # Reset power
+            self.power = 0
+                    
+                    
     # This method is responsible for rotating the cannon on the Tank sprite based on the position of the mouse.
     def rotateCannon(self):
         
