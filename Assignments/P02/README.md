@@ -20,8 +20,8 @@
   
 ### Examples
   
-<img src="assets/pic1.png" width="700" height= "500"> <img src="assets/pic.png"  width="700" height= "500">
-<img src="assets/pic2.png"  width="700" height= "500"> <img src="assets/pic3.png"  width="700" height= "500">
+<img src="assets/pic1.png"> <img src="assets/pic.png">
+<img src="assets/pic2.png"> <img src="assets/pic3.png">
 
 ### Example Command
 
