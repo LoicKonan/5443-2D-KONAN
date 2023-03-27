@@ -1,6 +1,7 @@
 import pygame
 from pygame import Vector2
 pygame.font.init()
+import time
 
 from objects.Explosion import Explosion
 from objects.Missile import Missile
@@ -47,6 +48,8 @@ class Game:
     def update(self):
         # Update the camera position
         # utils.camera.update()
+        
+        
 
         # Rotate the cannon of the current tank based on whose turn it is
         if self.currentTurn == -1:
@@ -203,8 +206,10 @@ class Game:
         else:
             self.tank2.onKeyUp(key)
 
-    # This method handles mouse button down events
+
+    # # This method handles mouse button down events
     def onMouseDown(self, event):
+        
         # if there is a winner, return
         if self.winner is not None:
             return
@@ -220,7 +225,8 @@ class Game:
         # If it's player 2's turn, call the onMouseDown function for tank2
         else:
             self.tank2.onMouseDown(event)
-
+    
+        
 
         # This function is called when a mouse button is released
     def onMouseUp(self, event):

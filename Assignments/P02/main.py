@@ -13,15 +13,7 @@ game = Game()
 # # Load background2 from the assets folder
 # if background == 0:
 #     game.background = pygame.transform.scale(pygame.image.load("assets/some.jpg"),(utils.width, utils.height))
-    
-# # Load background3.from the assets folder
-# elif background == 1:
-#     game.background = pygame.transform.scale(pygame.image.load("assets/new.png"),(utils.width, utils.height))
-    
-# # Just black color
-# elif background == 2:
-#     game.background = pygame.Surface((utils.width, utils.height))
-#     game.background.fill((0, 0, 0))
+ 
     
 # Game loop
 while True:

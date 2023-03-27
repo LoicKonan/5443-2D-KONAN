@@ -11,6 +11,7 @@ from utils.assets_manager import assetsManager
 from utils.sounds import sounds
 from utils.util import utils
 
+
 # Tank class that inherits from the GameObject class
 class Tank(GameObject):
     def __init__(self, pos):
@@ -62,6 +63,7 @@ class Tank(GameObject):
 
         #  updating the shotY
         if self.holding:
+            
             sounds.play("hold")
             self.shotY += 0.2
             if self.shotY >= 10:
@@ -123,6 +125,7 @@ class Tank(GameObject):
         # Set the cannon's angle and shooting direction
         self.angle = angle
         self.shootDir = Vector2(math.cos(math.radians(a)), math.sin(math.radians(a))).normalize()
+
 
     # This method is called when the mouse button is pressed down
     def onMouseDown(self, event):
