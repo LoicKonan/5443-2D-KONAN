@@ -1,5 +1,6 @@
 import pygame
 from pygame import Vector2
+pygame.font.init()
 
 from objects.Explosion import Explosion
 from objects.Missile import Missile
@@ -54,11 +55,11 @@ class Game:
             self.tank2.rotateCannon()
 
         # Check if a tank has gone out of bounds
-        if self.tank1.pos.y > 2000:
+        if self.tank1.pos.y > 720:
             self.winner = 1
             return
         
-        if self.tank2.pos.y > 2000:
+        if self.tank2.pos.y > 720:
             self.winner = -1
             return
 
@@ -276,16 +277,28 @@ class Game:
 
     # This function is called to draw the game
     def draw(self):
-    #     # Draw the text for the controls
-    #     utils.drawText(Vector2(10, 100), "gravity (Q-E): " + "{:.2f}".format(self.velocity) , (244, 244, 244), 24)
-    #     utils.drawText(Vector2(10, 140), "A/D : move".format(self.velocity), (244, 244, 244), 24)
-    #     utils.drawText(Vector2(10, 180), "hold mouse : shoot".format(self.velocity), (244, 244, 244), 24)
-    #     utils.drawText(Vector2(10, 220), "(left : normal, right: missile)".format(self.velocity),(244, 244, 244), 24)
-    #     utils.drawText(Vector2(10, 260), "W : special".format(self.velocity), (244, 244, 244), 24)
-
+        
+        # Draw game instructions and Title.
+        utils.drawText(Vector2(400, 20), "Tank Battle Game", (244, 244, 244), 48)
+        utils.drawText(Vector2(520, 100), "Move: A/D", (244, 244, 244), 24)
+        utils.drawText(Vector2(520, 130), "Gravity: Q/E + : " + "{:.2f}".format(self.velocity), (244, 244, 244), 24)
+        utils.drawText(Vector2(520, 160), "Shoot: Mouse", (244, 244, 244), 24)
+        utils.drawText(Vector2(520, 190), "Special: W", (244, 244, 244), 24)
+       
+        # Draw Team USA top left Corner and Top Right Corner Team RUSSIA
+        utils.drawText(Vector2(110, 40), "Team USA", (100, 200, 219), 24)
+        utils.drawText(Vector2(1040, 40), "Team Russia", (231, 76, 60), 24) 
         
         
-        #  iterates through each game object in the gameObjects list
+        # Show who Turn it is if game is not over
+        if self.winner is None:
+            if self.currentTurn == -1:
+                utils.drawText(Vector2(115, 190), "USA Turn",  (100, 200, 219), 24)
+            else:
+                utils.drawText(Vector2(1045, 190), "Russia Turn", (231, 76, 60), 24) 
+        
+        
+        # Iterates through each game object in the gameObjects list
         for obj in self.gameObjects:
             # Draws the object on the screen at its position, taking into account the position of the camera
             utils.screen.blit(obj.img, (obj.pos.x - utils.camera.pos.x, obj.pos.y - utils.camera.pos.y))
@@ -304,3 +317,4 @@ class Game:
         # Display a message telling the user to press space to restart the game IF no one won.
         if self.winner is not None:
             utils.drawText(Vector2(500, 140), "Press 'space' to restart!", (166, 23, 23), 32)
+   

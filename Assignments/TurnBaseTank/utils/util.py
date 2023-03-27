@@ -3,6 +3,7 @@ import math
 from pygame.locals import *
 from pygame import Vector2
 from utils.camera import Camera
+pygame.font.init()
 
 
 class Utils():
@@ -52,10 +53,14 @@ class Utils():
             self.drawText(Vector2(0, 0), "fps: " + str(self.fps), (233, 23, 23), 16)
 
     # Method to draw text on the screen
-    def drawText(self, pos, text, color, size):  # draw text
-        self.font = pygame.font.Font('assets/Merchant.ttf', size)
+    def drawText(self, pos, text, color, size):  
+        self.font = pygame.font.Font('assets/FreeSansBold.otf', size)
         text = self.font.render(text, True, color)
         self.screen.blit(text, (pos.x, pos.y))
+   
+        
+        
+
 
     # Method to calculate distance between two points
     def distance(self, x1, y1, x2, y2):

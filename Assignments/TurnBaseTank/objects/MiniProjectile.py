@@ -31,7 +31,7 @@ class MiniProjectile(GameObject):
         if self.deathTime >= 3:
             self.destroy = True
         # destroy the projectile if it has gone off the screen
-        if self.pos.y >= 1300:
+        if self.pos.y >= 721:
             self.destroy = True
 
     def rotate(self):

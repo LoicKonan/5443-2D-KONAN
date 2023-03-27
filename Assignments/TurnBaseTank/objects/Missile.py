@@ -73,7 +73,7 @@ class Missile(GameObject):
             self.destroy = True
 
         # if the missile has gone off the bottom of the screen destroy it.
-        if self.pos.y >= 1300:
+        if self.pos.y >= 721:
             self.destroy = True
 
     # Move the missile towards the given target using steering behavior.

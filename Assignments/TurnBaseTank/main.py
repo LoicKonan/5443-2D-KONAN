@@ -2,27 +2,33 @@ import pygame
 import random
 from game import Game
 from utils.util import utils
-
+pygame.font.init()
 
 # Create a new Game instance
 game = Game()
 
-# Generate a random of background number between 0 and 2
-background = random.randrange(0,1)
+
+# # Generate a random of background number between 0 and 2
+# background = random.randrange(0,2)
     
-# Load background2 from the assets folder
-if background == 0:
-    game.background = pygame.transform.scale(pygame.image.load("assets/some.jpg"),(utils.width, utils.height))
+# # Load background2 from the assets folder
+# if background == 0:
+#     game.background = pygame.transform.scale(pygame.image.load("assets/some.jpg"),(utils.width, utils.height))
     
-# Load background3.from the assets folder
-elif background == 1:
-    game.background = pygame.transform.scale(pygame.image.load("assets/new.png"),(utils.width, utils.height))
+# # Load background3.from the assets folder
+# elif background == 1:
+#     game.background = pygame.transform.scale(pygame.image.load("assets/new.png"),(utils.width, utils.height))
+    
+# # Just black color
+# elif background == 2:
+#     game.background = pygame.Surface((utils.width, utils.height))
+#     game.background.fill((0, 0, 0))
     
 # Game loop
 while True:
-    # Set the background color of the screen to dark green    
-    utils.screen.blit(game.background, (0, 0))
-    
+    # Set the background color of the screen to black    
+    utils.screen.fill((0, 0, 0), (0, 0, utils.width, utils.height))
+
     # Initialize the delta time used for animation and movement updates
     utils.initDeltaTime()
 
