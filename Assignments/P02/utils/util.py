@@ -13,8 +13,8 @@ class Utils():
         pygame.init()
         
         # set the game window size and initialize game variables
-        self.height = 720
-        self.width = 1280
+        self.height = 620
+        self.width = 1180
         self.gameOver = False
         self.currentLevel = 0
         self.screen = pygame.display.set_mode((self.width, self.height),DOUBLEBUF,16)
@@ -57,10 +57,7 @@ class Utils():
         self.font = pygame.font.Font('assets/FreeSansBold.otf', size)
         text = self.font.render(text, True, color)
         self.screen.blit(text, (pos.x, pos.y))
-   
         
-        
-
 
     # Method to calculate distance between two points
     def distance(self, x1, y1, x2, y2):

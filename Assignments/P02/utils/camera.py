@@ -11,7 +11,7 @@ class Camera:
 
     def getRect(self):
         # Create a rectangle that represents the camera's view
-        rect = pygame.rect.Rect(self.pos.x - 1280 / 2, self.pos.y - 720 / 2, 1280, 720)
+        rect = pygame.rect.Rect(self.pos.x - 1180 / 2, self.pos.y - 620 / 2, 1180, 620)
         return rect
 
     def update(self):
@@ -19,8 +19,8 @@ class Camera:
         # position minus half of the screen width and height
         # plus 200 pixels to account for the player's height
         if self.target is not None:
-            self.pos.x = self.target.pos.x - 1280/2
-            self.pos.y = self.target.pos.y - 720/2 + 200
+            self.pos.x = self.target.pos.x - 1180/2
+            self.pos.y = self.target.pos.y - 620/2 + 200
             
         # If the camera does not have a target, set its position to the initial position (150, 0)
         else:

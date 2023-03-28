@@ -38,9 +38,9 @@ class Projectile(GameObject):
 
         # Increment the death time and destroy the projectile if it has lived too long or gone too far
         self.deathTime += utils.deltaTime()
-        if self.deathTime >= 3:
+        if self.deathTime >= 8:
             self.destroy = True
-        if self.pos.y >= 720:
+        if self.pos.y >= 620:
             self.destroy = True
 
     # Create and return two mini projectiles with the missile's velocity and type.

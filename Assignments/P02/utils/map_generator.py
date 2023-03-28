@@ -48,13 +48,13 @@ class MapGenerator:
         Map = random.randrange(0,1)
 
         if Map == 0:
-            self.platforms.append(Platform(Vector2(50,650),20,100) )
-            self.platforms.append(Platform(Vector2(1050, 650), 20, 100))
+            self.platforms.append(Platform(Vector2(50,550),20,100) )
+            self.platforms.append(Platform(Vector2(1050, 550), 20, 100))
             
             
         elif Map == 1:
             self.platforms.append(Platform(Vector2(50, 550), 2, 350))
-            self.platforms.append(Platform(Vector2(50, 330), 2, 350))    
+            self.platforms.append(Platform(Vector2(50, 430), 2, 350))    
 
         # Add the game objects of each platform to the list of game objects in the map
         for platform in self.platforms:

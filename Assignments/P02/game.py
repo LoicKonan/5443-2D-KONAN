@@ -22,7 +22,7 @@ class Game:
         self.tank2 = None
         self.currentLevel = 0
         self.gameObjects = []
-        self.velocity = 0.20
+        self.velocity = .2
         self.currentProjectile = None
 
         # Start a new game
@@ -48,8 +48,6 @@ class Game:
     def update(self):
         # Update the camera position
         # utils.camera.update()
-        
-        
 
         # Rotate the cannon of the current tank based on whose turn it is
         if self.currentTurn == -1:
@@ -58,11 +56,11 @@ class Game:
             self.tank2.rotateCannon()
 
         # Check if a tank has gone out of bounds
-        if self.tank1.pos.y > 720:
+        if self.tank1.pos.y > 620:
             self.winner = 1
             return
         
-        if self.tank2.pos.y > 720:
+        if self.tank2.pos.y > 620:
             self.winner = -1
             return
 
@@ -294,15 +292,15 @@ class Game:
        
         # Draw Team USA top left Corner and Top Right Corner Team RUSSIA
         utils.drawText(Vector2(110, 40), "Team USA", (100, 200, 219), 24)
-        utils.drawText(Vector2(1040, 40), "Team Russia", (231, 76, 60), 24) 
+        utils.drawText(Vector2(940, 40), "Team Russia", (231, 76, 60), 24) 
         
         
         # Show who Turn it is if game is not over
         if self.winner is None:
             if self.currentTurn == -1:
-                utils.drawText(Vector2(115, 190), "USA Turn",  (100, 200, 219), 24)
+                utils.drawText(Vector2(115, 190), "USA Turn", (100, 200, 219), 24)
             else:
-                utils.drawText(Vector2(1045, 190), "Russia Turn", (231, 76, 60), 24) 
+                utils.drawText(Vector2(945, 190), "Russia Turn", (231, 76, 60), 24) 
         
         
         # Iterates through each game object in the gameObjects list
@@ -317,21 +315,21 @@ class Game:
         # If the game has been won by player 1, display a "Player 1 win!" message
         if self.winner == -1:
             utils.screen.fill((0, 0, 0))  # Clear the screen with black color
-            utils.drawText(Vector2(500, 100), "Player 1 win!!!", (244, 23, 23), 43) 
+            utils.drawText(Vector2(450, 100), "Player 1 win!!!", (244, 23, 23), 43) 
             
             # Add USA Flag
             usa_flag = pygame.image.load("assets/usa.jpg").convert_alpha()
             usa_flag = pygame.transform.scale(usa_flag, (300, 180))
-            utils.screen.blit(usa_flag, (500, 200))
-            utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
+            utils.screen.blit(usa_flag, (450, 200))
+            utils.drawText(Vector2(410, 440), "Press 'space' to restart!", (166, 23, 23), 32)
         
         # If the game has been won by player 2, display a "Player 2 win!" message
         elif self.winner == 1:
             utils.screen.fill((0, 0, 0))  # Clear the screen with black color
-            utils.drawText(Vector2(500, 100), "Player 2 win!!!", (244, 23, 23), 43)
+            utils.drawText(Vector2(450, 100), "Player 2 win!!!", (244, 23, 23), 43)
            
             # Add Russia Flag
             russia_flag = pygame.image.load("assets/russia.png").convert_alpha()
             russia_flag = pygame.transform.scale(russia_flag, (300, 180))
-            utils.screen.blit(russia_flag, (500, 200))
-            utils.drawText(Vector2(465, 440), "Press 'space' to restart!", (166, 23, 23), 32)
+            utils.screen.blit(russia_flag, (450, 200))
+            utils.drawText(Vector2(410, 440), "Press 'space' to restart!", (166, 23, 23), 32)

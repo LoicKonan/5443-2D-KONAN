@@ -18,7 +18,7 @@ class Tank(GameObject):
         super().__init__(pos, assetsManager.get("tank"), "tank")
         
         # Setting the initial speed, jumping, flip, cannon image, angle, and shotY of the Tank
-        self.speed = 1
+        self.speed = 5
         self.jumping = False
         self.flip = False
         self.cannonImg = assetsManager.get("cannon")
@@ -43,7 +43,7 @@ class Tank(GameObject):
 
 
     # Drawing the Tank object and its cannon
-    def draw(self):    # sourcery skip: extract-method, min-max-identity
+    def draw(self):    
         # Calculating the position of the cannon based on the Tank's position and shotY
         cannonX = self.pos.x - 67
         cannonY = self.pos.y + self.shotY

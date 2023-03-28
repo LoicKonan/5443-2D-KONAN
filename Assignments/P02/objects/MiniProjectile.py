@@ -28,10 +28,10 @@ class MiniProjectile(GameObject):
         # increase the death time by the time elapsed since last frame
         self.deathTime += utils.deltaTime()
         # destroy the projectile if the death time has exceeded a certain value
-        if self.deathTime >= 3:
+        if self.deathTime >= 8:
             self.destroy = True
         # destroy the projectile if it has gone off the screen
-        if self.pos.y >= 720:
+        if self.pos.y >= 620:
             self.destroy = True
 
     def rotate(self):
