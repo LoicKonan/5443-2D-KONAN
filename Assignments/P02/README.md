@@ -11,10 +11,21 @@
 ### Description
 
 - This is a **Tank Battle Game** in pygame.
+- This code defines a two-player tank game built with Pygame,
+- in which the players take turns to control their tanks and shoot missiles at each other.
+- The game features gravity, collision detection, and destructible walls.
+- The tanks can rotate their turrets, and missiles can be fired with adjustable power and angle.
+  
+- The main game loop is executed by the **Game.update() method**, 
+- which updates the position of all game objects and checks for collisions and projectile hits.
+- The game objects include **the tanks, missiles, projectiles, walls, and explosions**.
+  
+- The **Game.onKeyDown()** method handles key press events and allows players to control their tanks by adjusting the turret angle and missile power.
+- The **Game.checkTankWithWall()** and **Game.checkProjectileCollision()** methods handle collision detection between the game objects.
 
-### Instructions
+- The game can be started by creating an instance of the Game class and calling the **Game.update()** method in a loop until a winner is declared. 
+- A new game can be started by pressing the space key.
 
-- The game is played with the Keyboard.
   
 ### Examples
   
@@ -24,18 +35,16 @@
 ### Example Command
 
     ```bash
-    python game.py
+    python main.py
     ```
 
 ### Requirements
 
 - Python 3.8.5
-- Pygame 2.0.1
 
 ### Installation
 
 - Install Python 3.8.5
-- Install Pygame 2.0.1
 
 ### Files
 
