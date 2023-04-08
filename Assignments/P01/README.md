@@ -1,6 +1,6 @@
 ## Project 01 -  Wordle in Pygame
 
-- []: # **Language:** _markdown_
+- []: # **Language:** _Python_
 - []: # **Path:** _README.md_
 - []: # **Title:** _Project 01_
 - []: # **Author:** _[Loic_Konan](Loic_Konan)_

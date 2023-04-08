@@ -1,6 +1,6 @@
 ## Project 02 -  Tank Battle Game
 
-- []: # **Language:** _markdown_
+- []: # **Language:** _Python_
 - []: # **Title:** _Project 02_
 - []: # **Language:** _markdown_
 - []: # **Path:** _README.md_
