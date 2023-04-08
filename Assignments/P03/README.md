@@ -17,7 +17,7 @@
 <img src="assets/pic1.png"> <img src="assets/pic.png">
 <img src="assets/pic2.png"> <img src="assets/pic3.png">
 
-### Example Command
+* ### Example Command
 
     ```bash
     python main.py
