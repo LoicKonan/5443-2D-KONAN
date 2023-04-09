@@ -64,16 +64,16 @@ class SpaceRocks:
         self.spaceship = localSpaceShip
 
         # Griffin changed this to 1 so it would only generate 1 asteroid :)
-        # for _ in range(1):
-        #     while True:
-        #         position = get_random_position(mUtils.screen)
-        #         if (
-        #             position.distance_to(self.spaceship.position)
-        #             > self.MIN_ASTEROID_DISTANCE
-        #         ):
-        #             break
-        #
-        #     self.asteroids.append(Asteroid(position, self.asteroids.append))
+        for _ in range(1):
+            while True:
+                position = get_random_position(mUtils.screen)
+                if (
+                    position.distance_to(self.spaceship.position)
+                    > self.MIN_ASTEROID_DISTANCE
+                ):
+                    break
+        
+            self.asteroids.append(Asteroid(position, self.asteroids.append))
 
     def main_loop(self):
         while True:
@@ -123,7 +123,6 @@ class SpaceRocks:
                 self.spaceship.stop()
 
     def _process_game_logic(self):
-        #self.spaceship.updateData()
         mUtils.initDeltaTime()
         if self.gameStatus == "lose":
             return
@@ -136,8 +135,15 @@ class SpaceRocks:
         for id,player in self.manager.players.items():
             for bullet in self.bullets[:]:
                 if bullet.collides_with(player) and bullet.id != id:
-                    # player.getHit(10)
                     self.bullets.remove(bullet)
+                    break
+                
+        for bullet in self.bullets[:]:
+            for asteroid in self.asteroids[:]:
+                if asteroid.collides_with(bullet):
+                    self.asteroids.remove(asteroid)
+                    self.bullets.remove(bullet)
+                    asteroid.split()
                     break
 
         for bullet in self.bullets[:]:

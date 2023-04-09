@@ -209,11 +209,9 @@ class Bullet(GameObject):
         self.size -= mUtils.deltaTime() * 6
         self.damage -= mUtils.deltaTime() * 6
 
-        if self.size < 1:
-            self.size = 1
-        if self.damage < 1:
-            self.damage = 1
-
+        self.size = max(self.size, 1)
+        self.damage = max(self.damage, 1)
+        
         sprite = pygame.transform.scale(self.sprite,(int(self.size),int(self.size)))
         blit_position = Vector2(self.position.x - 5,self.position.y - 5)
         surface.blit(sprite, blit_position)
