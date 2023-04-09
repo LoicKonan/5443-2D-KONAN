@@ -4,11 +4,12 @@ import sys
 import pygame
 from rich import json
 
-from models import Asteroid, Spaceship
+from models import Asteroid, Spaceship, Wormhole
 from Globals import Globals
 from MUtils import mUtils
 from manager import GameManager
 from utils import get_random_position, load_sprite, print_text, mykwargs, load_sound
+from pygame.math import Vector2
 
 from urllib.request import urlopen
 
@@ -48,8 +49,8 @@ class SpaceRocks:
         # globals = Globals(x, y)
         self.manager = GameManager(self.bullets.append)
         localSpaceShip = Spaceship((400,400),None,None,self.bullets.append,
-           id=playerId,creds=creds, callback=self.manager.callBack
-        )
+           id=playerId,creds=creds, callback=self.manager.callBack)
+        
         self.manager.addPlayer(None,None,player=localSpaceShip, localPlayer=True)
         # set the window title
         pygame.display.set_caption(f"{creds['user']}")
@@ -64,6 +65,8 @@ class SpaceRocks:
 
         self.spaceship = localSpaceShip
         self.explosion_sound = load_sound("explosion")
+
+        self.wormhole = Wormhole(mUtils.screen)
 
 
         # Griffin changed this to 1 so it would only generate 1 asteroid :)
@@ -163,6 +166,20 @@ class SpaceRocks:
                     self.asteroids.remove(asteroid)
                     asteroid.split()
                     break
+                
+                
+        if self.wormhole:
+            self.wormhole.update()
+
+            if self.wormhole.available:
+                if self.spaceship and self.spaceship.collides_withPos(self.wormhole,Vector2(self.wormhole.pos1.x + 40,self.wormhole.pos1.y +40)):
+                    self.spaceship.position = Vector2(self.wormhole.pos2.x + 40 - 32,self.wormhole.pos2.y + 40 - 32)
+                    self.spaceship.velocity = Vector2(0,0)
+                    self.wormhole.available = False
+                elif self.spaceship and self.spaceship.collides_withPos(self.wormhole,Vector2(self.wormhole.pos2.x + 40 ,self.wormhole.pos2.y + 40)):
+                    self.spaceship.position = Vector2(self.wormhole.pos1.x + 40 - 32,self.wormhole.pos1.y + 40 - 32)
+                    self.spaceship.velocity = Vector2(0, 0)
+                    self.wormhole.available = False
 
 
         for bullet in self.bullets[:]:

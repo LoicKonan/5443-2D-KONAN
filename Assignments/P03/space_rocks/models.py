@@ -12,6 +12,46 @@ from utils import get_random_velocity, load_sound, load_sprite, wrap_position, p
 UP = Vector2(0, -1)
 
 
+
+# Animate images in a list of images
+image_paths = ["sprites/Portal/portal01.png", "sprites/Portal/portal02.png",
+               "sprites/Portal/portal03.png", "sprites/Portal/portal04.png",
+               "sprites/Portal/portal05.png", "sprites/Portal/portal06.png",
+               "sprites/Portal/portal07.png", "sprites/Portal/portal08.png",
+               "sprites/Portal/portal09.png", "sprites/Portal/portal10.png",
+               "sprites/Portal/portal11.png", "sprites/Portal/portal12.png",
+               "sprites/Portal/portal13.png", "sprites/Portal/portal14.png",
+               "sprites/Portal/portal15.png", "sprites/Portal/portal16.png",
+               "sprites/Portal/portal17.png", "sprites/Portal/portal18.png",
+               "sprites/Portal/portal19.png", "sprites/Portal/portal20.png",
+               "sprites/Portal/portal21.png", "sprites/Portal/portal22.png",
+               "sprites/Portal/portal23.png", "sprites/Portal/portal24.png",
+               "sprites/Portal/portal25.png", "sprites/Portal/portal26.png",
+               "sprites/Portal/portal27.png", "sprites/Portal/portal28.png",
+               "sprites/Portal/portal29.png", "sprites/Portal/portal30.png",
+               "sprites/Portal/portal31.png", "sprites/Portal/portal32.png",
+               "sprites/Portal/portal33.png", "sprites/Portal/portal34.png",
+               "sprites/Portal/portal35.png", "sprites/Portal/portal36.png",
+               "sprites/Portal/portal37.png", "sprites/Portal/portal38.png",
+               "sprites/Portal/portal39.png", "sprites/Portal/portal40.png",
+               "sprites/Portal/portal41.png", "sprites/Portal/portal42.png",
+               "sprites/Portal/portal43.png", "sprites/Portal/portal44.png",
+               "sprites/Portal/portal45.png", "sprites/Portal/portal46.png",
+               "sprites/Portal/portal47.png", "sprites/Portal/portal48.png",
+               "sprites/Portal/portal49.png", "sprites/Portal/portal50.png",
+               "sprites/Portal/portal51.png", "sprites/Portal/portal52.png",
+               "sprites/Portal/portal53.png", "sprites/Portal/portal54.png",
+               "sprites/Portal/portal55.png", "sprites/Portal/portal56.png",
+               "sprites/Portal/portal57.png", "sprites/Portal/portal58.png",
+               "sprites/Portal/portal59.png", "sprites/Portal/portal60.png",
+               "sprites/Portal/portal61.png", "sprites/Portal/portal62.png",
+               "sprites/Portal/portal63.png", "sprites/Portal/portal64.png"]
+
+current_image = 0
+current_image_2 = 0
+
+
+
 class GameObject:
     def __init__(self, position, sprite, velocity):
         self.position = Vector2(position)
@@ -212,3 +252,68 @@ class Bullet(GameObject):
         sprite = pygame.transform.scale(self.sprite,(int(self.size),int(self.size)))
         blit_position = Vector2(self.position.x - 5,self.position.y - 5)
         surface.blit(sprite, blit_position)
+        
+        
+        
+        
+class Wormhole(GameObject):
+
+    def __init__(self,  screen, image_paths = image_paths):
+        # Load images as surfaces
+        images = [pygame.image.load(path).convert_alpha() for path in image_paths]
+
+        # Create sprite object and set initial image
+        sprite = pygame.sprite.Sprite()
+        sprite.image = images[0]
+        sprite.rect = sprite.image.get_rect()
+        self.countRandTime = 0
+        self.countAvailableTime = 0
+        self.available = True
+
+
+        self.screen = screen
+        self.pos1 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
+        self.pos2 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
+
+        while self.pos1.distance_to(self.pos2) < 300:
+            self.pos2 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
+
+        self.radius = 40
+       
+
+    def drawHole(self,pos):
+        global current_image
+        current_image_path = image_paths[current_image]
+        current_image_surface = pygame.image.load(current_image_path)
+        current_image_surface = pygame.transform.scale(current_image_surface, (200, 150))
+        blitPos = pos - Vector2(self.radius)
+        self.screen.blit(current_image_surface,blitPos)
+
+
+        current_image += 1
+        if current_image >= len(image_paths):
+            current_image = 0
+
+    def randomPos(self):
+        self.countRandTime = 0
+        self.pos1 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
+        self.pos2 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
+
+        while self.pos1.distance_to(self.pos2) < 300:
+            self.pos2 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
+
+    def update(self):
+        if not self.available:
+            self.countAvailableTime += 0.016
+            if self.countAvailableTime >= 3:
+                self.countAvailableTime = 0
+                self.available = True
+                self.randomPos()
+
+    def draw(self, surface):
+        if self.available:
+            self.drawHole(self.pos1)
+            self.drawHole(self.pos2)
+
+
+        # pass
