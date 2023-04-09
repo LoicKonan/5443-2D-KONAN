@@ -8,7 +8,8 @@ from models import Asteroid, Spaceship
 from Globals import Globals
 from MUtils import mUtils
 from manager import GameManager
-from utils import get_random_position, load_sprite, print_text, mykwargs
+from utils import get_random_position, load_sprite, print_text, mykwargs, load_sound
+
 from urllib.request import urlopen
 
 class SpaceRocks:
@@ -62,6 +63,8 @@ class SpaceRocks:
 
 
         self.spaceship = localSpaceShip
+        self.explosion_sound = load_sound("explosion")
+
 
         # Griffin changed this to 1 so it would only generate 1 asteroid :)
         for _ in range(1):
@@ -131,13 +134,15 @@ class SpaceRocks:
 
         for game_object in self._get_game_objects():
             game_object.move(mUtils.screen)
-
+             
+            
+            
         for id,player in self.manager.players.items():
             for bullet in self.bullets[:]:
                 if bullet.collides_with(player) and bullet.id != id:
                     self.bullets.remove(bullet)
                     break
-                
+
         for bullet in self.bullets[:]:
             for asteroid in self.asteroids[:]:
                 if asteroid.collides_with(bullet):
@@ -145,6 +150,20 @@ class SpaceRocks:
                     self.bullets.remove(bullet)
                     asteroid.split()
                     break
+                
+                
+        # Here if the player hit collide with the asteroids he lose 10 points and make noise.        
+        if self.spaceship:
+            for asteroid in self.asteroids:
+                if asteroid.collides_with(self.spaceship):
+                    self.spaceship.health -= 10
+                    self.explosion_sound.play()
+
+                    self.spaceship.updateData()
+                    self.asteroids.remove(asteroid)
+                    asteroid.split()
+                    break
+
 
         for bullet in self.bullets[:]:
                 if bullet.collides_with(self.spaceship) and bullet.id != self.spaceship.id:
@@ -157,10 +176,12 @@ class SpaceRocks:
             if not mUtils.screen.get_rect().collidepoint(bullet.position):
                 self.bullets.remove(bullet)
 
+
         if self.spaceship.destroy:
             self.spaceship.updateData()
             self.message = "You lose!"
             self.gameStatus = "lose"
+
 
     def _draw(self):
         mUtils.screen.blit(self.background, (0, 0))

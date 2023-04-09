@@ -287,10 +287,8 @@ if __name__ == "__main__":
 
     user = kwargs.get("user", "player-1")
     passwd = user + "2023!!!!!"
-    # passwd = kwargs.get('passwd','player-12023!!!')
     target = kwargs.get("target", "player-2")
-    # cmd = kwargs.get('cmd','message')
-    # body = kwargs.get('body','hello world')
+    
     method = kwargs.get("method", "listen")
     exchange = kwargs.get("exchange", "game1")
 
@@ -334,8 +332,7 @@ if __name__ == "__main__":
             print(creds)
             senders.append(CommsSender(**creds))
 
-            # cmd = random.choice(body[cmd])
-            # data = random.choice(body[cmd])
+            
             senders[-1].send(
                 target=user,
                 sender=user,
@@ -347,6 +344,5 @@ if __name__ == "__main__":
         print("Comms Listener starting. To exit press CTRL+C ...")
 
         commsListener = CommsListener(**creds)
-        # m = MultiComms('player-4','game1')
         commsListener.bindKeysToQueue([f"#.{user}.#", "#.broadcast.#"])
         commsListener.startConsuming()

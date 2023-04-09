@@ -106,9 +106,7 @@ class Spaceship(GameObject):
         blit_position = self.position - rotated_surface_size * 0.5
         surface.blit(rotated_surface, blit_position)
 
-        textColor = (23, 233, 23)
-        if self.creds is None:
-            textColor = (233, 23, 23)
+        textColor = (233, 23, 23) if self.creds is None else (23, 233, 23)
         mUtils.drawText(Vector2(self.position.x - 20, self.position.y - 20), str(self.health), textColor, 8)
 
         ###
@@ -116,8 +114,7 @@ class Spaceship(GameObject):
         if self.healthGeneTime < 0:
             self.healthGeneTime = 60
             self.health += 10
-            if self.health >100:
-                self.health = 100
+            self.health = min(self.health, 100)
             self.updateData()
 
         ## skill
