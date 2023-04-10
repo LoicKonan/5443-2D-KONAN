@@ -19,10 +19,17 @@
 <img src="assets/pic1.png"> <img src="assets/pic.png">
 <img src="assets/pic2.png"> <img src="assets/pic3.png">
 
-* ### Example Command
+### Example Command
+
+**Player number 2:**
+**Player number 16:**
 
     ```bash
-    python main.py
+    __main__.py  queue=game-01 player=player-02 
+
+    __main__.py  queue=game-01 player=player-16
+
+
     ```
 
 ### Requirements
