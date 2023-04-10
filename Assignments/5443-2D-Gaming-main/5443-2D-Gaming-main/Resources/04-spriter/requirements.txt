@@ -1,3 +1,0 @@
-natsort
-pillow
-rich
