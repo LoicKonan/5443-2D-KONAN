@@ -1,2 +1,0 @@
-## Sudoku - Starter Code
-#### None
