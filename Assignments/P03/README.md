@@ -11,7 +11,8 @@
 
 - This is a multiplayer version of the classic asteroids game where players control spaceships and shoot at each other to earn points.
 - The game features multiple ships, bullet firing, health regeneration, and a score system.
-- Additional features include power-ups, stronger bullets, and health asteroids.
+- Additional features include wormholes, power-ups, stronger bullets, and asteroids.
+- If you Enter in a wormhole you go to a different planet with different background.
 
   
 ### Examples
@@ -25,6 +26,7 @@
 **Player number 16:**
 
     ```bash
+
     __main__.py  queue=game-01 player=player-02 
 
     __main__.py  queue=game-01 player=player-16
