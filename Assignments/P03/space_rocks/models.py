@@ -228,13 +228,16 @@ class Bullet(GameObject):
         
         
         
+## This class Wormhole that is a subclass of the GameObject class. 
+## It creates two portals on the screen
 class Wormhole(GameObject):
 
+    # initializes the Wormhole object by loading images of the portals and setting their initial
+    # positions. It also sets the radius of the portals.
     def __init__(self,  screen):
 
         # Load images from assets, sprites and portal folder
         images = [load_sprite("portal" + str(i)) for i in range(1, 64)]
-
        
         # Create sprite object and set initial image
         sprite = pygame.sprite.Sprite()
@@ -243,7 +246,6 @@ class Wormhole(GameObject):
         self.countRandTime = 0
         self.countAvailableTime = 0
         self.available = True
-
 
         self.screen = screen
         self.pos1   = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
@@ -255,6 +257,7 @@ class Wormhole(GameObject):
         self.radius = 40
        
 
+    # draws a portal on the screen at the given position.
     def drawHole(self,pos):
         global current_image
         current_image_path = image_paths[current_image]
@@ -263,11 +266,11 @@ class Wormhole(GameObject):
         blitPos = pos - Vector2(self.radius)
         self.screen.blit(current_image_surface,blitPos)
 
-
         current_image += 1
         if current_image >= len(image_paths):
             current_image = 0
 
+    # generates random positions for the portals and ensures that they are at least 300 distance apart.
     def randomPos(self):
         self.countRandTime = 0
         self.pos1 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
@@ -276,6 +279,7 @@ class Wormhole(GameObject):
         while self.pos1.distance_to(self.pos2) < 300:
             self.pos2 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
 
+    # updates the position of the portals after a certain amount of time has elapsed since the last update.
     def update(self):
         if not self.available:
             self.countAvailableTime += 0.016
@@ -283,7 +287,9 @@ class Wormhole(GameObject):
                 self.countAvailableTime = 0
                 self.available = True
                 self.randomPos()
-
+                
+                
+    # draws the portals on the screen 
     def draw(self, surface):
         if self.available:
             self.drawHole(self.pos1)

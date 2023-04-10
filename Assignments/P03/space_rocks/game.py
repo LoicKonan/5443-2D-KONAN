@@ -167,7 +167,7 @@ class SpaceRocks:
                     break
                 
               
-
+        # Here depending on which wormhole you go into you will see a different background.
         if self.wormhole:
             self.wormhole.update()
 
