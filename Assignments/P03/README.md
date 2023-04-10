@@ -9,8 +9,8 @@
   
 ### Description
 
-- This is a multiplayer version of the classic asteroids game where players control spaceships and shoot at each other to earn points. 
-- The game features multiple ships, bullet firing, health regeneration, and a score system. 
+- This is a multiplayer version of the classic asteroids game where players control spaceships and shoot at each other to earn points.
+- The game features multiple ships, bullet firing, health regeneration, and a score system.
 - Additional features include power-ups, stronger bullets, and health asteroids.
 
   
