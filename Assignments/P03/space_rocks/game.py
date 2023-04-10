@@ -158,14 +158,15 @@ class SpaceRocks:
         if self.spaceship:
             for asteroid in self.asteroids:
                 if asteroid.collides_with(self.spaceship):
-                    self.spaceship.health -= 10
+                    self.spaceship.health -= 2
                     self.explosion_sound.play()
 
                     self.spaceship.updateData()
                     self.asteroids.remove(asteroid)
                     asteroid.split()
                     break
-
+                
+              
 
         if self.wormhole:
             self.wormhole.update()
@@ -182,6 +183,7 @@ class SpaceRocks:
                     self.spaceship.position = Vector2(self.wormhole.pos1.x + 40 - 32,self.wormhole.pos1.y + 40 - 32)
                     self.spaceship.velocity = Vector2(0, 0)
                     self.wormhole.available = False
+                    
 
 
         for bullet in self.bullets[:]:
