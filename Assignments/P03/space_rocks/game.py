@@ -42,21 +42,21 @@ class SpaceRocks:
 
         self._init_pygame()
         mUtils.initDeltaTime()
-        # mUtils.screen = pygame.display.set_mode((800, 600))
         self.asteroids = []
-        self.bullets = []
+        self.bullets   = []
 
-        # globals = Globals(x, y)
         self.manager = GameManager(self.bullets.append)
         localSpaceShip = Spaceship((400,400),None,None,self.bullets.append,
            id=playerId,creds=creds, callback=self.manager.callBack)
         
         self.manager.addPlayer(None,None,player=localSpaceShip, localPlayer=True)
+        
         # set the window title
         pygame.display.set_caption(f"{creds['user']}")
 
+        # Background
+        self.background = load_sprite("Aqua", False)
 
-        self.background = load_sprite("space", False)
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(None, 64)
         self.message = ""
@@ -69,8 +69,8 @@ class SpaceRocks:
         self.wormhole = Wormhole(mUtils.screen)
 
 
-        # Griffin changed this to 1 so it would only generate 1 asteroid :)
-        for _ in range(1):
+        # Generate asteroid
+        for _ in range(2):
             while True:
                 position = get_random_position(mUtils.screen)
                 if (
@@ -139,7 +139,6 @@ class SpaceRocks:
             game_object.move(mUtils.screen)
 
 
-
         for id,player in self.manager.players.items():
             for bullet in self.bullets[:]:
                 if bullet.collides_with(player) and bullet.id != id:
@@ -172,17 +171,14 @@ class SpaceRocks:
             self.wormhole.update()
 
             if self.wormhole.available and self.spaceship:
-                if self.spaceship.collides_withPos(
-                    self.wormhole,
-                    Vector2(self.wormhole.pos1.x + 40, self.wormhole.pos1.y + 40),
-                ):
+                if self.spaceship.collides_withPos(self.wormhole, Vector2(self.wormhole.pos1.x + 40, self.wormhole.pos1.y + 40),):
+                    self.background = load_sprite("Blue", False)
                     self.spaceship.position = Vector2(self.wormhole.pos2.x + 40 - 32,self.wormhole.pos2.y + 40 - 32)
                     self.spaceship.velocity = Vector2(0,0)
                     self.wormhole.available = False
-                elif self.spaceship.collides_withPos(
-                    self.wormhole,
-                    Vector2(self.wormhole.pos2.x + 40, self.wormhole.pos2.y + 40),
-                ):
+                    
+                elif self.spaceship.collides_withPos(self.wormhole, Vector2(self.wormhole.pos2.x + 40, self.wormhole.pos2.y + 40),):
+                    self.background = load_sprite("space", False)
                     self.spaceship.position = Vector2(self.wormhole.pos1.x + 40 - 32,self.wormhole.pos1.y + 40 - 32)
                     self.spaceship.velocity = Vector2(0, 0)
                     self.wormhole.available = False
@@ -213,6 +209,9 @@ class SpaceRocks:
 
         for game_object in self._get_game_objects():
             game_object.draw(mUtils.screen)
+            
+        if self.wormhole:
+            self.wormhole.draw(mUtils.screen)
 
         if self.message:
             print_text(mUtils.screen, self.message, self.font)

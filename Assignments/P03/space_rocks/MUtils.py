@@ -36,9 +36,12 @@ class MUtils():
     def collide(self, a, b):  # aabb 2 box collide check
         rect = a.getRect()
         r = b.getRect()
-        if r.x < rect.x + rect.w and r.x + r.w > rect.x and r.y < rect.y + rect.h and r.h + r.y > rect.y:
-            return True
-        return False
+        return (
+            r.x < rect.x + rect.w
+            and r.x + r.w > rect.x
+            and r.y < rect.y + rect.h
+            and r.h + r.y > rect.y
+        )
 
 
 mUtils = MUtils()

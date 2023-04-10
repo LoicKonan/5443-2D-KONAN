@@ -1,6 +1,8 @@
 import math
 import os
 import random
+from pygame import transform
+
 
 import pygame
 from pygame.math import Vector2
@@ -14,7 +16,7 @@ UP = Vector2(0, -1)
 
 
 # image path for the portal sprites
-image_paths = [os.path.join("assets", "sprites", "portal", "portal" + str(i) + ".png") for i in range(1, 64)]
+image_paths = [os.path.join("portal", "portal" + str(i) + ".png") for i in range(1, 64)]
 
 current_image = 0
 
@@ -226,16 +228,12 @@ class Bullet(GameObject):
         
         
         
-        
 class Wormhole(GameObject):
 
     def __init__(self,  screen):
 
         # Load images from assets, sprites and portal folder
-        # images = [load_sprite("portal" + str(i)) for i in range(1, 64)]
- 
-        # Load images from assets folder, sprites folder and portal folder
-        images = [pygame.image.load(path).convert_alpha() for path in image_paths]
+        images = [load_sprite("portal" + str(i)) for i in range(1, 64)]
 
        
         # Create sprite object and set initial image
@@ -248,8 +246,8 @@ class Wormhole(GameObject):
 
 
         self.screen = screen
-        self.pos1 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
-        self.pos2 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
+        self.pos1   = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
+        self.pos2   = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
 
         while self.pos1.distance_to(self.pos2) < 300:
             self.pos2 = Vector2(random.randrange(0, 800 - 200), random.randrange(0, 600 - 150))
