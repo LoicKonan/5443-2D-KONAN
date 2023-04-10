@@ -137,9 +137,9 @@ class SpaceRocks:
 
         for game_object in self._get_game_objects():
             game_object.move(mUtils.screen)
-             
-            
-            
+
+
+
         for id,player in self.manager.players.items():
             for bullet in self.bullets[:]:
                 if bullet.collides_with(player) and bullet.id != id:
@@ -153,8 +153,8 @@ class SpaceRocks:
                     self.bullets.remove(bullet)
                     asteroid.split()
                     break
-                
-                
+
+
         # Here if the player hit collide with the asteroids he lose 10 points and make noise.        
         if self.spaceship:
             for asteroid in self.asteroids:
@@ -166,17 +166,23 @@ class SpaceRocks:
                     self.asteroids.remove(asteroid)
                     asteroid.split()
                     break
-                
-                
+
+
         if self.wormhole:
             self.wormhole.update()
 
-            if self.wormhole.available:
-                if self.spaceship and self.spaceship.collides_withPos(self.wormhole,Vector2(self.wormhole.pos1.x + 40,self.wormhole.pos1.y +40)):
+            if self.wormhole.available and self.spaceship:
+                if self.spaceship.collides_withPos(
+                    self.wormhole,
+                    Vector2(self.wormhole.pos1.x + 40, self.wormhole.pos1.y + 40),
+                ):
                     self.spaceship.position = Vector2(self.wormhole.pos2.x + 40 - 32,self.wormhole.pos2.y + 40 - 32)
                     self.spaceship.velocity = Vector2(0,0)
                     self.wormhole.available = False
-                elif self.spaceship and self.spaceship.collides_withPos(self.wormhole,Vector2(self.wormhole.pos2.x + 40 ,self.wormhole.pos2.y + 40)):
+                elif self.spaceship.collides_withPos(
+                    self.wormhole,
+                    Vector2(self.wormhole.pos2.x + 40, self.wormhole.pos2.y + 40),
+                ):
                     self.spaceship.position = Vector2(self.wormhole.pos1.x + 40 - 32,self.wormhole.pos1.y + 40 - 32)
                     self.spaceship.velocity = Vector2(0, 0)
                     self.wormhole.available = False
