@@ -130,7 +130,7 @@ class Spaceship(GameObject):
             self.health = min(self.health, 100)
             self.updateData()
 
-        ## skill
+        ## After you get 5 points you make bullet great.
         if self.score >= 5:
             self.activeBulletSkill = True
             self.bulletDamage = 20
