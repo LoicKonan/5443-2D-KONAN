@@ -1,4 +1,4 @@
-## Project 02 -  Tank Battle Game
+## Project 03 -  Tank Battle Game
 
 - []: # **Language:** _Python_
 - []: # **Title:** _Project 03_
