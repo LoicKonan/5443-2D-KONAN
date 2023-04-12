@@ -20,7 +20,7 @@
 - The **Game.onKeyDown()** method handles key press events and allows players to control their tanks by adjusting the turret angle and missile power.
 - The **Game.checkTankWithWall()** and **Game.checkProjectileCollision()** methods handle collision detection between the game objects.
 
-- The game can be started by creating an instance of the Game class and calling the **Game.update()** method in a loop until a winner is declared. 
+- The game can be started by creating an instance of the Game class and calling the **Game.update()** method in a loop until a winner is declared.
 - A new game can be started by pressing the space key.
 
   
