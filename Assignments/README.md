@@ -8,4 +8,4 @@
 | [04](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/03-A03)       |  [A03](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/03-A03) | [Create server.](https://github.com/rugbyprof/5443-2D-Gaming/tree/main/Assignments/03-A03) |:heavy_check_mark:  |
 | [05](./P02)       |  [P02](./P02) | [Two Player Game  - Tank Battle Game](./P02)  |  :heavy_check_mark:|
 | [06](./P03)       |  [P03](./P03) | [MultiPlayer Game - Space Battle](./P03)      |  :heavy_check_mark:|
-| [07](./P04)       |  [P04](./P04) | [Adventure - Collaborative Level Game](./P04) | 🛑 :soon:|
+| [07](./P04)       |  [P04](./P04) | [Adventure - Collaborative Level Game](./P04) |  :heavy_check_mark:|
