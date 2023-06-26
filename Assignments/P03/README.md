@@ -3,7 +3,7 @@
 - []: # **Language:** _Python_
 - []: # **Title:** _Project 03_
 - []: # **Path:** _README.md_
-- []: # **Author:** Loic Konan, Md Abubakkar and Nitish Kumar Erelli
+- []: # **Author:** _Loic Konan, Md Abubakkar and Nitish Kumar Erelli_
 - []: # **Date:** _04/10/2023_
 - []: # **Description:** _Space Game_
   
@@ -37,8 +37,8 @@
 ### Requirements
 
 - Python 3.8.5
-- pygame 
-- rich 
+- pygame
+- rich
 - pika
 - requests
 

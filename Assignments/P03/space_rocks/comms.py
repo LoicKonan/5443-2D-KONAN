@@ -188,7 +188,6 @@ class CommsListener(Comms):
             daemon=True,
         ).start()
 
-
 class CommsSender(Comms):
     def __init__(self, **kwargs):
         """Extends Comms and adds a "send" method which sends data to a

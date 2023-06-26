@@ -9,6 +9,3 @@
 | [05](./P02)       |  [P02](./P02) | [Two Player Game  - Tank Battle Game](./P02)  |  :heavy_check_mark:|
 | [06](./P03)       |  [P03](./P03) | [MultiPlayer Game - Space Battle](./P03)      |  :heavy_check_mark:|
 | [07](./P04)       |  [P04](./P04) | [Adventure - Collaborative Level Game](./P04) | 🛑 :soon:|
-| [08](./P05)       |  [P05](./P05) | [P05](./P05) | 🛑 :soon:|
-| [09](./P06)       |  [P06](./P06) | [P06](./P06) | 🛑 :soon:|
-| [10](./P07)       |  [P07](./P07) | [P07](./P07) | 🛑 :soon:|
